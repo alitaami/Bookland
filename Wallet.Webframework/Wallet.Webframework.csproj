@@ -22,5 +22,9 @@
 		<PackageReference Include="NLog.Targets.Sentry" Version="1.3.0" />
 		<PackageReference Include="NLog.Web.AspNetCore" Version="5.3.5" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Wallet.Infrastructure\Wallet.Infrastructure.csproj" />
+	</ItemGroup>
 	
 </Project>
