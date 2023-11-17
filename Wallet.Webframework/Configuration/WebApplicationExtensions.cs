@@ -1,6 +1,4 @@
-﻿using Discount.Api.Services;
-using Discount.Infrastructure.Extensions;
-using HealthChecks.UI.Client;
+﻿using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http;
@@ -35,7 +33,7 @@ namespace WebFramework.Configuration
 
                 app.Services.GetRequiredService<IHostApplicationLifetime>().ApplicationStarted.Register(() =>
                 {
-                    app.MigrateDatabase<DiscountService>(); // Use a service related to your database context.
+                    //app.MigrateDatabase<DiscountService>(); // Use a service related to your database context.
                 });
                  
                 // Endpoints mapping comes after Authentication and Authorization.
@@ -46,15 +44,7 @@ namespace WebFramework.Configuration
                     Predicate = _ => true,
                     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
                 });
-                app.UseEndpoints(endpoints =>
-                {
-                    endpoints.MapGrpcService<DiscountService>();
-                    endpoints.MapGet("/", async context =>
-                    {
-                        await context.Response.WriteAsync(
-                            "Communication with gRPC endpoints must be made through a gRPC client.");
-                    });
-                });
+               
                 return app;
             }
             catch (Exception ex)

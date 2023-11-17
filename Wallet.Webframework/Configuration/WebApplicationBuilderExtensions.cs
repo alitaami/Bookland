@@ -14,7 +14,6 @@ using Common.Utilities;
 using Microsoft.OpenApi.Models;
 using WebFramework.Configuration.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using Application;
 
 namespace WebFramework.Configuration
 {
@@ -274,10 +273,10 @@ namespace WebFramework.Configuration
         {
 
             // Register other application services.
-            builder.Services.AddApplicationServices();
+            //builder.Services.AddApplicationServices();
 
-            // Register Repository as transient.
-            builder.Services.AddTransient<IDiscountRepository, DiscountRepository>();
+            //// Register Repository as transient.
+            //builder.Services.AddTransient<IDiscountRepository, DiscountRepository>();
              
             // Configure IISServerOptions if needed.
             builder.Services.Configure<IISServerOptions>(options =>

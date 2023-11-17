@@ -1,6 +1,6 @@
-﻿using Discount.Common.Resources;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
+using Wallet.Common.Resources;
 
 public class PasswordQualityAttribute : ValidationAttribute
 {
