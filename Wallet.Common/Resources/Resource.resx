@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ActivateAccount" xml:space="preserve">
+    <value>جهت فعالسازی حساب کاربری خود رو لینک زیر کلیک کنید</value>
+  </data>
+  <data name="ActivateAccountSubject" xml:space="preserve">
+    <value>فعالسازی حساب کاربری</value>
+  </data>
+  <data name="AdExists" xml:space="preserve">
+    <value>آگهی ای با این نام موجود است</value>
+  </data>
+  <data name="AdveriseNotFound" xml:space="preserve">
+    <value>آگهی ای یافت نشد</value>
+  </data>
+  <data name="AdvertiseDayNotMatch" xml:space="preserve">
+    <value>برای بازدید از این ملک چنین روزی تعیین نشده است </value>
+  </data>
+  <data name="AgeError" xml:space="preserve">
+    <value>سن نباید کمتر از 18 باشد</value>
+  </data>
+  <data name="AlreadyExists" xml:space="preserve">
+    <value>تلفن همراه ،ایمیل و یا نام کاربری تکراریست!</value>
+  </data>
+  <data name="AlreadyExists2" xml:space="preserve">
+    <value>تلفن همراه ، نام کاربری ،ایمیل و یا کد املاک تکراریست!</value>
+  </data>
+  <data name="CacheKeyOfReceivers" xml:space="preserve">
+    <value>Receivers</value>
+  </data>
+  <data name="ConfirmVisit" xml:space="preserve">
+    <value>تایید درخواست بازدید از ملک</value>
+  </data>
+  <data name="CreateError" xml:space="preserve">
+    <value>مشکلی در ثبت به وجود آمده است!!</value>
+  </data>
+  <data name="DaysExists" xml:space="preserve">
+    <value>این روز برای آگهی شما ثبت شده است</value>
+  </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>مشکلی در حذف به وجود آمده است!!</value>
+  </data>
+  <data name="EmailRecordNull" xml:space="preserve">
+    <value>رکوردی برای نمایش وجود ندارد</value>
+  </data>
+  <data name="EmailsSent" xml:space="preserve">
+    <value>ایمیل های اطلاع رسانی ارسال شدند</value>
+  </data>
+  <data name="EmailSubject1" xml:space="preserve">
+    <value>درخواست بازدید شما از ملک آگهی شده</value>
+  </data>
+  <data name="EmailSubject1-1" xml:space="preserve">
+    <value>مورد تایید قرار گرفت</value>
+  </data>
+  <data name="EmailSubject2" xml:space="preserve">
+    <value>درخواست بازدید از ملک آگهی شده شما، توسط </value>
+  </data>
+  <data name="EmailSubject2-1" xml:space="preserve">
+    <value>برای شما ارسال شده است</value>
+  </data>
+  <data name="EnterParametersCorrectlyAndCompletely" xml:space="preserve">
+    <value>پارامترهای ارسالی را کامل و صحیح وارد کنید.</value>
+  </data>
+  <data name="EstateInfo" xml:space="preserve">
+    <value>اطلاعات املاک نمیتواند خالی باشد</value>
+  </data>
+  <data name="ExpiredDate" xml:space="preserve">
+    <value>مدت زمان در نظر گرفته شده منقضی شده است</value>
+  </data>
+  <data name="ForgotPassword1" xml:space="preserve">
+    <value>جهت بازیابی رمزعبور کد ذیل را در فیلد مربوطه وارد کنید.دقت شود که این کد تا 5 دقیقه معتبر است</value>
+  </data>
+  <data name="GeneralErrorTryAgain" xml:space="preserve">
+    <value>لطفا مجددا تلاش کنید</value>
+  </data>
+  <data name="ImageRequired" xml:space="preserve">
+    <value>عکس وارد شود</value>
+  </data>
+  <data name="InvalidOperationException" xml:space="preserve">
+    <value>The response has already started, the http status code middleware will not be executed.</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>حساب کاربری شما فعال شده است</value>
+  </data>
+  <data name="IsExists" xml:space="preserve">
+    <value>تکراری میباشد</value>
+  </data>
+  <data name="MapingError" xml:space="preserve">
+    <value>ارور در Mapping رخ داده است</value>
+  </data>
+  <data name="NewsReceiverError" xml:space="preserve">
+    <value>پرسنلی برای ارسال ایمیل وجود ندارد</value>
+  </data>
+  <data name="NotFound" xml:space="preserve">
+    <value>یافت نشد</value>
+  </data>
+  <data name="NullField" xml:space="preserve">
+    <value>فیلد مربوطه نباید خالی باشد</value>
+  </data>
+  <data name="PasswordDoesntMatch" xml:space="preserve">
+    <value>رمز عبور قبلی نادرست است</value>
+  </data>
+  <data name="PasswordMin" xml:space="preserve">
+    <value>رمز عبور نباید کمتر از 8 حرف باشد</value>
+  </data>
+  <data name="PasswordQuality" xml:space="preserve">
+    <value>رمزعبور باید شامل اعداد ، حروف کوچک و بزرگ و حروف خاص باشد</value>
+  </data>
+  <data name="PasswordUnique" xml:space="preserve">
+    <value>رمزعبور باید شامل حروف خاص باشد</value>
+  </data>
+  <data name="RecoveryPassword" xml:space="preserve">
+    <value>بازیابی رمز عبور</value>
+  </data>
+  <data name="RequestExists" xml:space="preserve">
+    <value>شما قبلا درخواستی برای بازدید از این ملک ارسال کرده اید</value>
+  </data>
+  <data name="RequestVisit" xml:space="preserve">
+    <value>درخواست بازدید از ملک</value>
+  </data>
+  <data name="RoleDoesNotMatchUser" xml:space="preserve">
+    <value>چنین دسترسی ای برای شما تعریف نشده است</value>
+  </data>
+  <data name="RoleExist" xml:space="preserve">
+    <value>نقش وارد شده تکراری میباشد</value>
+  </data>
+  <data name="RoleNotFound" xml:space="preserve">
+    <value>نقشی یافت نشد</value>
+  </data>
+  <data name="SecurityTokenExpiredException" xml:space="preserve">
+    <value>توکن امنیتی منقضی شده است</value>
+  </data>
+  <data name="SqlForeignKeyException" xml:space="preserve">
+    <value>به دلیل نقض محدودیت کلید خارجی امکان درج یا آپدیت وجود ندارد</value>
+  </data>
+  <data name="SqlUpdateException" xml:space="preserve">
+    <value>به دلیل نقض یونیک بودن بعضی از فیلدها امکان اضافه شدن و یا اپدیت وجود ندارد</value>
+  </data>
+  <data name="UnauthorizedAccessException" xml:space="preserve">
+    <value>دسترسی به این بخش بدون احراز هویت امکان پذیر نیست</value>
+  </data>
+  <data name="UpdateError" xml:space="preserve">
+    <value>مشکلی در بروزرسانی به وجود آمده است!!</value>
+  </data>
+  <data name="UserIsNotActive" xml:space="preserve">
+    <value>حساب کاربری شما فعال نیست</value>
+  </data>
+  <data name="UserRequestError" xml:space="preserve">
+    <value>ایجاد کننده آگهی نمیتواند برای آگهی خود درخواست بازدید بفرستد</value>
+  </data>
+  <data name="UserRoleExist" xml:space="preserve">
+    <value>این نقش قبلا به این کاربر نسبت داده شده است</value>
+  </data>
+  <data name="WrongAdvertise" xml:space="preserve">
+    <value>چنین آگهی ای برای این شخص تعریف نشده است</value>
+  </data>
+  <data name="WrongDaySelected" xml:space="preserve">
+    <value>روز های هفته باید شامل شنبه تا جمعه باشند</value>
+  </data>
+</root>
