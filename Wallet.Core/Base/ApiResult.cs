@@ -8,18 +8,18 @@ namespace Entities.Base
     {
         public ApiResult(HttpStatusCode httpStatusCode, ErrorCodeEnum errorCode, string? errorMessage, IEnumerable<FieldErrorItem>? errors)
         {
-            HttpStatusCode = (int)httpStatusCode;
-            ErrorCode = errorCode;
-            ErrorMessage = errorMessage;
+            Http_Status_Code = (int)httpStatusCode;
+            Error_Code = errorCode;
+            Error_Message = errorMessage;
             Errors = errors;
         }
 
-        public int HttpStatusCode { get; }
+        public int Http_Status_Code { get; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public ErrorCodeEnum ErrorCode { get; }
+        public ErrorCodeEnum Error_Code { get; }
 
-        public string? ErrorMessage { get; }
+        public string? Error_Message { get; }
 
         public IEnumerable<FieldErrorItem>? Errors { get; }
     }
@@ -47,9 +47,9 @@ namespace Entities.Base
         RoleNotFound = 18,
         UserIsNotActive = 19,
         DuplicateKey = 20,
-        DatabaseWriteError =21,
-        DatabaseConnectionError =22,
-        NullField =23
+        DatabaseWriteError = 21,
+        DatabaseConnectionError = 22,
+        NullField = 23
     }
 
     public class FieldErrorItem

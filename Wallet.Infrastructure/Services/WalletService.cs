@@ -44,7 +44,7 @@ namespace Wallet.Infrastructure.Services
             {
                 _logger.LogError(ex, null, null);
 
-                return InternalServerError(ErrorCodeEnum.InternalError, Resource.GeneralErrorTryAgain, null);
+                return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
             }
         }
     }
