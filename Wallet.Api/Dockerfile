@@ -31,8 +31,7 @@ RUN dotnet publish "Wallet.Api.csproj" -c Release -o /app/publish /p:UseAppHost=
 # Stage 3: Final image
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS final
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 5000
 
 # Copy the published artifacts from the 'publish' stage
 COPY --from=publish /app/publish .
