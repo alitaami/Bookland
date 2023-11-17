@@ -6,6 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>a291fd24-99cc-4ff3-92e9-0e602e4c4613</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>bin\Debug\MyApi.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,10 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Wallet.Webframework\Wallet.Webframework.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

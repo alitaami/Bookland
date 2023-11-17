@@ -45,7 +45,7 @@ public class ServiceBase<Tclass>
             return Ok();
         }
 
-        return new ServiceResult(data, new ApiResult(HttpStatusCode.OK, ErrorCodeEnum.None, null, null));
+        return new ServiceResult(data, new ApiResult( HttpStatusCode.OK, ErrorCodeEnum.None, null, null));
     }
 
     protected virtual ServiceResult Ok()
@@ -85,24 +85,14 @@ public class ServiceBase<Tclass>
         {
             return new ServiceResult(
                 null,
-                new ApiResult(
-                    HttpStatusCode.BadRequest,
-                    ErrorCodeEnum.DuplicateKey,
-                    "Duplicate entry detected.",
-                    null
-                )
+                new ApiResult(HttpStatusCode.BadRequest, ErrorCodeEnum.DuplicateKey, "Duplicate entry detected.", null)
             );
         }
         else
         {
             return new ServiceResult(
                 null,
-                new ApiResult(
-                    HttpStatusCode.InternalServerError,
-                    ErrorCodeEnum.DatabaseWriteError,
-                    "An error occurred while writing to the database.",
-                    null
-                )
+                new ApiResult(HttpStatusCode.InternalServerError, ErrorCodeEnum.DatabaseWriteError, "An error occurred while writing to the database.", null)
             );
         }
     }

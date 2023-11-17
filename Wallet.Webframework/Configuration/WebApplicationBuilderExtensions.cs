@@ -14,6 +14,9 @@ using Common.Utilities;
 using Microsoft.OpenApi.Models;
 using WebFramework.Configuration.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using Wallet.Core.Interfaces;
+using Wallet.Infrastructure.Services;
+using Application;
 
 namespace WebFramework.Configuration
 {
@@ -83,7 +86,7 @@ namespace WebFramework.Configuration
         private static void AddHealthChecks(WebApplicationBuilder builder)
         {
             builder.Services.AddHealthChecks()
-                .AddNpgSql(builder.Configuration["DatabaseSettings:ConnectionString"], name: "PostgreSQL Health Check");
+                .AddNpgSql(builder.Configuration["ConnectionStrings:BookLandDB"], name: "PostgreSQL Health Check");
         }
 
         private static void AddSwagger(WebApplicationBuilder builder)
@@ -272,12 +275,14 @@ namespace WebFramework.Configuration
         private static void AddAppServices(WebApplicationBuilder builder)
         {
 
+            builder.Services.AddTransient<ApplicationDbContext>();
+           
             // Register other application services.
-            //builder.Services.AddApplicationServices();
+            builder.Services.AddApplicationServices();
+            
+            // Register Repository as transient.
+            builder.Services.AddTransient<IWalletService, WalletService>();
 
-            //// Register Repository as transient.
-            //builder.Services.AddTransient<IDiscountRepository, DiscountRepository>();
-             
             // Configure IISServerOptions if needed.
             builder.Services.Configure<IISServerOptions>(options =>
             {

@@ -133,6 +133,15 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to عدد وارد شده نمیتواند صفر باشد.
+        /// </summary>
+        public static string AmountError {
+            get {
+                return ResourceManager.GetString("AmountError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Receivers.
         /// </summary>
         public static string CacheKeyOfReceivers {

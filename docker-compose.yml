@@ -8,6 +8,8 @@ services:
       dockerfile: Wallet.Api\Dockerfile
     ports:
       - "5000:5000"
+    networks:
+      - db_network
     depends_on:
       - postgres-db
     restart: on-failure
@@ -28,3 +30,4 @@ services:
 
 networks:
   db_network:
+  

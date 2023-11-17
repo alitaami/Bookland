@@ -1,7 +1,16 @@
-# Stage 1: Build and restore
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR /src
+# Use the official SDK image as a parent image
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS base
 
+# Define build arguments and environment variables
+ARG BUILD_CONFIGURATION=Release
+ENV ASPNETCORE_ENVIRONMENT=Production
+ENV ASPNETCORE_URLS=http://+:5000
+
+# Expose port 80 for the application to listen on
+EXPOSE 80
+
+# Set the working directory to /src
+WORKDIR /src
 # Copy the project files
 COPY ["Wallet.Api/Wallet.Api.csproj", "Wallet.Api/"]
 COPY ["Wallet.Webframework/Wallet.Webframework.csproj", "Wallet.Webframework/"]
@@ -18,23 +27,17 @@ RUN dotnet restore "Wallet.Application/Wallet.Application.csproj"
 RUN dotnet restore "Wallet.Core/Wallet.Core.csproj"
 RUN dotnet restore "Wallet.Common/Wallet.Common.csproj"
 
-# Copy the entire project files
+# Copy the rest of the application source code
 COPY . .
 
+# Set the working directory to the Wallet.Api project
 WORKDIR "/src/Wallet.Api"
-RUN dotnet build "Wallet.Api.csproj" -c Release -o /app/build
 
-# Stage 2: Publish
-FROM build AS publish
-RUN dotnet publish "Wallet.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
+# Build the application in Release mode and output to /app/build
+RUN dotnet build "Wallet.Api.csproj" -c ${BUILD_CONFIGURATION} -o /app/build
 
-# Stage 3: Final image
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS final
-WORKDIR /app
-EXPOSE 5000
+# Specify the entry point and command to run the application
+ENTRYPOINT ["dotnet", "/app/build/Wallet.Api.dll"]
+CMD ["--server.urls", "http://0.0.0.0:5000"]
+ 
 
-# Copy the published artifacts from the 'publish' stage
-COPY --from=publish /app/publish .
-
-# Specify the exact command to run your application
-ENTRYPOINT ["dotnet", "Wallet.Api.dll"]

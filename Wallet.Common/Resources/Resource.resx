@@ -141,6 +141,9 @@
   <data name="AlreadyExists2" xml:space="preserve">
     <value>تلفن همراه ، نام کاربری ،ایمیل و یا کد املاک تکراریست!</value>
   </data>
+  <data name="AmountError" xml:space="preserve">
+    <value>عدد وارد شده نمیتواند صفر باشد</value>
+  </data>
   <data name="CacheKeyOfReceivers" xml:space="preserve">
     <value>Receivers</value>
   </data>

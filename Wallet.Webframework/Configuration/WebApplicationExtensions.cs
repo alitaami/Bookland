@@ -30,11 +30,6 @@ namespace WebFramework.Configuration
                 //app.UseAuthentication();
                 app.UseStaticFiles();
                 //app.UseAuthorization();
-
-                app.Services.GetRequiredService<IHostApplicationLifetime>().ApplicationStarted.Register(() =>
-                {
-                    //app.MigrateDatabase<DiscountService>(); // Use a service related to your database context.
-                });
                  
                 // Endpoints mapping comes after Authentication and Authorization.
                 app.MapControllers();
