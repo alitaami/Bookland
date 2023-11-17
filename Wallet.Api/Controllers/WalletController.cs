@@ -8,6 +8,7 @@ using System.Reflection;
 using Wallet.Application.Features.Commands;
 using Wallet.Core.ViewModels;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Wallet.Api.Controllers
 {
@@ -29,7 +30,7 @@ namespace Wallet.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Ok), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> ChargeWallet([FromQuery] int amount)

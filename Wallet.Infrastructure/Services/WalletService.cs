@@ -2,6 +2,8 @@
 using Entities.Base;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Npgsql;
+using NpgsqlTypes;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -30,8 +32,9 @@ namespace Wallet.Infrastructure.Services
                  IEnumerable<dynamic> data = Enumerable.Empty<dynamic>();
 
                 using (IDbConnection dbConnection = _Context.Connection)
-                {
+                { 
                     dbConnection.Open();
+                    // TODO: Charging Logic 
                     data = await dbConnection.QueryAsync("SELECT * FROM walletactions");
                 }
 
@@ -40,12 +43,14 @@ namespace Wallet.Infrastructure.Services
 
                 return Ok(data);
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, null, null);
-
-                return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
-            }
+           catch (NpgsqlException sqlEx)
+        {
+            return HandleNpgsqlException(sqlEx);
+        }
+        catch (Exception ex)
+        {
+            return HandleException(ex);
+        }
         }
     }
 }

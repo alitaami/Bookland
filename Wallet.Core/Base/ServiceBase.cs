@@ -3,24 +3,25 @@ using Microsoft.Extensions.Logging;
 using Npgsql; // Add this for PostgreSQL support
 using System.ComponentModel.DataAnnotations;
 using System.Net;
+using System.Net.Sockets;
 using Wallet.Common.Resources;
 
 public class ServiceBase<Tclass>
 {
     protected readonly ILogger<Tclass> _logger;
-
-    public ServiceBase(ILogger<Tclass> logger)
+    public ServiceBase(
+       ILogger<Tclass> logger)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
-
     protected virtual ServiceResult HandleException(Exception ex)
     {
         try
         {
+
             if (ex is PostgresException pgEx) // Handle PostgreSQL-specific exceptions
             {
-                return HandlePostgresException(pgEx);
+                return HandleNpgsqlException(pgEx);
             }
             else if (ex is APIException napEx)
             {
@@ -34,7 +35,8 @@ public class ServiceBase<Tclass>
         catch (Exception generalEx)
         {
             _logger.LogError(generalEx, null);
-            throw;
+
+            throw; //Todo : درسته ایا یا باید همینجا هندل بشه
         }
     }
 
@@ -45,7 +47,7 @@ public class ServiceBase<Tclass>
             return Ok();
         }
 
-        return new ServiceResult(data, new ApiResult( HttpStatusCode.OK, ErrorCodeEnum.None, null, null));
+        return new ServiceResult(data, new ApiResult(HttpStatusCode.OK, ErrorCodeEnum.None, null, null));
     }
 
     protected virtual ServiceResult Ok()
@@ -67,7 +69,6 @@ public class ServiceBase<Tclass>
     {
         return new ServiceResult(null, new ApiResult(HttpStatusCode.InternalServerError, errorCode, errorMessage, errors));
     }
-
     protected virtual void ValidateModel(object model)
     {
         if (model is null)
@@ -78,22 +79,21 @@ public class ServiceBase<Tclass>
             throw new APIException(HttpStatusCode.BadRequest, Resource.EnterParametersCorrectlyAndCompletely, validationResults.AsReadOnly());
     }
 
-    protected virtual ServiceResult HandlePostgresException(PostgresException pgEx)
+    protected ServiceResult HandleNpgsqlException(NpgsqlException pgEx)
     {
-        // Handle specific PostgreSQL errors. For example, unique constraint violations.
-        if (pgEx.SqlState == "23505") // Unique constraint violation
+        if (pgEx.InnerException is SocketException)
         {
-            return new ServiceResult(
-                null,
-                new ApiResult(HttpStatusCode.BadRequest, ErrorCodeEnum.DuplicateKey, "Duplicate entry detected.", null)
-            );
+            // SocketException indicates a network-related error (e.g., database server not reachable)
+            return InternalServerError(ErrorCodeEnum.DatabaseConnectionError, "Error connecting to the database", null);
+        }
+        else if (pgEx.SqlState == "23505")
+        {
+            // Unique constraint violation
+            return BadRequest(ErrorCodeEnum.DuplicateKey, "Duplicate entry detected.", null);
         }
         else
         {
-            return new ServiceResult(
-                null,
-                new ApiResult(HttpStatusCode.InternalServerError, ErrorCodeEnum.DatabaseWriteError, "An error occurred while writing to the database.", null)
-            );
+            return InternalServerError(ErrorCodeEnum.DatabaseWriteError, "An error occurred while writing to the database.", null);
         }
     }
 

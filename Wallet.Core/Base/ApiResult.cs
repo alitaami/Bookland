@@ -76,4 +76,5 @@ namespace Entities.Base
         public ApiResult Result { get; }
         public object? Data { get; set; }
     }
+
 }

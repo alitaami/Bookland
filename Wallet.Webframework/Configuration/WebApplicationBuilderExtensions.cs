@@ -50,7 +50,7 @@ namespace WebFramework.Configuration
 
                 AddCustomApiVersioning(builder);
 
-                AddSwagger(builder);
+                //AddSwagger(builder);
 
                 AddCors(builder);
 
@@ -277,6 +277,11 @@ namespace WebFramework.Configuration
 
             builder.Services.AddTransient<ApplicationDbContext>();
            
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
+            });
+
             // Register other application services.
             builder.Services.AddApplicationServices();
             
