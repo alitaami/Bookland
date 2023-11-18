@@ -37,7 +37,7 @@ namespace Wallet.Infrastructure.Services
                 INSERT INTO WalletActions (ActionTypeId, UserId, Amount, IsSuccessful, Description, CreatedDate)
                 VALUES (@ActionTypeId, @UserId, @Amount, @IsSuccessful, @Description, @CreatedDate);
                 ";
-              
+
                 var parameters = new
                 {
                     ActionTypeId = 1,
@@ -52,10 +52,40 @@ namespace Wallet.Infrastructure.Services
                 {
                     dbConnection.Open();
                     // TODO: Charging Logic 
-                    walletActionId =  await dbConnection.ExecuteScalarAsync<int>(insertQuery,parameters);
+                    walletActionId = await dbConnection.ExecuteScalarAsync<int>(insertQuery, parameters);
                 }
-                 
+
                 return Ok(walletActionId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, null, null);
+
+                return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
+            }
+        }
+
+        public async Task<ServiceResult> UpdateWallet(int walletActionId)
+        {
+            try
+            {
+                string updateQuery = @"
+                UPDATE WalletActions
+                SET IsSuccessful = true
+                WHERE Id = @WalletActionId;";
+
+                var parameters = new
+                {
+                    WalletActionId = walletActionId
+                };
+
+                using (IDbConnection dbConnection = _Context.Connection)
+                {
+                    dbConnection.Open();
+                    await dbConnection.ExecuteAsync(updateQuery, parameters);
+                }
+
+                return Ok();
             }
             catch (Exception ex)
             {

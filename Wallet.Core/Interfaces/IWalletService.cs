@@ -10,5 +10,7 @@ namespace Wallet.Core.Interfaces
     public interface IWalletService
     {
         public Task<ServiceResult> ChargeWallet(int id,int amount);
+        public Task<ServiceResult> UpdateWallet(int walletActionId);
+
     }
 }
