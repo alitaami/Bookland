@@ -19,9 +19,9 @@ namespace Wallet.Infrastructure.Services
     {
         private readonly IConfiguration _configuration;
         private readonly ApplicationDbContext _Context;
-        
+
         public WalletService(IConfiguration configuration, ApplicationDbContext dbContext, ILogger<WalletService> logger) : base(logger)
-        { 
+        {
             _configuration = configuration;
             _Context = dbContext;
         }
@@ -29,19 +29,33 @@ namespace Wallet.Infrastructure.Services
         {
             try
             {
+                int walletActionId = 0;
+
                 IEnumerable<dynamic> data = Enumerable.Empty<dynamic>();
+
+                string insertQuery = @"
+                INSERT INTO WalletActions (ActionTypeId, UserId, Amount, IsSuccessful, Description, CreatedDate)
+                VALUES (@ActionTypeId, @UserId, @Amount, @IsSuccessful, @Description, @CreatedDate);
+                ";
+              
+                var parameters = new
+                {
+                    ActionTypeId = 1,
+                    UserId = id,
+                    Amount = amount,
+                    IsSuccessful = false, // You may need to determine the success based on your logic
+                    Description = $" {amount} تومان  واریز به حساب", // You may want to adjust the description
+                    CreatedDate = DateTime.Now // You may want to adjust the creation date
+                };
 
                 using (IDbConnection dbConnection = _Context.Connection)
                 {
                     dbConnection.Open();
                     // TODO: Charging Logic 
-                    data = await dbConnection.QueryAsync("SELECT * FROM walletactions");
+                    walletActionId =  await dbConnection.ExecuteScalarAsync<int>(insertQuery,parameters);
                 }
-
-                ////if (res.IsFaulted)
-                //return BadRequest(ErrorCodeEnum.BadRequest, Resource.CreateError, null);///
-
-                return Ok(data);
+                 
+                return Ok(walletActionId);
             }
             catch (Exception ex)
             {

@@ -68,6 +68,8 @@ namespace Wallet.Api.Controllers
 
                 var res = await _sender.Send(new ChargeWalletCommand(model));
 
+                // TODO : Zarinpal logic and update IsSuccessful = true 
+                
                 return APIResponse(res);
             }
             catch (Exception ex)
