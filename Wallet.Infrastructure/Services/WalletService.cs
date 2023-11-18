@@ -35,7 +35,8 @@ namespace Wallet.Infrastructure.Services
 
                 string insertQuery = @"
                 INSERT INTO WalletActions (ActionTypeId, UserId, Amount, IsSuccessful, Description, CreatedDate)
-                VALUES (@ActionTypeId, @UserId, @Amount, @IsSuccessful, @Description, @CreatedDate);
+                VALUES (@ActionTypeId, @UserId, @Amount, @IsSuccessful, @Description, @CreatedDate)
+                RETURNING Id;
                 ";
 
                 var parameters = new

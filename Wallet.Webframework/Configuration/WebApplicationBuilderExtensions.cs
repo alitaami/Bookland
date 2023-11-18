@@ -298,7 +298,6 @@ namespace WebFramework.Configuration
 
         private static void AddAppServices(WebApplicationBuilder builder)
         {
-
             builder.Services.AddTransient<ApplicationDbContext>();
 
             builder.Services.AddSwaggerGen(c =>

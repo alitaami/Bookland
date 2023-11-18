@@ -12,16 +12,22 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using System.IdentityModel.Tokens.Jwt;
 using Wallet.Common.Utilities;
 using Wallet.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
+using Microsoft.Graph.Models;
 
 namespace Wallet.Api.Controllers
 {
+   
     public class WalletController : APIControllerBase
     {
         private readonly ILogger<WalletController> _logger;
         private readonly ISender _sender;
         private readonly IWalletService _service;
-        public WalletController(IWalletService service, ILogger<WalletController> logger, ISender sender)
+        private readonly IMapper _mapper;
+        public WalletController(IMapper mapper,IWalletService service, ILogger<WalletController> logger, ISender sender)
         {
+            _mapper = mapper;
             _logger = logger;
             _service = service;
             _sender = sender;
@@ -49,7 +55,7 @@ namespace Wallet.Api.Controllers
                 // Extract the token portion
                 var jwtToken = authorizationHeader?.Split(" ").LastOrDefault();
 
-                if(jwtToken is null)
+                if (jwtToken is null)
                     return BadRequest(Resource.UserIdClaimMissing);
 
                 var userId = JwtTokenHelper.GetUserIdByClaim(jwtToken);
@@ -66,11 +72,23 @@ namespace Wallet.Api.Controllers
                     userId = int.Parse(userId)
                 };
 
-                var res = await _sender.Send(new ChargeWalletCommand(model));
+                var walletAction_Id = await _sender.Send(new ChargeWalletCommand(model));
 
-                // TODO : Zarinpal logic and update IsSuccessful = true 
-                
-                return APIResponse(res);
+                int walletActionId = _mapper.Map<int>(walletAction_Id);
+
+                // TODO : fic Zarinpal callback url 
+                var payment = new ZarinpalSandbox.Payment(amount);
+                var res = payment.PaymentRequest("شارژ کیف پول", "Todo" + walletActionId);
+
+                if (res.Result.Status == 100)
+                {
+                    await _sender.Send(new UpdateWalletCommand(walletActionId));
+                    return Ok("https://sandbox.zarinpal.com/pg/StartPay/" + res.Result.Authority);
+                }
+                else
+                {
+                    return InternalServerError(ErrorCodeEnum.BadRequest, Resource.DepositFail);
+                }
             }
             catch (Exception ex)
             {

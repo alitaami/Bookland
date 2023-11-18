@@ -196,6 +196,15 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to شارژ کیف پول انجام نگرفت.
+        /// </summary>
+        public static string DepositFail {
+            get {
+                return ResourceManager.GetString("DepositFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to رکوردی برای نمایش وجود ندارد.
         /// </summary>
         public static string EmailRecordNull {

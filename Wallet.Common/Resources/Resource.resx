@@ -162,6 +162,9 @@
   <data name="DeleteError" xml:space="preserve">
     <value>مشکلی در حذف به وجود آمده است!!</value>
   </data>
+  <data name="DepositFail" xml:space="preserve">
+    <value>شارژ کیف پول انجام نگرفت</value>
+  </data>
   <data name="EmailRecordNull" xml:space="preserve">
     <value>رکوردی برای نمایش وجود ندارد</value>
   </data>
