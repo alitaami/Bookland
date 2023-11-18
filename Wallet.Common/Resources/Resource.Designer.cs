@@ -142,6 +142,15 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to برای دسترسی به این بخش باید لاگین شده باشید.
+        /// </summary>
+        public static string AuthorizationHeaderMissing {
+            get {
+                return ResourceManager.GetString("AuthorizationHeaderMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Receivers.
         /// </summary>
         public static string CacheKeyOfReceivers {
@@ -489,6 +498,15 @@ namespace Wallet.Common.Resources {
         public static string UpdateError {
             get {
                 return ResourceManager.GetString("UpdateError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شناسه کاربری در توکن ارسالی یافت نشد.
+        /// </summary>
+        public static string UserIdClaimMissing {
+            get {
+                return ResourceManager.GetString("UserIdClaimMissing", resourceCulture);
             }
         }
         

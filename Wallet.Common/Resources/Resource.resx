@@ -144,6 +144,9 @@
   <data name="AmountError" xml:space="preserve">
     <value>عدد وارد شده نمیتواند صفر باشد</value>
   </data>
+  <data name="AuthorizationHeaderMissing" xml:space="preserve">
+    <value>برای دسترسی به این بخش باید لاگین شده باشید</value>
+  </data>
   <data name="CacheKeyOfReceivers" xml:space="preserve">
     <value>Receivers</value>
   </data>
@@ -260,6 +263,9 @@
   </data>
   <data name="UpdateError" xml:space="preserve">
     <value>مشکلی در بروزرسانی به وجود آمده است!!</value>
+  </data>
+  <data name="UserIdClaimMissing" xml:space="preserve">
+    <value>شناسه کاربری در توکن ارسالی یافت نشد</value>
   </data>
   <data name="UserIsNotActive" xml:space="preserve">
     <value>حساب کاربری شما فعال نیست</value>

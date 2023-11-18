@@ -19,9 +19,9 @@ namespace Wallet.Infrastructure.Services
     {
         private readonly IConfiguration _configuration;
         private readonly ApplicationDbContext _Context;
-
+        
         public WalletService(IConfiguration configuration, ApplicationDbContext dbContext, ILogger<WalletService> logger) : base(logger)
-        {
+        { 
             _configuration = configuration;
             _Context = dbContext;
         }
@@ -29,28 +29,26 @@ namespace Wallet.Infrastructure.Services
         {
             try
             {
-                 IEnumerable<dynamic> data = Enumerable.Empty<dynamic>();
+                IEnumerable<dynamic> data = Enumerable.Empty<dynamic>();
 
                 using (IDbConnection dbConnection = _Context.Connection)
-                { 
+                {
                     dbConnection.Open();
                     // TODO: Charging Logic 
                     data = await dbConnection.QueryAsync("SELECT * FROM walletactions");
                 }
 
-                //if (res.IsFaulted)
-                //    return BadRequest(ErrorCodeEnum.BadRequest, Resource.CreateError, null);///
+                ////if (res.IsFaulted)
+                //return BadRequest(ErrorCodeEnum.BadRequest, Resource.CreateError, null);///
 
                 return Ok(data);
             }
-           catch (NpgsqlException sqlEx)
-        {
-            return HandleNpgsqlException(sqlEx);
-        }
-        catch (Exception ex)
-        {
-            return HandleException(ex);
-        }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, null, null);
+
+                return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
+            }
         }
     }
 }

@@ -10,24 +10,18 @@ public class APIControllerBase : ControllerBase
 {
     protected IActionResult APIResponse(ServiceResult serviceResult)
     {
+      
         if (serviceResult.Result.Http_Status_Code == (int)HttpStatusCode.OK)
         {
-            if (serviceResult.Data == null)
-            {
-                return Ok();
-            }
-            else
-            {
-                return Ok(serviceResult.Data);
-            }
+             return Ok(serviceResult.Data);
         }
         else if (serviceResult.Result.Http_Status_Code == (int)HttpStatusCode.BadRequest)
         {
-            return BadRequest(serviceResult.Result);
+            return BadRequest(serviceResult.Data);
         }
         else if (serviceResult.Result.Http_Status_Code == (int)HttpStatusCode.NotFound)
         {
-            return NotFound(serviceResult.Result);
+            return NotFound(serviceResult.Data);
         }
         else if (serviceResult.Result.Http_Status_Code == (int)HttpStatusCode.InternalServerError)
         {
@@ -40,7 +34,6 @@ public class APIControllerBase : ControllerBase
             return StatusCode((int)HttpStatusCode.InternalServerError);
         }
     }
-
 
     protected IActionResult InternalServerError()
     {

@@ -17,6 +17,10 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using Wallet.Core.Interfaces;
 using Wallet.Infrastructure.Services;
 using Application;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
 
 namespace WebFramework.Configuration
 {
@@ -54,7 +58,7 @@ namespace WebFramework.Configuration
 
                 AddCors(builder);
 
-                //AddAuthentication(builder);
+                AddAuthentication(builder);
 
                 AddAppHsts(builder);
 
@@ -83,6 +87,26 @@ namespace WebFramework.Configuration
                 });
             });
         }
+        private static void AddAuthentication(WebApplicationBuilder builder)
+        {
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false, // Set to true if you want to validate the issuer
+                    ValidateAudience = false, // Set to true if you want to validate the audience
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("g0NTnMYpskKBSufh5HBpD_Dpdx6r5cCz7zC6L_YhBvw=")),
+                    ClockSkew = TimeSpan.Zero // Adjust as needed
+                };
+            });
+            }
         private static void AddHealthChecks(WebApplicationBuilder builder)
         {
             builder.Services.AddHealthChecks()
@@ -276,7 +300,7 @@ namespace WebFramework.Configuration
         {
 
             builder.Services.AddTransient<ApplicationDbContext>();
-           
+
             builder.Services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
@@ -284,7 +308,7 @@ namespace WebFramework.Configuration
 
             // Register other application services.
             builder.Services.AddApplicationServices();
-            
+
             // Register Repository as transient.
             builder.Services.AddTransient<IWalletService, WalletService>();
 

@@ -36,7 +36,7 @@ public class ServiceBase<Tclass>
         {
             _logger.LogError(generalEx, null);
 
-            throw; //Todo : درسته ایا یا باید همینجا هندل بشه
+            throw ex; //Todo : درسته ایا یا باید همینجا هندل بشه
         }
     }
 

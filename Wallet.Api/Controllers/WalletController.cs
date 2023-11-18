@@ -9,48 +9,61 @@ using Wallet.Application.Features.Commands;
 using Wallet.Core.ViewModels;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http.HttpResults;
+using System.IdentityModel.Tokens.Jwt;
+using Wallet.Common.Utilities;
+using Wallet.Core.Interfaces;
 
 namespace Wallet.Api.Controllers
 {
     public class WalletController : APIControllerBase
     {
         private readonly ILogger<WalletController> _logger;
-        private ISender _sender;
-
-        public WalletController(ILogger<WalletController> logger, ISender sender)
+        private readonly ISender _sender;
+        private readonly IWalletService _service;
+        public WalletController(IWalletService service, ILogger<WalletController> logger, ISender sender)
         {
             _logger = logger;
+            _service = service;
             _sender = sender;
         }
 
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="authorizationHeader"></param>
         /// <param name="amount"></param>
         /// <returns></returns>
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(Ok), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> ChargeWallet([FromQuery] int amount)
+        public async Task<IActionResult> ChargeWallet([FromHeader(Name = "Bearer")] string authorizationHeader, [FromQuery] int amount)
         {
             try
             {
-                if (amount.Equals(0))
-                    return InternalServerError(Resource.AmountError);
+                if (string.IsNullOrEmpty(authorizationHeader))
+                    return BadRequest(Resource.AuthorizationHeaderMissing);
 
-                //var userId = User.FindFirstValue("user-id");
+                // Authorization header typically has the format "Bearer {token}"
+                // Extract the token portion
+                var jwtToken = authorizationHeader?.Split(" ").LastOrDefault();
 
-                //if (string.IsNullOrEmpty(userId))
-                //    return InternalServerError(Resource.GeneralErrorTryAgain);
+                if(jwtToken is null)
+                    return BadRequest(Resource.UserIdClaimMissing);
+
+                var userId = JwtTokenHelper.GetUserIdByClaim(jwtToken);
+
+                if (userId is null)
+                    return BadRequest(Resource.UserIdClaimMissing);
+
+                if (amount <= 0)
+                    return BadRequest(Resource.AmountError);
 
                 var model = new ChargeWalletViewModel
                 {
-
                     amount = amount,
-                    //TODO : user-id is string we should cast that
-                    userId = 1
+                    userId = int.Parse(userId)
                 };
 
                 var res = await _sender.Send(new ChargeWalletCommand(model));

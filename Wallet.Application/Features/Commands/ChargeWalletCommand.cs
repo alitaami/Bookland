@@ -15,7 +15,6 @@ namespace Wallet.Application.Features.Commands
     public class ChargeWalletCommand : IRequest<ServiceResult>
     {
         public ChargeWalletViewModel model { get; set; }
-
         public ChargeWalletCommand(ChargeWalletViewModel walletViewModel)
         {
             model = walletViewModel;
@@ -32,7 +31,7 @@ namespace Wallet.Application.Features.Commands
         {
             try
             {
-                var res = _service.ChargeWallet(request.model.userId, request.model.amount);
+                var res = await _service.ChargeWallet(request.model.userId, request.model.amount);
 
                 return Ok(res);
             }
