@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Entities.Base;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Npgsql;
@@ -8,8 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Wallet.Application.Features.Commands;
 using Wallet.Common.Resources;
 using Wallet.Core.Interfaces;
 
@@ -30,7 +33,7 @@ namespace Wallet.Infrastructure.Services
             try
             {
                 int walletActionId = 0;
-
+                 
                 IEnumerable<dynamic> data = Enumerable.Empty<dynamic>();
 
                 string insertQuery = @"
@@ -64,8 +67,7 @@ namespace Wallet.Infrastructure.Services
 
                 return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
             }
-        }
-
+        } 
         public async Task<ServiceResult> UpdateWallet(int walletActionId)
         {
             try
@@ -95,5 +97,6 @@ namespace Wallet.Infrastructure.Services
                 return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
             }
         }
+        
     }
 }

@@ -17,28 +17,30 @@ namespace Wallet.Application.Features.Commands
         public UpdateWalletCommand(int walletActionId)
         {
             WalletActionId = walletActionId;
-        }
-    }
-    public class UpdateWalletCommandHandler : ServiceBase<UpdateWalletCommandHandler>, IRequestHandler<UpdateWalletCommand, ServiceResult>
-    {
-        private readonly IWalletService _service;
-        public UpdateWalletCommandHandler(IWalletService service, ILogger<UpdateWalletCommandHandler> logger) : base(logger)
+        } 
+        public class UpdateWalletCommandHandler : ServiceBase<UpdateWalletCommandHandler>, IRequestHandler<UpdateWalletCommand, ServiceResult>
         {
-            _service = service;
-        }
-        public async Task<ServiceResult> Handle(UpdateWalletCommand request, CancellationToken cancellationToken)
-        {
-            try
-            {
-                var res = await _service.UpdateWallet(request.WalletActionId);
+            private readonly IWalletService _service;
 
-                return Ok(res);
-            }
-            catch (Exception ex)
+            public UpdateWalletCommandHandler(IWalletService service, ILogger<UpdateWalletCommandHandler> logger) : base(logger)
             {
-                _logger.LogError(ex, null, null);
-                return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
+                _service = service;
+            }
+            public async Task<ServiceResult> Handle(UpdateWalletCommand request, CancellationToken cancellationToken)
+            {
+                try
+                {
+                    var res = await _service.UpdateWallet(request.WalletActionId);
+
+                    // Ensure that res is a ServiceResult with the expected structure
+                    return res;
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, null, null);
+                    return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
+                }
             }
         }
-    }
+    } 
 }

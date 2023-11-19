@@ -142,7 +142,7 @@
     <value>تلفن همراه ، نام کاربری ،ایمیل و یا کد املاک تکراریست!</value>
   </data>
   <data name="AmountError" xml:space="preserve">
-    <value>عدد وارد شده نمیتواند صفر باشد</value>
+    <value>مبلغ وارد شده نباید کمتر از 5000 و یا بیشتر از 200000 تومان باشد</value>
   </data>
   <data name="AuthorizationHeaderMissing" xml:space="preserve">
     <value>برای دسترسی به این بخش باید لاگین شده باشید</value>
@@ -163,7 +163,7 @@
     <value>مشکلی در حذف به وجود آمده است!!</value>
   </data>
   <data name="DepositFail" xml:space="preserve">
-    <value>شارژ کیف پول انجام نگرفت</value>
+    <value>مشکلی در شارژ کیف پول شما به وجود آمده  است ، مجددا تلاش کنید</value>
   </data>
   <data name="EmailRecordNull" xml:space="preserve">
     <value>رکوردی برای نمایش وجود ندارد</value>
@@ -210,6 +210,12 @@
   <data name="IsExists" xml:space="preserve">
     <value>تکراری میباشد</value>
   </data>
+  <data name="JwtExpTimeClaimMissing" xml:space="preserve">
+    <value>زمان انقضایی برای توکن ارسالی وجود ندارد</value>
+  </data>
+  <data name="JwtTokenExpired" xml:space="preserve">
+    <value>توکن ارسالی منقضی شذه است دوباره لاگین شوید</value>
+  </data>
   <data name="MapingError" xml:space="preserve">
     <value>ارور در Mapping رخ داده است</value>
   </data>
@@ -248,6 +254,9 @@
   </data>
   <data name="RoleExist" xml:space="preserve">
     <value>نقش وارد شده تکراری میباشد</value>
+  </data>
+  <data name="RoleIdClaimMissing" xml:space="preserve">
+    <value>RoleId در توکن ارسالی یافت نشد</value>
   </data>
   <data name="RoleNotFound" xml:space="preserve">
     <value>نقشی یافت نشد</value>

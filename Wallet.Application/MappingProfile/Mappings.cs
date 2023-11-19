@@ -8,6 +8,7 @@ namespace Application.MappingProfiles
         public Mappings()
         {
             CreateMap<ServiceResult, int>().ReverseMap(); 
+            CreateMap<ServiceResult, string>().ReverseMap(); 
         }
     }
 }

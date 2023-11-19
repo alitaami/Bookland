@@ -42,5 +42,22 @@ namespace Wallet.Common.Utilities
             var userId = GetClaimValue(jwtToken, "user_id");
             return userId;
         }
+        public static string GetUserRoleIdByClaim(string jwtToken)
+        {
+            var userId = GetClaimValue(jwtToken, "role_id");
+            return userId;
+        }
+
+        public static DateTime? GetExpirationTime(string jwtToken)
+        {
+            var expValue = GetClaimValue(jwtToken, "exp");
+
+            if (expValue != null && long.TryParse(expValue, out long expUnixTime))
+            {
+                return DateTimeOffset.FromUnixTimeSeconds(expUnixTime).UtcDateTime;
+            }
+
+            return null;
+        }
     }
 }

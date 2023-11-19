@@ -15,17 +15,17 @@ using Wallet.Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using Microsoft.Graph.Models;
+using static System.Net.WebRequestMethods;
 
 namespace Wallet.Api.Controllers
-{
-   
+{ 
     public class WalletController : APIControllerBase
     {
         private readonly ILogger<WalletController> _logger;
         private readonly ISender _sender;
         private readonly IWalletService _service;
         private readonly IMapper _mapper;
-        public WalletController(IMapper mapper,IWalletService service, ILogger<WalletController> logger, ISender sender)
+        public WalletController(IMapper mapper, IWalletService service, ILogger<WalletController> logger, ISender sender)
         {
             _mapper = mapper;
             _logger = logger;
@@ -39,32 +39,25 @@ namespace Wallet.Api.Controllers
         /// <param name="authorizationHeader"></param>
         /// <param name="amount"></param>
         /// <returns></returns>
+        [Route("api/user/wallet/[action]")]
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> ChargeWallet([FromHeader(Name = "Bearer")] string authorizationHeader, [FromQuery] int amount)
+        public async Task<IActionResult> ChargeUserWallet([FromHeader(Name = "Bearer")] string authorizationHeader, [FromQuery] int amount)
         {
             try
             {
-                if (string.IsNullOrEmpty(authorizationHeader))
-                    return BadRequest(Resource.AuthorizationHeaderMissing);
+                // Id=3 : Customer 
+                IActionResult validationError =
+                AuthorizationHelper.ValidateAuthorization(authorizationHeader, 3,out string userId );
 
-                // Authorization header typically has the format "Bearer {token}"
-                // Extract the token portion
-                var jwtToken = authorizationHeader?.Split(" ").LastOrDefault();
+                if (validationError != null)
+                    return validationError;
 
-                if (jwtToken is null)
-                    return BadRequest(Resource.UserIdClaimMissing);
-
-                var userId = JwtTokenHelper.GetUserIdByClaim(jwtToken);
-
-                if (userId is null)
-                    return BadRequest(Resource.UserIdClaimMissing);
-
-                if (amount <= 0)
-                    return BadRequest(Resource.AmountError);
+                if (amount > 200000 || amount < 5000)
+                    return InternalServerError(ErrorCodeEnum.AmountError, Resource.AmountError);
 
                 var model = new ChargeWalletViewModel
                 {
@@ -75,20 +68,29 @@ namespace Wallet.Api.Controllers
                 var walletAction_Id = await _sender.Send(new ChargeWalletCommand(model));
 
                 int walletActionId = _mapper.Map<int>(walletAction_Id);
-
-                // TODO : fic Zarinpal callback url 
+                
+                #region ZarinPal Implementation
                 var payment = new ZarinpalSandbox.Payment(amount);
-                var res = payment.PaymentRequest("شارژ کیف پول", "Todo" + walletActionId);
+                var res = payment.PaymentRequest("شارژ کیف پول", "http://localhost:3000/onlinePayment/" + walletActionId);
 
                 if (res.Result.Status == 100)
                 {
                     await _sender.Send(new UpdateWalletCommand(walletActionId));
-                    return Ok("https://sandbox.zarinpal.com/pg/StartPay/" + res.Result.Authority);
+
+                    string authority = res.Result.Authority.TrimStart('0'); // Remove leading zeros
+                    string baseUrl = "https://sandbox.zarinpal.com/pg/StartPay/";
+
+                    string redirectUrl = baseUrl + authority;
+
+                    ServiceResult result = new ServiceResult(redirectUrl, new ApiResult(HttpStatusCode.OK, ErrorCodeEnum.None, "", null));
+
+                    return Ok(result);
                 }
                 else
                 {
-                    return InternalServerError(ErrorCodeEnum.BadRequest, Resource.DepositFail);
+                    return InternalServerError(ErrorCodeEnum.DepositError, Resource.DepositFail);
                 }
+                #endregion
             }
             catch (Exception ex)
             {

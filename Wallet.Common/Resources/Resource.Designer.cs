@@ -133,7 +133,7 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to عدد وارد شده نمیتواند صفر باشد.
+        ///   Looks up a localized string similar to مبلغ وارد شده نباید کمتر از 5000 و یا بیشتر از 200000 تومان باشد.
         /// </summary>
         public static string AmountError {
             get {
@@ -196,7 +196,7 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to شارژ کیف پول انجام نگرفت.
+        ///   Looks up a localized string similar to مشکلی در شارژ کیف پول شما به وجود آمده  است ، مجددا تلاش کنید.
         /// </summary>
         public static string DepositFail {
             get {
@@ -340,6 +340,24 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to زمان انقضایی برای توکن ارسالی وجود ندارد.
+        /// </summary>
+        public static string JwtExpTimeClaimMissing {
+            get {
+                return ResourceManager.GetString("JwtExpTimeClaimMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to توکن ارسالی منقضی شذه است دوباره لاگین شوید.
+        /// </summary>
+        public static string JwtTokenExpired {
+            get {
+                return ResourceManager.GetString("JwtTokenExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ارور در Mapping رخ داده است.
         /// </summary>
         public static string MapingError {
@@ -453,6 +471,15 @@ namespace Wallet.Common.Resources {
         public static string RoleExist {
             get {
                 return ResourceManager.GetString("RoleExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RoleId در توکن ارسالی یافت نشد.
+        /// </summary>
+        public static string RoleIdClaimMissing {
+            get {
+                return ResourceManager.GetString("RoleIdClaimMissing", resourceCulture);
             }
         }
         

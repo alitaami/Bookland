@@ -4,24 +4,29 @@ using Entities.Base;
 using Wallet.Common.Resources;
 using Tavis.UriTemplates;
 
-[Route("api/[controller]/[action]")]
+
 [ApiController]
 public class APIControllerBase : ControllerBase
 {
     protected IActionResult APIResponse(ServiceResult serviceResult)
     {
-      
         if (serviceResult.Result.Http_Status_Code == (int)HttpStatusCode.OK)
         {
-             return Ok(serviceResult.Data);
+            var res = new ServiceResult(serviceResult.Data, new ApiResult(HttpStatusCode.OK, ErrorCodeEnum.None, null, null));
+
+            if (serviceResult.Data == null)
+                return Ok();
+            else
+                return Ok(res);
         }
+
         else if (serviceResult.Result.Http_Status_Code == (int)HttpStatusCode.BadRequest)
         {
-            return BadRequest(serviceResult.Data);
+            return BadRequest(serviceResult.Result);
         }
         else if (serviceResult.Result.Http_Status_Code == (int)HttpStatusCode.NotFound)
         {
-            return NotFound(serviceResult.Data);
+            return NotFound(serviceResult.Result);
         }
         else if (serviceResult.Result.Http_Status_Code == (int)HttpStatusCode.InternalServerError)
         {
@@ -58,5 +63,5 @@ public class APIControllerBase : ControllerBase
     private ApiResult CreateInternalErrorResult(ErrorCodeEnum error, string? message)
     {
         return new ApiResult(HttpStatusCode.InternalServerError, error, message, null);
-    }
+    } 
 }
