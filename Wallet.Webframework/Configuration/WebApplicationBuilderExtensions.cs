@@ -21,6 +21,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace WebFramework.Configuration
 {
@@ -106,7 +108,7 @@ namespace WebFramework.Configuration
                     ClockSkew = TimeSpan.Zero // Adjust as needed
                 };
             });
-            }
+        }
         private static void AddHealthChecks(WebApplicationBuilder builder)
         {
             builder.Services.AddHealthChecks()
@@ -348,28 +350,28 @@ namespace WebFramework.Configuration
 
         private static void AddMvcAndJsonOptions(WebApplicationBuilder builder)
         {
-            builder.Services
-                             .AddControllers()
-                             .AddJsonOptions(options =>
-                             {
-                                 options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
-                             })
-                             .AddNewtonsoftJson(options =>
-                             {
-                                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                                 options.SerializerSettings.Converters.Add(new StringEnumConverter());
-                                 options.SerializerSettings.Culture = new CultureInfo("en");
-                                 options.SerializerSettings.NullValueHandling = NullValueHandling.Include;
-                                 options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
-                                 options.SerializerSettings.DateParseHandling = DateParseHandling.DateTime;
-                                 options.SerializerSettings.MissingMemberHandling = MissingMemberHandling.Ignore;
-                                 options.SerializerSettings.ContractResolver = new DefaultContractResolver
-                                 {
-                                     NamingStrategy = new CamelCaseNamingStrategy()
-                                 };
-                                 options.AllowInputFormatterExceptionMessages = true;
-                             });
-
+            builder.Services.AddControllers()
+                           .AddJsonOptions(options =>
+                           {
+                               options.JsonSerializerOptions.PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy();
+                               options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                           })
+                           .AddNewtonsoftJson(options =>
+                           {
+                               // Your existing settings for Newtonsoft.Json
+                               options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                               options.SerializerSettings.Converters.Add(new StringEnumConverter());
+                               options.SerializerSettings.Culture = new CultureInfo("en");
+                               options.SerializerSettings.NullValueHandling = NullValueHandling.Include;
+                               options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
+                               options.SerializerSettings.DateParseHandling = DateParseHandling.DateTime;
+                               options.SerializerSettings.MissingMemberHandling = MissingMemberHandling.Ignore;
+                               options.SerializerSettings.ContractResolver = new DefaultContractResolver
+                               {
+                                   NamingStrategy = new SnakeCaseNamingStrategy()
+                               };
+                               options.AllowInputFormatterExceptionMessages = true;
+                           });
         }
 
         private static void AddAppHsts(WebApplicationBuilder builder)
