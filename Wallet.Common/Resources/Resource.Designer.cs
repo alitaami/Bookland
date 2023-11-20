@@ -520,6 +520,15 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to فرمت توکن ارسالی در هدر، صحیح نمیباشد.
+        /// </summary>
+        public static string TokenTypeError {
+            get {
+                return ResourceManager.GetString("TokenTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to دسترسی به این بخش بدون احراز هویت امکان پذیر نیست.
         /// </summary>
         public static string UnauthorizedAccessException {

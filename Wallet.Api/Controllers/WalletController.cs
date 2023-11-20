@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using Microsoft.Graph.Models;
 using static System.Net.WebRequestMethods;
+using Wallet.Common.Utilities.Authorization;
 
 namespace Wallet.Api.Controllers
 { 
@@ -45,16 +46,13 @@ namespace Wallet.Api.Controllers
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> ChargeUserWallet([FromHeader(Name = "Bearer")] string authorizationHeader, [FromQuery] int amount)
+        [ValidateAuthorization(3)] // Specify the required roleId
+        public async Task<IActionResult> ChargeUserWallet([FromHeader(Name = "Authorization")] string authorizationHeader, [FromQuery] int amount)
         {
             try
             {
-                // Id=3 : Customer 
-                IActionResult validationError =
-                AuthorizationHelper.ValidateAuthorization(authorizationHeader, 3,out string userId );
-
-                if (validationError != null)
-                    return validationError;
+                // Use HttpContext.User.Claims to retrieve user claims
+                string userId = HttpContext.User?.Claims.FirstOrDefault(c => c.Type == "user_id")?.Value;
 
                 if (amount > 200000 || amount < 5000)
                     return InternalServerError(ErrorCodeEnum.AmountError, Resource.AmountError);

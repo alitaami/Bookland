@@ -270,6 +270,9 @@
   <data name="SqlUpdateException" xml:space="preserve">
     <value>به دلیل نقض یونیک بودن بعضی از فیلدها امکان اضافه شدن و یا اپدیت وجود ندارد</value>
   </data>
+  <data name="TokenTypeError" xml:space="preserve">
+    <value>فرمت توکن ارسالی در هدر، صحیح نمیباشد</value>
+  </data>
   <data name="UnauthorizedAccessException" xml:space="preserve">
     <value>دسترسی به این بخش بدون احراز هویت امکان پذیر نیست</value>
   </data>
