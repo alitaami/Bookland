@@ -46,7 +46,7 @@ namespace Wallet.Api.Controllers
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.InternalServerError)]
-        [ValidateAuthorization(3)] // Specify the required roleId
+        [ValidateAuthorization(2)] // Specify the required roleId
         public async Task<IActionResult> ChargeUserWallet([FromHeader(Name = "Authorization")] string authorizationHeader, [FromQuery] int amount)
         {
             try
@@ -69,7 +69,7 @@ namespace Wallet.Api.Controllers
                 
                 #region ZarinPal Implementation
                 var payment = new ZarinpalSandbox.Payment(amount);
-                var res = payment.PaymentRequest("شارژ کیف پول", "http://localhost:3000/wallet/" + walletActionId);
+                var res = payment.PaymentRequest("شارژ کیف پول", "http://localhost:3000/wallet/");
 
                 if (res.Result.Status == 100)
                 {
