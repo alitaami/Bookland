@@ -17,7 +17,7 @@ namespace Wallet.Application.Features.Commands
         {
             Model = walletViewModel;
         }
-
+    }
         public class ChargeWalletCommandHandler : ServiceBase<ChargeWalletCommandHandler>, IRequestHandler<ChargeWalletCommand, ServiceResult>
         {
             private readonly IWalletService _service;
@@ -33,7 +33,6 @@ namespace Wallet.Application.Features.Commands
                 {
                     var res = await _service.ChargeWallet(request.Model.userId, request.Model.amount);
 
-                    // Ensure that res is a ServiceResult with the expected structure
                     return res;
                 }
                 catch (Exception ex)
@@ -44,4 +43,3 @@ namespace Wallet.Application.Features.Commands
             }
         }
     }
-}

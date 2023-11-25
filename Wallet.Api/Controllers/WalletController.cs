@@ -19,7 +19,7 @@ using static System.Net.WebRequestMethods;
 using Wallet.Common.Utilities.Authorization;
 
 namespace Wallet.Api.Controllers
-{ 
+{
     public class WalletController : APIControllerBase
     {
         private readonly ILogger<WalletController> _logger;
@@ -65,30 +65,50 @@ namespace Wallet.Api.Controllers
 
                 var walletAction_Id = await _sender.Send(new ChargeWalletCommand(model));
 
-                int walletActionId = _mapper.Map<int>(walletAction_Id);
-                
+                int walletActionId = _mapper.Map<int>(walletAction_Id.Data);
+
                 #region ZarinPal Implementation
                 var payment = new ZarinpalSandbox.Payment(amount);
                 var res = payment.PaymentRequest("شارژ کیف پول", "http://localhost:3000/wallet/");
 
                 if (res.Result.Status == 100)
                 {
-                    await _sender.Send(new UpdateWalletCommand(walletActionId));
-
-                    string authority = res.Result.Authority.TrimStart('0'); // Remove leading zeros
+                    string authority = res.Result.Authority; // Remove leading zeros
                     string baseUrl = "https://sandbox.zarinpal.com/pg/StartPay/";
 
-                    string redirectUrl = baseUrl + authority;
+                    string redirectUrl = $"{baseUrl}{authority}?walletActionId={walletActionId}";
 
                     ServiceResult result = new ServiceResult(redirectUrl, new ApiResult(HttpStatusCode.OK, ErrorCodeEnum.None, "", null));
 
-                    return Ok(result);
+                    return APIResponse(result);
                 }
                 else
                 {
                     return InternalServerError(ErrorCodeEnum.DepositError, Resource.DepositFail);
                 }
                 #endregion
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, null, null);
+                return InternalServerError(ErrorCodeEnum.InternalError, ex.Message);
+            }
+        }
+
+        [Route("api/user/wallet/[action]")]
+        [HttpPut]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.InternalServerError)]
+        [ValidateAuthorization(2)] // Specify the required roleId
+        public async Task<IActionResult> UpdateUserWallet([FromHeader(Name = "Authorization")] string authorizationHeader, [FromQuery] int walletActionId)
+        {
+            try
+            {
+                var res = await _sender.Send(new UpdateWalletCommand(walletActionId));
+
+                return APIResponse(res);
             }
             catch (Exception ex)
             {
