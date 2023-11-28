@@ -147,6 +147,9 @@
   <data name="AuthorizationHeaderMissing" xml:space="preserve">
     <value>برای دسترسی به این بخش باید لاگین شده باشید</value>
   </data>
+  <data name="BookPurchased" xml:space="preserve">
+    <value>!این کتاب توسط شما خریداری شده است</value>
+  </data>
   <data name="CacheKeyOfReceivers" xml:space="preserve">
     <value>Receivers</value>
   </data>
@@ -302,6 +305,9 @@
   </data>
   <data name="UserRoleExist" xml:space="preserve">
     <value>این نقش قبلا به این کاربر نسبت داده شده است</value>
+  </data>
+  <data name="WalletAmountError" xml:space="preserve">
+    <value>!موجودی کیف پول شما برای خرید این کتاب کافی نیست</value>
   </data>
   <data name="WrongAdvertise" xml:space="preserve">
     <value>چنین آگهی ای برای این شخص تعریف نشده است</value>

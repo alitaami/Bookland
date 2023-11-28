@@ -97,20 +97,54 @@ namespace Wallet.Infrastructure.Services
                 return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
             }
         }
-         
+
         public async Task<ServiceResult> PurchaseBook(int userId, int bookId, decimal newBookPrice)
         {
-            try
+            using (IDbConnection dbConnection = _Context.Connection)
             {
+                dbConnection.Open();
+                using (var transaction = dbConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        var userPurchased = await UserPurchased(userId, bookId);
 
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, null, null);
+                        if (userPurchased.Data is true)
+                            return BadRequest(ErrorCodeEnum.BadRequest, Resource.BookPurchased, null);
 
-                return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
+                        // Query to calculate the sum of the amount for a user
+                        string query = "SELECT COALESCE(SUM(amount), 0) AS total_amount FROM public.walletactions WHERE userid = @UserId";
+
+                        // Execute the query
+                        var result = await dbConnection.ExecuteScalarAsync<decimal>(query, new { UserId = userId });
+
+                        if (result < newBookPrice)
+                            return BadRequest(ErrorCodeEnum.BadRequest, Resource.WalletAmountError, null);
+
+                        string query1 = @"
+                        INSERT INTO public.walletactions (actiontypeid, userid, amount, issuccessful, description, createddate)
+                        VALUES (2, @UserId, @Amount, true, 'خرید کتاب به شناسه ' || @BookId , CURRENT_TIMESTAMP)";
+                         
+                        // Query to add books to userBooks
+                        string query2 = "INSERT INTO public.userbooks (bookid, userid, boughttime) VALUES (@BookId, @UserId, CURRENT_TIMESTAMP)";
+
+                        // Combine both queries into a single command
+                        string combinedQuery = $"{query1}; {query2}";
+
+                        // Execute the combined query within the transaction
+                        await dbConnection.ExecuteAsync(combinedQuery, new { UserId = userId, BookId = bookId, Amount = newBookPrice }, transaction);
+
+                        transaction.Commit();  // Commit the transaction if everything is successful
+                        return Ok();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();  // Roll back the transaction if an exception occurs
+                        _logger.LogError(ex, null, null);
+                        return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
+                    }
+                }
             }
         }
-
     }
 }

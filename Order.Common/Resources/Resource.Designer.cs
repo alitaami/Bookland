@@ -151,6 +151,15 @@ namespace Order.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to !این کتاب توسط شما خریداری شده است.
+        /// </summary>
+        public static string BookPurchased {
+            get {
+                return ResourceManager.GetString("BookPurchased", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Receivers.
         /// </summary>
         public static string CacheKeyOfReceivers {
@@ -615,6 +624,15 @@ namespace Order.Common.Resources {
         public static string UserRoleExist {
             get {
                 return ResourceManager.GetString("UserRoleExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to !موجودی کیف پول شما برای خرید این کتاب کافی نیست.
+        /// </summary>
+        public static string WalletAmountError {
+            get {
+                return ResourceManager.GetString("WalletAmountError", resourceCulture);
             }
         }
         
