@@ -17,12 +17,54 @@ namespace Wallet.Infrastructure.Services
             _configuration = configuration;
             _Context = dbContext;
         }
+
+        public async Task<ServiceResult> AdjustDiscount(decimal bookPrice, string code)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, null, null);
+
+                return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
+            }
+        }
+
+        public async Task<ServiceResult> CheckBook(int userId, int bookId)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, null, null);
+
+                return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
+            }
+        }
+
+        public async Task<ServiceResult> PurchaseBook(int userId, int bookId, decimal newBookPrice)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, null, null);
+
+                return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
+            }
+        }
         //public async Task<ServiceResult> ChargeWallet(int id, int amount)
         //{
         //    try
         //    {
         //        int walletActionId = 0;
-                 
+
         //        IEnumerable<dynamic> data = Enumerable.Empty<dynamic>();
 
         //        string insertQuery = @"
@@ -86,6 +128,6 @@ namespace Wallet.Infrastructure.Services
         //        return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
         //    }
         //}
-        
+
     }
 }
