@@ -1,10 +1,11 @@
 ﻿using Entities.Base;
 using Microsoft.Extensions.Logging;
-using Npgsql; // Add this for PostgreSQL support
+using NLog;
+using Npgsql;
+using Order.Common.Resources;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Net.Sockets;
-using Wallet.Common.Resources;
 
 public class ServiceBase<Tclass>
 {

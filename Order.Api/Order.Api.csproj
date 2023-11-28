@@ -16,4 +16,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Order.Webframework\Order.Webframework.csproj" />
+  </ItemGroup>
+
 </Project>
