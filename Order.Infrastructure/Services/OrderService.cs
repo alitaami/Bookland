@@ -66,20 +66,38 @@ namespace Wallet.Infrastructure.Services
             }
         }
 
-        public async Task<ServiceResult> CheckBook(int userId, int bookId)
+        public async Task<ServiceResult> UserPurchased(int userId, int bookId)
         {
             try
             {
+                using (IDbConnection dbConnection = _Context.Connection)
+                {
+                    dbConnection.Open();
 
+                    // Query to check if the user has purchased the book
+                    string query = "SELECT 1 FROM public.userbooks WHERE userid = @UserId AND bookid = @BookId";
+
+                    // Execute the query
+                    var result = await dbConnection.ExecuteScalarAsync<int?>(query, new { UserId = userId, BookId = bookId });
+
+                    // Check the result and return accordingly
+                    if (result != null)
+                    {
+                        return Ok(true); // The user has purchased the book
+                    }
+                    else
+                    {
+                        return Ok(false); // The user has not purchased the book
+                    }
+                }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, null, null);
-
                 return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
             }
         }
-
+         
         public async Task<ServiceResult> PurchaseBook(int userId, int bookId, decimal newBookPrice)
         {
             try
@@ -93,77 +111,6 @@ namespace Wallet.Infrastructure.Services
                 return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
             }
         }
-
-
-        public async Task<ServiceResult> ChargeWallet(int id, int amount)
-        {
-            try
-            {
-                int walletActionId = 0;
-
-                IEnumerable<dynamic> data = Enumerable.Empty<dynamic>();
-
-                string insertQuery = @"
-                INSERT INTO WalletActions (ActionTypeId, UserId, Amount, IsSuccessful, Description, CreatedDate)
-                VALUES (@ActionTypeId, @UserId, @Amount, @IsSuccessful, @Description, @CreatedDate)
-                RETURNING Id;
-                ";
-
-                var parameters = new
-                {
-                    ActionTypeId = 1,
-                    UserId = id,
-                    Amount = amount,
-                    IsSuccessful = false, // You may need to determine the success based on your logic
-                    Description = $" {amount} تومان  واریز به حساب", // You may want to adjust the description
-                    CreatedDate = DateTime.Now.AddHours(3.5) // You may want to adjust the creation date
-                };
-
-                using (IDbConnection dbConnection = _Context.Connection)
-                {
-                    dbConnection.Open();
-                    // TODO: Charging Logic 
-                    walletActionId = await dbConnection.ExecuteScalarAsync<int>(insertQuery, parameters);
-                }
-
-                return Ok(walletActionId);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, null, null);
-
-                return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
-            }
-        }
-        //public async Task<ServiceResult> UpdateWallet(int walletActionId)
-        //{
-        //    try
-        //    {
-        //        string updateQuery = @"
-        //        UPDATE WalletActions
-        //        SET IsSuccessful = true
-        //        WHERE Id = @WalletActionId;";
-
-        //        var parameters = new
-        //        {
-        //            WalletActionId = walletActionId
-        //        };
-
-        //        using (IDbConnection dbConnection = _Context.Connection)
-        //        {
-        //            dbConnection.Open();
-        //            await dbConnection.ExecuteAsync(updateQuery, parameters);
-        //        }
-
-        //        return Ok();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, null, null);
-
-        //        return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
-        //    }
-        //}
 
     }
 }
