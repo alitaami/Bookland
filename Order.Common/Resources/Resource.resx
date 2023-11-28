@@ -150,6 +150,18 @@
   <data name="CacheKeyOfReceivers" xml:space="preserve">
     <value>Receivers</value>
   </data>
+  <data name="CodeExpired" xml:space="preserve">
+    <value>کد تخفیف وارد شده منقضی شده است</value>
+  </data>
+  <data name="CodeFinished" xml:space="preserve">
+    <value>عداد دفعات استفاده از کد تخفیف وارد شده تمام شده است</value>
+  </data>
+  <data name="CodeNotFound" xml:space="preserve">
+    <value>کد تخفیف وارد شده موجود نیست</value>
+  </data>
+  <data name="CodeUsed" xml:space="preserve">
+    <value>!کد وارد شده توسط شما استفاده شده است</value>
+  </data>
   <data name="ConfirmVisit" xml:space="preserve">
     <value>تایید درخواست بازدید از ملک</value>
   </data>

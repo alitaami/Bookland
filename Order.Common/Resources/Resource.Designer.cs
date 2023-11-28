@@ -160,6 +160,42 @@ namespace Order.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to کد تخفیف وارد شده منقضی شده است.
+        /// </summary>
+        public static string CodeExpired {
+            get {
+                return ResourceManager.GetString("CodeExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عداد دفعات استفاده از کد تخفیف وارد شده تمام شده است.
+        /// </summary>
+        public static string CodeFinished {
+            get {
+                return ResourceManager.GetString("CodeFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کد تخفیف وارد شده موجود نیست.
+        /// </summary>
+        public static string CodeNotFound {
+            get {
+                return ResourceManager.GetString("CodeNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to !کد وارد شده توسط شما استفاده شده است.
+        /// </summary>
+        public static string CodeUsed {
+            get {
+                return ResourceManager.GetString("CodeUsed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تایید درخواست بازدید از ملک.
         /// </summary>
         public static string ConfirmVisit {

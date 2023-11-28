@@ -10,7 +10,7 @@ namespace Order.Core.Interfaces
     public interface IOrderService
     {
         public Task<ServiceResult> CheckBook (int userId,int bookId);
-        public Task<ServiceResult> AdjustDiscount (decimal bookPrice,string code);
+        public Task<ServiceResult> AdjustDiscount (int userId,decimal bookPrice,string code);
         public Task<ServiceResult> PurchaseBook (int userId, int bookId,decimal newBookPrice);
     }
 }
