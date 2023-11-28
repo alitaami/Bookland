@@ -6,6 +6,8 @@ using MediatR;
 using Order.Application.Features.Queries;
 using Microsoft.IdentityModel.Tokens;
 using Order.Common.Resources;
+using Order.Application.Models.ViewModels;
+using Order.Application.Features.Commands;
 
 namespace Wallet.Api.Controllers
 {
@@ -62,7 +64,7 @@ namespace Wallet.Api.Controllers
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.InternalServerError)]
         [ValidateAuthorization(2)] // Specify the required roleId
-        public async Task<IActionResult> CheckBook([FromHeader(Name = "Authorization")] string authorizationHeader, [FromRoute] string code, [FromRoute] decimal amount)
+        public async Task<IActionResult> AdjustDiscount([FromHeader(Name = "Authorization")] string authorizationHeader, [FromRoute] string code, [FromRoute] decimal amount)
         {
             try
             {
@@ -74,7 +76,36 @@ namespace Wallet.Api.Controllers
                 if (userId.Equals(0))
                     return BadRequestError(ErrorCodeEnum.BadRequest, Resource.TokenTypeError);
 
-                var res = await _sender.Send(new AdjustDiscountQuery(userId,code,amount));
+                var res = await _sender.Send(new AdjustDiscountQuery(userId, code, amount));
+
+                return APIResponse(res);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, null, null);
+                return InternalServerError(ErrorCodeEnum.InternalError, ex.Message);
+            }
+        }
+        [Route("api/user/purchase-book")]
+        [HttpPost]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.InternalServerError)]
+        [ValidateAuthorization(2)] // Specify the required roleId
+        public async Task<IActionResult> PurchaseBook([FromHeader(Name = "Authorization")] string authorizationHeader, [FromBody] PurchaseBookViewModel model)
+        {
+            try
+            {
+                // Use HttpContext.User.Claims to retrieve user claims
+                string user_Id = HttpContext.User?.Claims.FirstOrDefault(c => c.Type == "user_id")?.Value;
+
+                int userId = !user_Id.IsNullOrEmpty() ? int.Parse(user_Id) : 0;
+
+                if (userId.Equals(0))
+                    return BadRequestError(ErrorCodeEnum.BadRequest, Resource.TokenTypeError);
+
+                var res = await _sender.Send(new PurchaseBookCommand(userId,model));
 
                 return APIResponse(res);
             }

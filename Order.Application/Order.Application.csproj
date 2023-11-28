@@ -9,10 +9,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Order.Core\Order.Core.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Features\Commands\" />
-  </ItemGroup>
 	
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="12.0.1" />

@@ -1,7 +1,7 @@
 ﻿using Entities.Base;
 using Microsoft.AspNetCore.Mvc;
+using Order.Common.Resources;
 using System.Net;
-using Wallet.Common.Resources;
 using Wallet.Common.Utilities.Authorization;
 
 public static class AuthorizationHelper
