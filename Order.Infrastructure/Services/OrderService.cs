@@ -21,7 +21,7 @@ namespace Wallet.Infrastructure.Services
             _Context = dbContext;
         }
 
-        public async Task<ServiceResult> AdjustDiscount(int userId, decimal bookPrice, string code)
+        public async Task<ServiceResult> AdjustDiscount(int userId, string code, decimal amount)
         {
             try
             {
@@ -54,9 +54,9 @@ namespace Wallet.Infrastructure.Services
                         return BadRequest(ErrorCodeEnum.BadRequest, Resource.CodeUsed, null);
 
                     // Calculate new price
-                    var newPrice = bookPrice * (100 - discountInfo.percent);
+                    var newPrice = amount * (100 - discountInfo.percent);
 
-                    return Ok(newPrice);
+                    return Ok(new { DiscountId = discountInfo.DiscountId, NewPrice = newPrice });
                 }
             }
             catch (Exception ex)
@@ -98,7 +98,7 @@ namespace Wallet.Infrastructure.Services
             }
         }
 
-        public async Task<ServiceResult> PurchaseBook(int userId, int bookId, decimal newBookPrice)
+        public async Task<ServiceResult> PurchaseBook(int userId, int bookId, decimal amount, int discountId)
         {
             using (IDbConnection dbConnection = _Context.Connection)
             {
@@ -112,27 +112,40 @@ namespace Wallet.Infrastructure.Services
                         if (userPurchased.Data is true)
                             return BadRequest(ErrorCodeEnum.BadRequest, Resource.BookPurchased, null);
 
+                        // Query to get discount percentage
+                        string discountquery = "SELECT percent FROM public.discounts WHERE id = @DiscountId";
+
+                        // Execute the query
+                        var percent = await dbConnection.ExecuteAsync(discountquery, new { DiscountId = discountId });
+
+                        if (percent == 0)
+                            return BadRequest(ErrorCodeEnum.BadRequest, Resource.CodeNotFound, null);
+
+                        decimal newPrice = (100 - percent) * amount;
+
                         // Query to calculate the sum of the amount for a user
                         string query = "SELECT COALESCE(SUM(amount), 0) AS total_amount FROM public.walletactions WHERE userid = @UserId";
 
                         // Execute the query
                         var result = await dbConnection.ExecuteScalarAsync<decimal>(query, new { UserId = userId });
 
-                        if (result < newBookPrice)
+                        if (result < newPrice)
                             return BadRequest(ErrorCodeEnum.BadRequest, Resource.WalletAmountError, null);
 
                         string query1 = @"
                         INSERT INTO public.walletactions (actiontypeid, userid, amount, issuccessful, description, createddate)
                         VALUES (2, @UserId, @Amount, true, 'خرید کتاب به شناسه ' || @BookId , CURRENT_TIMESTAMP)";
-                         
+
                         // Query to add books to userBooks
                         string query2 = "INSERT INTO public.userbooks (bookid, userid, boughttime) VALUES (@BookId, @UserId, CURRENT_TIMESTAMP)";
 
+                        string query3 = "INSERT INTO public.userdiscounts (discountid, userid) VALUES (@DiscountId, @UserId)";
+
                         // Combine both queries into a single command
-                        string combinedQuery = $"{query1}; {query2}";
+                        string combinedQuery = $"{query1}; {query2}; {query3}";
 
                         // Execute the combined query within the transaction
-                        await dbConnection.ExecuteAsync(combinedQuery, new { UserId = userId, BookId = bookId, Amount = newBookPrice }, transaction);
+                        await dbConnection.ExecuteAsync(combinedQuery, new { UserId = userId, BookId = bookId, Amount = newPrice, DiscountId = discountId }, transaction);
 
                         transaction.Commit();  // Commit the transaction if everything is successful
                         return Ok();
