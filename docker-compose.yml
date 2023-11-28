@@ -12,6 +12,18 @@ services:
       - my_network
 
     restart: on-failure
+    
+  order-api:
+    image: order-api:latest
+    build:
+      context: .
+      dockerfile: Order.Api\Dockerfile
+    ports:
+      - "5001:5001"
+    networks:
+      - my_network
+
+    restart: on-failure
 
   #postgres-db:
   #  image: postgres:latest
