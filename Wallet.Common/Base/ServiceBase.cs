@@ -17,8 +17,7 @@ public class ServiceBase<Tclass>
     protected virtual ServiceResult HandleException(Exception ex)
     {
         try
-        {
-
+        { 
             if (ex is PostgresException pgEx) // Handle PostgreSQL-specific exceptions
             {
                 return HandleNpgsqlException(pgEx);
