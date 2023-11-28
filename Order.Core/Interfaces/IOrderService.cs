@@ -1,4 +1,5 @@
 ﻿using Entities.Base;
+using Order.Application.Models.ViewModels;
 
 namespace Order.Core.Interfaces
 {

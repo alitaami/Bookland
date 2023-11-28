@@ -38,8 +38,11 @@ namespace Wallet.Infrastructure.Services
                     // Execute the query
                     var discountInfo = await dbConnection.QueryFirstOrDefaultAsync(query, new { Code = code });
 
-                    var validate =await ValidateDiscount(code, null, userId);
-                   
+                    if (discountInfo is null)
+                        return BadRequest(ErrorCodeEnum.BadRequest, Resource.CodeNotFound, null);
+
+                    var validate = await ValidateDiscount(code, null, userId);
+
                     if (validate != null)
                         return validate;
 
@@ -100,50 +103,95 @@ namespace Wallet.Infrastructure.Services
                         if (userPurchased.Data is true)
                             return BadRequest(ErrorCodeEnum.BadRequest, Resource.BookPurchased, null);
 
-                        var validate = await ValidateDiscount(null, model.DiscountId, userId);
-
-                        if (validate != null)
-                            return validate;
-
-                        // Query to get discount percentage
-                        string discountquery = "SELECT percent FROM public.discounts WHERE id = @DiscountId";
+                        // Query to get book amount
+                        string amountQuery = "SELECT price FROM public.books WHERE id = @BookId";
 
                         // Execute the query
-                        var percent = await dbConnection.ExecuteScalarAsync<decimal>(discountquery, new { DiscountId = model.DiscountId });
+                        var amount = await dbConnection.ExecuteScalarAsync<decimal>(amountQuery, new { BookId = model.BookId });
+                         
+                        if (model.DiscountId != null)
+                        {
+                            var validate = await ValidateDiscount(null, model.DiscountId, userId);
 
-                        if (percent <= 0)
-                            return BadRequest(ErrorCodeEnum.BadRequest, Resource.CodeNotFound, null);
+                            if (validate != null)
+                                return validate;
 
-                        decimal newPrice = (100 - percent) * model.Amount / 100;
+                            // Query to get discount percentage
+                            string discountquery = "SELECT percent FROM public.discounts WHERE id = @DiscountId";
 
-                        // Query to calculate the sum of the amount for a user
-                        string query = "SELECT COALESCE(SUM(amount), 0) AS total_amount FROM public.walletactions WHERE userid = @UserId";
+                            // Execute the query
+                            var percent = await dbConnection.ExecuteScalarAsync<decimal>(discountquery, new { DiscountId = model.DiscountId });
 
-                        // Execute the query
-                        var result = await dbConnection.ExecuteScalarAsync<decimal>(query, new { UserId = userId });
+                            if (percent <= 0)
+                                return BadRequest(ErrorCodeEnum.BadRequest, Resource.CodeNotFound, null);
+                             
+                            decimal newPrice = (100 - percent) * amount / 100;
 
-                        if (result < newPrice)
-                            return BadRequest(ErrorCodeEnum.BadRequest, Resource.WalletAmountError, null);
+                            // Query to calculate the sum of the amount for a user
+                            string query = @"
+                            SELECT 
+                            COALESCE(SUM(CASE WHEN actiontypeid = 1 THEN amount ELSE 0 END), 0) -
+                            COALESCE(SUM(CASE WHEN actiontypeid = 2 THEN amount ELSE 0 END), 0) AS total_amount
+                            FROM public.walletactions
+                            WHERE userid = @UserId";
 
-                        string query1 = @"
-                        INSERT INTO public.walletactions (actiontypeid, userid, amount, issuccessful, description, createddate)
-                        VALUES (2, @UserId, @Amount, true, 'خرید کتاب به شناسه ' || @BookId ,CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
+                            // Execute the query
+                            var result = await dbConnection.ExecuteScalarAsync<decimal>(query, new { UserId = userId });
 
-                        // Query to add books to userBooks
-                        string query2 = "INSERT INTO public.userbooks (bookid, userid, boughttime) VALUES (@BookId, @UserId, CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
+                            if (result < newPrice)
+                                return BadRequest(ErrorCodeEnum.BadRequest, Resource.WalletAmountError, null);
 
-                        string query3 = "INSERT INTO public.userdiscounts (discountid, userid) VALUES (@DiscountId, @UserId)";
+                            string query1 = @"
+                            INSERT INTO public.walletactions (actiontypeid, userid, amount, issuccessful, description, createddate)
+                            VALUES (2, @UserId, @Amount, true, 'خرید کتاب با شناسه ' || @BookId ,CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
 
-                        string query4 = "UPDATE public.discounts SET quantity = quantity - 1 WHERE id = @DiscountId";
+                            // Query to add books to userBooks
+                            string query2 = "INSERT INTO public.userbooks (bookid, userid, boughttime) VALUES (@BookId, @UserId, CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
 
-                        // Combine both queries into a single command
-                        string combinedQuery = $"{query1}; {query2}; {query3}; {query4}";
+                            string query3 = "INSERT INTO public.userdiscounts (discountid, userid) VALUES (@DiscountId, @UserId)";
 
-                        // Execute the combined query within the transaction
-                        await dbConnection.ExecuteAsync(combinedQuery, new { UserId = userId, BookId = model.BookId, Amount = newPrice, DiscountId = model.DiscountId }, transaction);
+                            string query4 = "UPDATE public.discounts SET quantity = quantity - 1 WHERE id = @DiscountId";
 
-                        transaction.Commit();  // Commit the transaction if everything is successful
-                        return Ok();
+                            // Combine both queries into a single command
+                            string combinedQuery = $"{query1}; {query2}; {query3}; {query4}";
+
+                            // Execute the combined query within the transaction
+                            await dbConnection.ExecuteAsync(combinedQuery, new { UserId = userId, BookId = model.BookId, Amount = newPrice, DiscountId = model.DiscountId }, transaction);
+
+                            transaction.Commit();  // Commit the transaction if everything is successful
+                            return Ok();
+                        }
+                        else
+                        {
+                            // Query to calculate the sum of the amount for a user
+                            string query = @"
+                            SELECT 
+                            COALESCE(SUM(CASE WHEN actiontypeid = 1 THEN amount ELSE 0 END), 0) -
+                            COALESCE(SUM(CASE WHEN actiontypeid = 2 THEN amount ELSE 0 END), 0) AS total_amount
+                            FROM public.walletactions
+                            WHERE userid = @UserId";
+
+                            // Execute the query
+                            var result = await dbConnection.ExecuteScalarAsync<decimal>(query, new { UserId = userId });
+
+                            if (result < amount)
+                                return BadRequest(ErrorCodeEnum.BadRequest, Resource.WalletAmountError, null);
+                             
+                            string query1 = @"
+                            INSERT INTO public.walletactions (actiontypeid, userid, amount, issuccessful, description, createddate)
+                            VALUES (2, @UserId, @Amount, true, 'خرید کتاب با شناسه ' || @BookId ,CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
+
+                            // Query to add books to userBooks
+                            string query2 = "INSERT INTO public.userbooks (bookid, userid, boughttime) VALUES (@BookId, @UserId, CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
+
+                            // Combine both queries into a single command
+                            string combinedQuery = $"{query1}; {query2};";
+
+                            await dbConnection.ExecuteAsync(combinedQuery, new { UserId = userId, BookId = model.BookId, Amount = amount },transaction);
+
+                            transaction.Commit();  // Commit the transaction if everything is successful
+                            return Ok();
+                        }
                     }
                     catch (Exception ex)
                     {
