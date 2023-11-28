@@ -57,9 +57,17 @@ public class APIControllerBase : ControllerBase
     {
         return APIResponse(new ServiceResult(null, CreateInternalErrorResult(error, message)));
     }
+    protected IActionResult BadRequestError(ErrorCodeEnum error, string message)
+    {
+        return APIResponse(new ServiceResult(null, CreateBadRequestErrorResult(error, message)));
+    }
 
     private ApiResult CreateInternalErrorResult(ErrorCodeEnum error, string? message)
     {
         return new ApiResult(HttpStatusCode.InternalServerError, error, message, null);
+    } 
+    private ApiResult CreateBadRequestErrorResult(ErrorCodeEnum error, string? message)
+    {
+        return new ApiResult(HttpStatusCode.BadRequest, error, message, null);
     } 
 }

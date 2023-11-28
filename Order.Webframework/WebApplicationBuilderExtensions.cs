@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using System.Text.Json.Serialization;
 using Order.Core.Interfaces;
+using Order.Application;
 
 namespace WebFramework.Configuration
 {
@@ -107,7 +108,7 @@ namespace WebFramework.Configuration
             builder.Services.AddHealthChecks()
                 .AddNpgSql(builder.Configuration["ConnectionStrings:BookLandDB"], name: "PostgreSQL Health Check");
         }
-         
+
         private static void AddCustomApiVersioning(WebApplicationBuilder builder)
         {
             builder.Services.AddApiVersioning(options =>
@@ -153,7 +154,7 @@ namespace WebFramework.Configuration
             });
 
             // Register other application services.
-            //builder.Services.AddApplicationServices();
+            builder.Services.AddApplicationServices();
 
             // Register Repository as transient.
             builder.Services.AddTransient<IOrderService, OrderService>();

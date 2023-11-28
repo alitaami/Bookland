@@ -11,30 +11,31 @@ using System.Threading.Tasks;
 
 namespace Order.Application.Features.Queries
 { 
-    public class CheckBookQuery : IRequest<ServiceResult>
+    public class AdjustDiscountQuery : IRequest<ServiceResult>
     {
-        public int BookId { get; set; }
+        public string Code { get; set; }
+        public decimal Amount { get; set; } 
         public int UserId { get; set; }
 
-        public CheckBookQuery(int bookId, int userId)
+        public AdjustDiscountQuery(int userId,string code, decimal amount)
         {
-            BookId = bookId;
             UserId = userId;
+            Code = code;
+            Amount = amount;
         }
     }
-    public class CheckBookQueryHandler : ServiceBase<CheckBookQueryHandler>, IRequestHandler<CheckBookQuery, ServiceResult>
+    public class AdjustDiscountQueryHandler : ServiceBase<AdjustDiscountQueryHandler>, IRequestHandler<AdjustDiscountQuery, ServiceResult>
     {
         private readonly IOrderService __order;
-        public CheckBookQueryHandler(ILogger<CheckBookQueryHandler> logger, IOrderService order) : base(logger)
+        public AdjustDiscountQueryHandler(ILogger<AdjustDiscountQueryHandler> logger, IOrderService order) : base(logger)
         {
             __order = order;
-        }
-
-        public async Task<ServiceResult> Handle(CheckBookQuery request, CancellationToken cancellationToken)
+        } 
+        public async Task<ServiceResult> Handle(AdjustDiscountQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                var res = await __order.UserPurchased(request.BookId, request.UserId);
+                var res = await __order.AdjustDiscount( request.UserId,request.Code,request.Amount );
 
                 return Ok(res);
             }
