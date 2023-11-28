@@ -8,8 +8,7 @@ namespace Order.Application
     {
         public static void AddApplicationServices(this IServiceCollection services)
         {
-            services.AddAutoMapper(Assembly.GetExecutingAssembly())
-                    .AddMediatR(Assembly.GetExecutingAssembly()); 
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
         }
     }
 }

@@ -9,7 +9,7 @@ using Order.Common.Resources;
 using Order.Application.Models.ViewModels;
 using Order.Application.Features.Commands;
 
-namespace Wallet.Api.Controllers
+namespace Order.Controllers
 {
     public class OrderController : APIControllerBase
     {
@@ -57,14 +57,14 @@ namespace Wallet.Api.Controllers
                 return InternalServerError(ErrorCodeEnum.InternalError, ex.Message);
             }
         }
-        [Route("api/user/adjust-discount/{discount_code}/{amount}")]
+        [Route("api/user/adjust-discount")]
         [HttpGet]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.InternalServerError)]
         [ValidateAuthorization(2)] // Specify the required roleId
-        public async Task<IActionResult> AdjustDiscount([FromHeader(Name = "Authorization")] string authorizationHeader, [FromRoute] string code, [FromRoute] decimal amount)
+        public async Task<IActionResult> AdjustDiscount([FromHeader(Name = "Authorization")] string authorizationHeader, [FromQuery] string code, [FromQuery] decimal amount)
         {
             try
             {
@@ -86,6 +86,7 @@ namespace Wallet.Api.Controllers
                 return InternalServerError(ErrorCodeEnum.InternalError, ex.Message);
             }
         }
+
         [Route("api/user/purchase-book")]
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
@@ -105,7 +106,7 @@ namespace Wallet.Api.Controllers
                 if (userId.Equals(0))
                     return BadRequestError(ErrorCodeEnum.BadRequest, Resource.TokenTypeError);
 
-                var res = await _sender.Send(new PurchaseBookCommand(userId,model));
+                var res = await _sender.Send(new PurchaseBookCommand(userId, model));
 
                 return APIResponse(res);
             }

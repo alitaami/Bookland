@@ -15,7 +15,6 @@ using Wallet.Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using Microsoft.Graph.Models;
-using static System.Net.WebRequestMethods;
 using Wallet.Common.Utilities.Authorization;
 
 namespace Wallet.Api.Controllers

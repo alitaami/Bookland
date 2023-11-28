@@ -10,34 +10,24 @@ public class APIControllerBase : ControllerBase
     {
         if (serviceResult.Result.Http_Status_Code == (int)HttpStatusCode.OK)
         {
-            var res = new ServiceResult(serviceResult.Data, new ApiResult(HttpStatusCode.OK, ErrorCodeEnum.None, null, null));
-
             if (serviceResult.Data == null)
                 return Ok();
             else
-                return Ok(res);
+                return Ok(serviceResult.Data);
         }
 
         else if (serviceResult.Result.Http_Status_Code == (int)HttpStatusCode.BadRequest)
-        {
             return BadRequest(serviceResult.Result);
-        }
-        else if (serviceResult.Result.Http_Status_Code == (int)HttpStatusCode.NotFound)
-        {
-            return NotFound(serviceResult.Result);
-        }
-        else if (serviceResult.Result.Http_Status_Code == (int)HttpStatusCode.InternalServerError)
-        {
-            // Return a new ServiceResult with null data for internal server errors
-            return StatusCode((int)HttpStatusCode.InternalServerError, new ServiceResult(null, serviceResult.Result));
-        }
-        else
-        {
-            // Handle other cases, if needed
-            return StatusCode((int)HttpStatusCode.InternalServerError);
-        }
-    }
 
+        else if (serviceResult.Result.Http_Status_Code == (int)HttpStatusCode.NotFound)
+            return NotFound(serviceResult.Result);
+
+        else if (serviceResult.Result.Http_Status_Code == (int)HttpStatusCode.InternalServerError)
+            return StatusCode((int)HttpStatusCode.InternalServerError, serviceResult.Data);
+
+        else //TODO : این مورد بررسی بشه شاید نیاز به تغییر باشه
+            return StatusCode((int)HttpStatusCode.InternalServerError);
+    }
     protected IActionResult InternalServerError()
     {
         return APIResponse(new ServiceResult(null, CreateInternalErrorResult(ErrorCodeEnum.InternalError, null)));

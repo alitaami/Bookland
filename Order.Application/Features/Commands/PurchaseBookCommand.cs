@@ -35,8 +35,8 @@ namespace Order.Application.Features.Commands
         {
             try
             {
-                var res = await _Order.PurchaseBook(request.UserId, request.Model.BookId, request.Model.Amount, request.Model.DiscountId);
-
+                var res = await _Order.PurchaseBook(request.UserId, request.Model);
+    
                 return Ok(res);
             }
             catch (Exception ex)
