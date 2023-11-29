@@ -147,6 +147,9 @@
   <data name="AuthorizationHeaderMissing" xml:space="preserve">
     <value>برای دسترسی به این بخش باید لاگین شده باشید</value>
   </data>
+  <data name="BookNotFound" xml:space="preserve">
+    <value>!چنین کتابی وجود ندارد</value>
+  </data>
   <data name="BookPurchased" xml:space="preserve">
     <value>!این کتاب توسط شما خریداری شده است</value>
   </data>

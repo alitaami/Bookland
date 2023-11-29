@@ -54,7 +54,16 @@ namespace Entities.Base
         JwtExpired =25,
         JwtTimeIsNull =26,
         AmountError =27,
-        DepositError =28
+        DepositError =28,
+        CodeNotFound =29,
+        CodeUsed =30,
+        CodeExpired =31,
+        CodeFinished =32,
+        WalletAmountError =33,
+        BookNotFound =34,
+        BookPurchased =35
+
+
     }
 
     public class FieldErrorItem

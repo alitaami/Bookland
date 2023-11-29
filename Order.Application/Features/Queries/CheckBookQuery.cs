@@ -34,7 +34,7 @@ namespace Order.Application.Features.Queries
         {
             try
             {
-                var res = await __order.UserPurchased(request.BookId, request.UserId);
+                var res = await __order.UserPurchased(request.UserId,request.BookId);
 
                 return Ok(res);
             }

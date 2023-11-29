@@ -151,6 +151,15 @@ namespace Order.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to !چنین کتابی وجود ندارد.
+        /// </summary>
+        public static string BookNotFound {
+            get {
+                return ResourceManager.GetString("BookNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to !این کتاب توسط شما خریداری شده است.
         /// </summary>
         public static string BookPurchased {

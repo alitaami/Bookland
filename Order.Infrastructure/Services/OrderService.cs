@@ -10,6 +10,8 @@ using Order.Common.Resources;
 using Order.Core.Interfaces;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
+using System.Net;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Wallet.Infrastructure.Services
 {
@@ -39,7 +41,7 @@ namespace Wallet.Infrastructure.Services
                     var discountInfo = await dbConnection.QueryFirstOrDefaultAsync(query, new { Code = code });
 
                     if (discountInfo is null)
-                        return BadRequest(ErrorCodeEnum.BadRequest, Resource.CodeNotFound, null);
+                        return BadRequest(ErrorCodeEnum.CodeNotFound, Resource.CodeNotFound, null);
 
                     var validate = await ValidateDiscount(code, null, userId);
 
@@ -58,7 +60,8 @@ namespace Wallet.Infrastructure.Services
                 return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
             }
         }
-        public async Task<ServiceResult> UserPurchased(int userId, int bookId)
+
+        private async Task<ServiceResult> CheckBookExists(int bookId)
         {
             try
             {
@@ -66,6 +69,33 @@ namespace Wallet.Infrastructure.Services
                 {
                     dbConnection.Open();
 
+                    // Query to check if the book exists
+                    var bookCheckQuery = "SELECT 1 FROM public.books WHERE  id = @BookId";
+
+                    // Execute the query
+                    var bookCheck = await dbConnection.ExecuteScalarAsync<int?>(bookCheckQuery, new { BookId = bookId });
+
+                    if (bookCheck is null)
+                        return Ok(false);
+
+                    return Ok(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, null, null);
+                return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
+            }
+        }
+
+        public async Task<ServiceResult> UserPurchased(int userId, int bookId)
+        {
+            try
+            {
+                using (IDbConnection dbConnection = _Context.Connection)
+                {
+                    dbConnection.Open();
+ 
                     // Query to check if the user has purchased the book
                     string query = "SELECT 1 FROM public.userbooks WHERE userid = @UserId AND bookid = @BookId";
 
@@ -101,14 +131,19 @@ namespace Wallet.Infrastructure.Services
                         var userPurchased = await UserPurchased(userId, model.BookId);
 
                         if (userPurchased.Data is true)
-                            return BadRequest(ErrorCodeEnum.BadRequest, Resource.BookPurchased, null);
+                            return BadRequest(ErrorCodeEnum.BookPurchased, Resource.BookPurchased, null);
 
+                        var checkBook = await CheckBookExists(model.BookId);
+
+                        if(checkBook.Data is false)
+                            return BadRequest(ErrorCodeEnum.BookNotFound, Resource.BookNotFound, null);
+                         
                         // Query to get book amount
                         string amountQuery = "SELECT price FROM public.books WHERE id = @BookId";
 
                         // Execute the query
                         var amount = await dbConnection.ExecuteScalarAsync<decimal>(amountQuery, new { BookId = model.BookId });
-                         
+
                         if (model.DiscountId != null)
                         {
                             var validate = await ValidateDiscount(null, model.DiscountId, userId);
@@ -123,8 +158,8 @@ namespace Wallet.Infrastructure.Services
                             var percent = await dbConnection.ExecuteScalarAsync<decimal>(discountquery, new { DiscountId = model.DiscountId });
 
                             if (percent <= 0)
-                                return BadRequest(ErrorCodeEnum.BadRequest, Resource.CodeNotFound, null);
-                             
+                                return BadRequest(ErrorCodeEnum.CodeNotFound, Resource.CodeNotFound, null);
+
                             decimal newPrice = (100 - percent) * amount / 100;
 
                             // Query to calculate the sum of the amount for a user
@@ -139,7 +174,7 @@ namespace Wallet.Infrastructure.Services
                             var result = await dbConnection.ExecuteScalarAsync<decimal>(query, new { UserId = userId });
 
                             if (result < newPrice)
-                                return BadRequest(ErrorCodeEnum.BadRequest, Resource.WalletAmountError, null);
+                                return BadRequest(ErrorCodeEnum.WalletAmountError, Resource.WalletAmountError, null);
 
                             string query1 = @"
                             INSERT INTO public.walletactions (actiontypeid, userid, amount, issuccessful, description, createddate)
@@ -175,8 +210,8 @@ namespace Wallet.Infrastructure.Services
                             var result = await dbConnection.ExecuteScalarAsync<decimal>(query, new { UserId = userId });
 
                             if (result < amount)
-                                return BadRequest(ErrorCodeEnum.BadRequest, Resource.WalletAmountError, null);
-                             
+                                return BadRequest(ErrorCodeEnum.WalletAmountError, Resource.WalletAmountError, null);
+
                             string query1 = @"
                             INSERT INTO public.walletactions (actiontypeid, userid, amount, issuccessful, description, createddate)
                             VALUES (2, @UserId, @Amount, true, 'خرید کتاب با شناسه ' || @BookId ,CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
@@ -187,7 +222,7 @@ namespace Wallet.Infrastructure.Services
                             // Combine both queries into a single command
                             string combinedQuery = $"{query1}; {query2};";
 
-                            await dbConnection.ExecuteAsync(combinedQuery, new { UserId = userId, BookId = model.BookId, Amount = amount },transaction);
+                            await dbConnection.ExecuteAsync(combinedQuery, new { UserId = userId, BookId = model.BookId, Amount = amount }, transaction);
 
                             transaction.Commit();  // Commit the transaction if everything is successful
                             return Ok();
@@ -219,22 +254,22 @@ namespace Wallet.Infrastructure.Services
                         var discountInfo = await dbConnection.QueryFirstOrDefaultAsync(query, new { Code = code });
 
                         if (discountInfo == null)
-                            return BadRequest(ErrorCodeEnum.BadRequest, Resource.CodeNotFound, null);
+                            return BadRequest(ErrorCodeEnum.CodeNotFound, Resource.CodeNotFound, null);
 
                         // Check quantity
                         if (discountInfo.quantity == 0)
-                            return BadRequest(ErrorCodeEnum.BadRequest, Resource.CodeFinished, null);
+                            return BadRequest(ErrorCodeEnum.CodeFinished, Resource.CodeFinished, null);
 
                         // Check expiration date
                         if (discountInfo.expiredate < DateTime.Today)
-                            return BadRequest(ErrorCodeEnum.BadRequest, Resource.CodeExpired, null);
+                            return BadRequest(ErrorCodeEnum.CodeExpired, Resource.CodeExpired, null);
 
                         // Check if the discount is already used
                         var isUsedQuery = "SELECT 1 FROM public.userdiscounts WHERE discountid = @DiscountId AND UserId = @userId";
                         var isUsed = await dbConnection.ExecuteScalarAsync<int?>(isUsedQuery, new { DiscountId = discountInfo.id, UserId = userId });
 
                         if (isUsed != null)
-                            return BadRequest(ErrorCodeEnum.BadRequest, Resource.CodeUsed, null);
+                            return BadRequest(ErrorCodeEnum.CodeUsed, Resource.CodeUsed, null);
 
                         return null; // No validation errors}
                     }
@@ -247,22 +282,22 @@ namespace Wallet.Infrastructure.Services
                         var discountInfo = await dbConnection.QueryFirstOrDefaultAsync(query, new { DiscountId = discountId });
 
                         if (discountInfo == null)
-                            return BadRequest(ErrorCodeEnum.BadRequest, Resource.CodeNotFound, null);
+                            return BadRequest(ErrorCodeEnum.CodeNotFound, Resource.CodeNotFound, null);
 
                         // Check quantity
                         if (discountInfo.quantity == 0)
-                            return BadRequest(ErrorCodeEnum.BadRequest, Resource.CodeFinished, null);
+                            return BadRequest(ErrorCodeEnum.CodeFinished, Resource.CodeFinished, null);
 
                         // Check expiration date
                         if (discountInfo.expiredate < DateTime.Today)
-                            return BadRequest(ErrorCodeEnum.BadRequest, Resource.CodeExpired, null);
+                            return BadRequest(ErrorCodeEnum.CodeExpired, Resource.CodeExpired, null);
 
                         // Check if the discount is already used
                         var isUsedQuery = "SELECT 1 FROM public.userdiscounts WHERE discountid = @DiscountId AND UserId = @userId";
                         var isUsed = await dbConnection.ExecuteScalarAsync<int?>(isUsedQuery, new { DiscountId = discountInfo.id, UserId = userId });
 
                         if (isUsed != null)
-                            return BadRequest(ErrorCodeEnum.BadRequest, Resource.CodeUsed, null);
+                            return BadRequest(ErrorCodeEnum.CodeUsed, Resource.CodeUsed, null);
 
                         return null; // No validation errors}
                     }
