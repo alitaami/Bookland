@@ -70,7 +70,7 @@ namespace Wallet.Infrastructure.Services
                     dbConnection.Open();
 
                     // Query to check if the book exists
-                    var bookCheckQuery = "SELECT 1 FROM public.books WHERE  id = @BookId";
+                    var bookCheckQuery = "SELECT 1 FROM public.books WHERE  id = @BookId AND isdelete=false ";
 
                     // Execute the query
                     var bookCheck = await dbConnection.ExecuteScalarAsync<int?>(bookCheckQuery, new { BookId = bookId });
@@ -139,7 +139,7 @@ namespace Wallet.Infrastructure.Services
                             return BadRequest(ErrorCodeEnum.BookNotFound, Resource.BookNotFound, null);
                          
                         // Query to get book amount
-                        string amountQuery = "SELECT price FROM public.books WHERE id = @BookId";
+                        string amountQuery = "SELECT price FROM public.books WHERE id = @BookId AND isdelete = false ";
 
                         // Execute the query
                         var amount = await dbConnection.ExecuteScalarAsync<decimal>(amountQuery, new { BookId = model.BookId });
