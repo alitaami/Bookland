@@ -310,5 +310,36 @@ namespace Wallet.Infrastructure.Services
             }
         }
 
+        public async Task<ServiceResult> UserBookmarked(int userId, int bookId)
+        {
+            try
+            {
+                using (IDbConnection dbConnection = _Context.Connection)
+                {
+                    dbConnection.Open();
+
+                    // Query to check if the user has purchased the book
+                    string query = "SELECT 1 FROM public.userbookmarks WHERE userid = @UserId AND bookid = @BookId AND isdelete=false";
+
+                    // Execute the query
+                    var result = await dbConnection.ExecuteScalarAsync<int?>(query, new { UserId = userId, BookId = bookId });
+
+                    // Check the result and return accordingly
+                    if (result != null)
+                    {
+                        return Ok(true); // The user has purchased the book
+                    }
+                    else
+                    {
+                        return Ok(false); // The user has not purchased the book
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, null, null);
+                return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
+            }
+        }
     }
 }
