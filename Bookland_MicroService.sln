@@ -23,19 +23,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker-Compose", "Docker-Co
 		SqlScripts.sql = SqlScripts.sql
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Order", "Order", "{1C7976E4-017D-4767-B814-11EC0A5505E5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Order-Discount", "Order-Discount", "{1C7976E4-017D-4767-B814-11EC0A5505E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Order.Application", "Order.Application\Order.Application.csproj", "{0034EB5C-F204-495D-85AC-B9B2A284263C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Order.Application", "Order.Application\Order.Application.csproj", "{0034EB5C-F204-495D-85AC-B9B2A284263C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Order.Common", "Order.Common\Order.Common.csproj", "{6237D1B6-E1C5-4A9A-B8B4-75E55450BD25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Order.Common", "Order.Common\Order.Common.csproj", "{6237D1B6-E1C5-4A9A-B8B4-75E55450BD25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Order.Core", "Order.Core\Order.Core.csproj", "{9352DE6E-8172-41D3-BC69-F897E8A9BC39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Order.Core", "Order.Core\Order.Core.csproj", "{9352DE6E-8172-41D3-BC69-F897E8A9BC39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Order.Infrastructure", "Order.Infrastructure\Order.Infrastructure.csproj", "{7C0C635E-D5EB-4A78-BADC-C596AF820070}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Order.Infrastructure", "Order.Infrastructure\Order.Infrastructure.csproj", "{7C0C635E-D5EB-4A78-BADC-C596AF820070}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Order.Webframework", "Order.Webframework\Order.Webframework.csproj", "{D8BBFC40-C58D-4510-93FA-CA67E234A314}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Order.Webframework", "Order.Webframework\Order.Webframework.csproj", "{D8BBFC40-C58D-4510-93FA-CA67E234A314}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Order.Api", "Order.Api\Order.Api.csproj", "{C986CBC5-D720-4993-B1B9-CF228673BF54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Order.Api", "Order.Api\Order.Api.csproj", "{C986CBC5-D720-4993-B1B9-CF228673BF54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
