@@ -6,17 +6,22 @@ services:
     build:
       context: .
       dockerfile: Wallet.Api\Dockerfile
+    networks:
+      - my_network
     ports:
       - "5000:80"
     restart: on-failure
     volumes:
       - wallet-data:/app/data
+    
 
   orderdiscount-api:
     image: orderdiscount-api:latest
     build:
       context: .
       dockerfile: Order.Api\Dockerfile
+    networks:
+      - my_network
     ports:
       - "5001:80"
     restart: on-failure
