@@ -95,7 +95,7 @@ namespace Wallet.Infrastructure.Services
                 using (IDbConnection dbConnection = _Context.Connection)
                 {
                     dbConnection.Open();
- 
+
                     // Query to check if the user has purchased the book
                     string query = "SELECT 1 FROM public.userbooks WHERE userid = @UserId AND bookid = @BookId";
 
@@ -135,9 +135,9 @@ namespace Wallet.Infrastructure.Services
 
                         var checkBook = await CheckBookExists(model.BookId);
 
-                        if(checkBook.Data is false)
+                        if (checkBook.Data is false)
                             return BadRequest(ErrorCodeEnum.BookNotFound, Resource.BookNotFound, null);
-                         
+
                         // Query to get book amount
                         string amountQuery = "SELECT price FROM public.books WHERE id = @BookId AND isdelete = false ";
 
@@ -237,6 +237,42 @@ namespace Wallet.Infrastructure.Services
                 }
             }
         }
+
+        private async Task<ServiceResult> WelcomeCodeCheck(string? code, int? discountId,int userId)
+        {
+            using (IDbConnection dbConnection = _Context.Connection)
+            {
+                dbConnection.Open();
+
+                if (discountId is null)
+                {
+                    if (code == Resource.WelcomeDiscountCode)
+                    {
+                        string query1 = "SELECT 1 FROM public.userbooks WHERE userid = @UserId";
+
+                        // Execute the query
+                        var userInfo = await dbConnection.QueryFirstOrDefaultAsync(query1, new { UserId = userId });
+
+                        if (userInfo is not null)
+                            return BadRequest(ErrorCodeEnum.WelcomeCodeError, Resource.WelcomeCodeError, null);
+                    }
+                }
+                else
+                {
+                    if (discountId == 1)
+                    {
+                        string query1 = "SELECT 1 FROM public.userbooks WHERE userid = @UserId";
+
+                        // Execute the query
+                        var userInfo = await dbConnection.QueryFirstOrDefaultAsync(query1, new { UserId = userId });
+
+                        if (userInfo is not null)
+                            return BadRequest(ErrorCodeEnum.WelcomeCodeError, Resource.WelcomeCodeError, null);
+                    }
+                }
+                return Ok();
+            }
+        }
         private async Task<ServiceResult> ValidateDiscount(string? code, int? discountId, int userId)
         {
             try
@@ -245,61 +281,70 @@ namespace Wallet.Infrastructure.Services
                 {
                     dbConnection.Open();
 
-                    if (discountId is null)
+                    var welcomecodeCheck = await WelcomeCodeCheck(code, discountId,userId);
+
+                    if (welcomecodeCheck.Result.Http_Status_Code != (int)HttpStatusCode.OK)
                     {
-                        // Query to get discount information
-                        string query = "SELECT id, quantity, expiredate, percent FROM public.discounts WHERE code = @Code";
-
-                        // Execute the query
-                        var discountInfo = await dbConnection.QueryFirstOrDefaultAsync(query, new { Code = code });
-
-                        if (discountInfo == null)
-                            return BadRequest(ErrorCodeEnum.CodeNotFound, Resource.CodeNotFound, null);
-
-                        // Check quantity
-                        if (discountInfo.quantity == 0)
-                            return BadRequest(ErrorCodeEnum.CodeFinished, Resource.CodeFinished, null);
-
-                        // Check expiration date
-                        if (discountInfo.expiredate < DateTime.Today)
-                            return BadRequest(ErrorCodeEnum.CodeExpired, Resource.CodeExpired, null);
-
-                        // Check if the discount is already used
-                        var isUsedQuery = "SELECT 1 FROM public.userdiscounts WHERE discountid = @DiscountId AND UserId = @userId";
-                        var isUsed = await dbConnection.ExecuteScalarAsync<int?>(isUsedQuery, new { DiscountId = discountInfo.id, UserId = userId });
-
-                        if (isUsed != null)
-                            return BadRequest(ErrorCodeEnum.CodeUsed, Resource.CodeUsed, null);
-
-                        return null; // No validation errors}
+                        return welcomecodeCheck;
                     }
                     else
                     {
-                        // Query to get discount information
-                        string query = "SELECT id, quantity, expiredate, percent FROM public.discounts WHERE id = @DiscountId";
+                        if (discountId is null)
+                        {
+                            // Query to get discount information
+                            string query = "SELECT id, quantity, expiredate, percent FROM public.discounts WHERE code = @Code";
 
-                        // Execute the query
-                        var discountInfo = await dbConnection.QueryFirstOrDefaultAsync(query, new { DiscountId = discountId });
+                            // Execute the query
+                            var discountInfo = await dbConnection.QueryFirstOrDefaultAsync(query, new { Code = code });
 
-                        if (discountInfo == null)
-                            return BadRequest(ErrorCodeEnum.CodeNotFound, Resource.CodeNotFound, null);
+                            if (discountInfo == null)
+                                return BadRequest(ErrorCodeEnum.CodeNotFound, Resource.CodeNotFound, null);
 
-                        // Check quantity
-                        if (discountInfo.quantity == 0)
-                            return BadRequest(ErrorCodeEnum.CodeFinished, Resource.CodeFinished, null);
+                            // Check quantity
+                            if (discountInfo.quantity == 0)
+                                return BadRequest(ErrorCodeEnum.CodeFinished, Resource.CodeFinished, null);
 
-                        // Check expiration date
-                        if (discountInfo.expiredate < DateTime.Today)
-                            return BadRequest(ErrorCodeEnum.CodeExpired, Resource.CodeExpired, null);
+                            // Check expiration date
+                            if (discountInfo.expiredate < DateTime.Today)
+                                return BadRequest(ErrorCodeEnum.CodeExpired, Resource.CodeExpired, null);
 
-                        // Check if the discount is already used
-                        var isUsedQuery = "SELECT 1 FROM public.userdiscounts WHERE discountid = @DiscountId AND UserId = @userId";
-                        var isUsed = await dbConnection.ExecuteScalarAsync<int?>(isUsedQuery, new { DiscountId = discountInfo.id, UserId = userId });
+                            // Check if the discount is already used
+                            var isUsedQuery = "SELECT 1 FROM public.userdiscounts WHERE discountid = @DiscountId AND UserId = @userId";
+                            var isUsed = await dbConnection.ExecuteScalarAsync<int?>(isUsedQuery, new { DiscountId = discountInfo.id, UserId = userId });
 
-                        if (isUsed != null)
-                            return BadRequest(ErrorCodeEnum.CodeUsed, Resource.CodeUsed, null);
+                            if (isUsed != null)
+                                return BadRequest(ErrorCodeEnum.CodeUsed, Resource.CodeUsed, null);
 
-                        return null; // No validation errors}
+                            return null; // No validation errors}
+                        }
+                        else
+                        {
+                            // Query to get discount information
+                            string query = "SELECT id, quantity, expiredate, percent FROM public.discounts WHERE id = @DiscountId";
+
+                            // Execute the query
+                            var discountInfo = await dbConnection.QueryFirstOrDefaultAsync(query, new { DiscountId = discountId });
+
+                            if (discountInfo == null)
+                                return BadRequest(ErrorCodeEnum.CodeNotFound, Resource.CodeNotFound, null);
+
+                            // Check quantity
+                            if (discountInfo.quantity == 0)
+                                return BadRequest(ErrorCodeEnum.CodeFinished, Resource.CodeFinished, null);
+
+                            // Check expiration date
+                            if (discountInfo.expiredate < DateTime.Today)
+                                return BadRequest(ErrorCodeEnum.CodeExpired, Resource.CodeExpired, null);
+
+                            // Check if the discount is already used
+                            var isUsedQuery = "SELECT 1 FROM public.userdiscounts WHERE discountid = @DiscountId AND UserId = @userId";
+                            var isUsed = await dbConnection.ExecuteScalarAsync<int?>(isUsedQuery, new { DiscountId = discountInfo.id, UserId = userId });
+
+                            if (isUsed != null)
+                                return BadRequest(ErrorCodeEnum.CodeUsed, Resource.CodeUsed, null);
+
+                            return null; // No validation errors}
+                        }
                     }
                 }
             }

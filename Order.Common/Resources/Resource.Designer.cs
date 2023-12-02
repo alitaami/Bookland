@@ -646,6 +646,24 @@ namespace Order.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to !استفاده از این کد صرفا برای خرید اول کاربر در نظر گرفته شده است.
+        /// </summary>
+        public static string WelcomeCodeError {
+            get {
+                return ResourceManager.GetString("WelcomeCodeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to welcome.
+        /// </summary>
+        public static string WelcomeDiscountCode {
+            get {
+                return ResourceManager.GetString("WelcomeDiscountCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to چنین آگهی ای برای این شخص تعریف نشده است.
         /// </summary>
         public static string WrongAdvertise {

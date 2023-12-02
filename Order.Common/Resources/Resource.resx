@@ -312,6 +312,12 @@
   <data name="WalletAmountError" xml:space="preserve">
     <value>!موجودی کیف پول شما برای خرید این کتاب کافی نیست</value>
   </data>
+  <data name="WelcomeCodeError" xml:space="preserve">
+    <value>!استفاده از این کد صرفا برای خرید اول کاربر در نظر گرفته شده است</value>
+  </data>
+  <data name="WelcomeDiscountCode" xml:space="preserve">
+    <value>welcome</value>
+  </data>
   <data name="WrongAdvertise" xml:space="preserve">
     <value>چنین آگهی ای برای این شخص تعریف نشده است</value>
   </data>
