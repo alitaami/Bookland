@@ -51,7 +51,7 @@ namespace Wallet.Infrastructure.Services
                     // Calculate new price
                     var newPrice = amount * (100 - discountInfo.percent) / 100;
 
-                    return Ok(new { DiscountId = discountInfo.id, NewPrice = newPrice });
+                    return Ok(new { DiscountId = discountInfo.id, NewPrice = newPrice , Percent = discountInfo.percent });
                 }
             }
             catch (Exception ex)
