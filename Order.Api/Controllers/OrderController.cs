@@ -8,9 +8,11 @@ using Microsoft.IdentityModel.Tokens;
 using Order.Common.Resources;
 using Order.Application.Models.ViewModels;
 using Order.Application.Features.Commands;
+using Microsoft.AspNetCore.Cors;
 
 namespace Order.Controllers
 {
+    [EnableCors("AllowAll")]
     public class OrderController : APIControllerBase
     {
         private readonly ILogger<OrderController> _logger;
