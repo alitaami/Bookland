@@ -83,12 +83,13 @@ namespace WebFramework.Configuration
             {
                 options.AddDefaultPolicy(builder =>
                 {
-                    builder.AllowAnyOrigin()
+                    builder.WithOrigins("http://localhost:3000")
                            .AllowAnyMethod()
                            .AllowAnyHeader();
                 });
             });
         }
+
         private static void AddAuthentication(WebApplicationBuilder builder)
         {
             builder.Services.AddAuthentication(options =>
