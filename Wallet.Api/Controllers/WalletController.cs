@@ -20,7 +20,6 @@ using Microsoft.AspNetCore.Cors;
 
 namespace Wallet.Api.Controllers
 {
-    [EnableCors("AllowAll")]
     public class WalletController : APIControllerBase
     {
         private readonly ILogger<WalletController> _logger;

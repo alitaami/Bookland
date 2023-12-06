@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Cors;
 
 namespace Order.Controllers
 {
-    [EnableCors("AllowAll")]
     public class OrderController : APIControllerBase
     {
         private readonly ILogger<OrderController> _logger;
