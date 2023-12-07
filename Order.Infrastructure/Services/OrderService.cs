@@ -176,9 +176,13 @@ namespace Wallet.Infrastructure.Services
                             if (result < newPrice)
                                 return BadRequest(ErrorCodeEnum.WalletAmountError, Resource.WalletAmountError, null);
 
+                            string bookQuery = "SELECT bookname FROM public.books WHERE id = @BookId";
+
+                            var bookName = await dbConnection.ExecuteScalarAsync<string>(bookQuery, new { BookId = model.BookId });
+
                             string query1 = @"
                             INSERT INTO public.walletactions (actiontypeid, userid, amount, issuccessful, description, createddate)
-                            VALUES (2, @UserId, @Amount, true, 'خرید کتاب با شناسه ' || @BookId ,CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
+                            VALUES (2, @UserId, @Amount, true, 'خرید کتاب  ' || @BookName ,CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
 
                             // Query to add books to userBooks
                             string query2 = "INSERT INTO public.userbooks (bookid, userid, boughttime) VALUES (@BookId, @UserId, CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
@@ -191,7 +195,7 @@ namespace Wallet.Infrastructure.Services
                             string combinedQuery = $"{query1}; {query2}; {query3}; {query4}";
 
                             // Execute the combined query within the transaction
-                            await dbConnection.ExecuteAsync(combinedQuery, new { UserId = userId, BookId = model.BookId, Amount = newPrice, DiscountId = model.DiscountId }, transaction);
+                            await dbConnection.ExecuteAsync(combinedQuery, new { UserId = userId, BookId = model.BookId, Amount = newPrice, DiscountId = model.DiscountId , BookName = bookName }, transaction);
 
                             transaction.Commit();  // Commit the transaction if everything is successful
                             return Ok();
@@ -212,9 +216,13 @@ namespace Wallet.Infrastructure.Services
                             if (result < amount)
                                 return BadRequest(ErrorCodeEnum.WalletAmountError, Resource.WalletAmountError, null);
 
+                            string bookQuery = "SELECT bookname FROM public.books WHERE id = @BookId";
+
+                            var bookName = await dbConnection.ExecuteScalarAsync<string>(bookQuery, new { BookId = model.BookId });
+
                             string query1 = @"
                             INSERT INTO public.walletactions (actiontypeid, userid, amount, issuccessful, description, createddate)
-                            VALUES (2, @UserId, @Amount, true, 'خرید کتاب با شناسه ' || @BookId ,CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
+                            VALUES (2, @UserId, @Amount, true, 'خرید کتاب  ' || @BookName ,CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
 
                             // Query to add books to userBooks
                             string query2 = "INSERT INTO public.userbooks (bookid, userid, boughttime) VALUES (@BookId, @UserId, CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
@@ -222,7 +230,7 @@ namespace Wallet.Infrastructure.Services
                             // Combine both queries into a single command
                             string combinedQuery = $"{query1}; {query2};";
 
-                            await dbConnection.ExecuteAsync(combinedQuery, new { UserId = userId, BookId = model.BookId, Amount = amount }, transaction);
+                            await dbConnection.ExecuteAsync(combinedQuery, new { UserId = userId, BookId = model.BookId, Amount = amount, BookName = bookName }, transaction);
 
                             transaction.Commit();  // Commit the transaction if everything is successful
                             return Ok();
