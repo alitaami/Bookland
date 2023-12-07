@@ -51,7 +51,7 @@ namespace Wallet.Infrastructure.Services
                     // Calculate new price
                     var newPrice = amount * (100 - discountInfo.percent) / 100;
 
-                    return Ok(new { DiscountId = discountInfo.id, NewPrice = newPrice , Percent = discountInfo.percent });
+                    return Ok(new { DiscountId = discountInfo.id, NewPrice = newPrice, Percent = discountInfo.percent });
                 }
             }
             catch (Exception ex)
@@ -163,11 +163,13 @@ namespace Wallet.Infrastructure.Services
                             decimal newPrice = (100 - percent) * amount / 100;
 
                             // Query to calculate the sum of the amount for a user
+                            // Query to calculate the sum of the amount for a user
                             string query = @"
-                            SELECT 
-                            COALESCE(SUM(CASE WHEN actiontypeid = 1 THEN amount ELSE 0 END), 0) -
-                            COALESCE(SUM(CASE WHEN actiontypeid = 2 THEN amount ELSE 0 END), 0) AS total_amount
-                            FROM public.walletactions
+                            SELECT
+                            SUM(CASE WHEN actiontypeid = 1 AND issuccessful = true THEN amount ELSE 0 END) -
+                            SUM(CASE WHEN actiontypeid = 2 AND issuccessful = true THEN amount ELSE 0 END) AS balance
+                            FROM
+                            public.walletactions
                             WHERE userid = @UserId";
 
                             // Execute the query
@@ -195,7 +197,7 @@ namespace Wallet.Infrastructure.Services
                             string combinedQuery = $"{query1}; {query2}; {query3}; {query4}";
 
                             // Execute the combined query within the transaction
-                            await dbConnection.ExecuteAsync(combinedQuery, new { UserId = userId, BookId = model.BookId, Amount = newPrice, DiscountId = model.DiscountId , BookName = bookName }, transaction);
+                            await dbConnection.ExecuteAsync(combinedQuery, new { UserId = userId, BookId = model.BookId, Amount = newPrice, DiscountId = model.DiscountId, BookName = bookName }, transaction);
 
                             transaction.Commit();  // Commit the transaction if everything is successful
                             return Ok();
@@ -204,10 +206,11 @@ namespace Wallet.Infrastructure.Services
                         {
                             // Query to calculate the sum of the amount for a user
                             string query = @"
-                            SELECT 
-                            COALESCE(SUM(CASE WHEN actiontypeid = 1 THEN amount ELSE 0 END), 0) -
-                            COALESCE(SUM(CASE WHEN actiontypeid = 2 THEN amount ELSE 0 END), 0) AS total_amount
-                            FROM public.walletactions
+                            SELECT
+                            SUM(CASE WHEN actiontypeid = 1 AND issuccessful = true THEN amount ELSE 0 END) -
+                            SUM(CASE WHEN actiontypeid = 2 AND issuccessful = true THEN amount ELSE 0 END) AS balance
+                            FROM
+                            public.walletactions
                             WHERE userid = @UserId";
 
                             // Execute the query
@@ -246,7 +249,7 @@ namespace Wallet.Infrastructure.Services
             }
         }
 
-        private async Task<ServiceResult> WelcomeCodeCheck(string? code, int? discountId,int userId)
+        private async Task<ServiceResult> WelcomeCodeCheck(string? code, int? discountId, int userId)
         {
             using (IDbConnection dbConnection = _Context.Connection)
             {
@@ -289,7 +292,7 @@ namespace Wallet.Infrastructure.Services
                 {
                     dbConnection.Open();
 
-                    var welcomecodeCheck = await WelcomeCodeCheck(code, discountId,userId);
+                    var welcomecodeCheck = await WelcomeCodeCheck(code, discountId, userId);
 
                     if (welcomecodeCheck.Result.Http_Status_Code != (int)HttpStatusCode.OK)
                     {
