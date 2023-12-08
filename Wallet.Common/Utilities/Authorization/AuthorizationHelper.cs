@@ -1,5 +1,6 @@
 ﻿using Entities.Base;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.Net;
 using Wallet.Common.Resources;
 using Wallet.Common.Utilities.Authorization;
@@ -11,35 +12,59 @@ public static class AuthorizationHelper
         userId = null;
 
         if (string.IsNullOrEmpty(authorizationHeader))
-            return Unauthorized(ErrorCodeEnum.BadGateway, Resource.AuthorizationHeaderMissing);
+            return Unauthorized(ErrorCodeEnum.AuthorizationHeaderMissing, Resource.AuthorizationHeaderMissing);
 
         string[] jwtToken = authorizationHeader.Split(" ");
 
         if (jwtToken.Length != 2 || jwtToken[0] != "Bearer" || jwtToken[1] is null)
-            return Unauthorized(ErrorCodeEnum.BadGateway, Resource.TokenTypeError);
+            return Unauthorized(ErrorCodeEnum.TokenTypeError, Resource.TokenTypeError);
 
-        userId = JwtTokenHelper.GetUserIdByClaim(jwtToken[1]);
-        string roleIdOfUser = JwtTokenHelper.GetUserRoleIdByClaim(jwtToken[1]);
-        DateTime? expTime = JwtTokenHelper.GetExpirationTime(jwtToken[1]);
+        // Extract the token without the "Bearer" prefix
+        string token = jwtToken[1].Trim(); // Trim leading and trailing whitespaces
 
-        if (!expTime.HasValue)
-            return Unauthorized(ErrorCodeEnum.JwtTimeIsNull, Resource.JwtExpTimeClaimMissing);
+        try
+        {
+            userId = JwtTokenHelper.GetUserIdByClaim(token);
+            string roleIdOfUser = JwtTokenHelper.GetUserRoleIdByClaim(token);
+            DateTime? expTime = JwtTokenHelper.GetExpirationTime(token);
 
-        if (expTime.Value < DateTime.UtcNow)
-            return Unauthorized(ErrorCodeEnum.JwtExpired, Resource.JwtTokenExpired);
+            // Rest of your validation logic...
 
-        if (roleIdOfUser is null)
-            return Unauthorized(ErrorCodeEnum.BadGateway, Resource.RoleIdClaimMissing);
+            if (!expTime.HasValue)
+                return Unauthorized(ErrorCodeEnum.JwtTimeIsNull, Resource.JwtExpTimeClaimMissing);
 
-        if (userId is null)
-            return Unauthorized(ErrorCodeEnum.BadGateway, Resource.UserIdClaimMissing);
+            if (expTime.Value < DateTime.UtcNow)
+                return Unauthorized(ErrorCodeEnum.JwtExpired, Resource.JwtTokenExpired);
 
-        int role_Id = int.Parse(roleIdOfUser);
+            if (roleIdOfUser is null)
+                return Unauthorized(ErrorCodeEnum.RoleIdClaimMissing, Resource.RoleIdClaimMissing);
 
-        if (role_Id != roleId)
-            return Forbidden(ErrorCodeEnum.PermissionDenied, Resource.RoleDoesNotMatchUser);
+            if (userId is null)
+                return Unauthorized(ErrorCodeEnum.UserIdClaimMissing, Resource.UserIdClaimMissing);
 
-        return null; // Indicates successful validation 
+            int role_Id = int.Parse(roleIdOfUser);
+
+            if (role_Id != roleId)
+                return Forbidden(ErrorCodeEnum.PermissionDenied, Resource.RoleDoesNotMatchUser);
+
+            return null; // Indicates successful validation 
+        }
+        catch (Exception ex)
+        {
+            // Handle the exception
+            // You can log the exception or return a specific error response
+            return HandleTokenException(ex);
+        }
+    }
+
+    private static IActionResult HandleTokenException(Exception ex)
+    {
+        // Log the exception
+        // You can customize this method based on your error handling strategy
+        return new ObjectResult(new ServiceResult(null, new ApiResult(HttpStatusCode.Unauthorized, ErrorCodeEnum.UnAuthorized, Resource.LoginAgain, null)))
+        {
+            StatusCode = (int)HttpStatusCode.Unauthorized
+        };
     }
 
     private static IActionResult Unauthorized(ErrorCodeEnum errorCode, string errorMessage)

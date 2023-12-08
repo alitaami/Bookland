@@ -70,11 +70,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to جهت فعالسازی حساب کاربری خود رو لینک زیر کلیک کنید.
+        /// </summary>
+        public static string ActivateAccount1 {
+            get {
+                return ResourceManager.GetString("ActivateAccount1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to فعالسازی حساب کاربری.
         /// </summary>
         public static string ActivateAccountSubject {
             get {
                 return ResourceManager.GetString("ActivateAccountSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to فعالسازی حساب کاربری.
+        /// </summary>
+        public static string ActivateAccountSubject1 {
+            get {
+                return ResourceManager.GetString("ActivateAccountSubject1", resourceCulture);
             }
         }
         
@@ -88,11 +106,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to آگهی ای با این نام موجود است.
+        /// </summary>
+        public static string AdExists1 {
+            get {
+                return ResourceManager.GetString("AdExists1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to آگهی ای یافت نشد.
         /// </summary>
         public static string AdveriseNotFound {
             get {
                 return ResourceManager.GetString("AdveriseNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to آگهی ای یافت نشد.
+        /// </summary>
+        public static string AdveriseNotFound1 {
+            get {
+                return ResourceManager.GetString("AdveriseNotFound1", resourceCulture);
             }
         }
         
@@ -106,11 +142,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to برای بازدید از این ملک چنین روزی تعیین نشده است .
+        /// </summary>
+        public static string AdvertiseDayNotMatch1 {
+            get {
+                return ResourceManager.GetString("AdvertiseDayNotMatch1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to سن نباید کمتر از 18 باشد.
         /// </summary>
         public static string AgeError {
             get {
                 return ResourceManager.GetString("AgeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to سن نباید کمتر از 18 باشد.
+        /// </summary>
+        public static string AgeError1 {
+            get {
+                return ResourceManager.GetString("AgeError1", resourceCulture);
             }
         }
         
@@ -124,11 +178,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to تلفن همراه ،ایمیل و یا نام کاربری تکراریست!.
+        /// </summary>
+        public static string AlreadyExists1 {
+            get {
+                return ResourceManager.GetString("AlreadyExists1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تلفن همراه ، نام کاربری ،ایمیل و یا کد املاک تکراریست!.
         /// </summary>
         public static string AlreadyExists2 {
             get {
                 return ResourceManager.GetString("AlreadyExists2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تلفن همراه ، نام کاربری ،ایمیل و یا کد املاک تکراریست!.
+        /// </summary>
+        public static string AlreadyExists21 {
+            get {
+                return ResourceManager.GetString("AlreadyExists21", resourceCulture);
             }
         }
         
@@ -142,11 +214,47 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مبلغ وارد شده نباید کمتر از 5000 و یا بیشتر از 200000 تومان باشد.
+        /// </summary>
+        public static string AmountError1 {
+            get {
+                return ResourceManager.GetString("AmountError1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to برای دسترسی به این بخش باید لاگین شده باشید.
         /// </summary>
         public static string AuthorizationHeaderMissing {
             get {
                 return ResourceManager.GetString("AuthorizationHeaderMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to برای دسترسی به این بخش باید لاگین شده باشید.
+        /// </summary>
+        public static string AuthorizationHeaderMissing1 {
+            get {
+                return ResourceManager.GetString("AuthorizationHeaderMissing1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to چنین کتابی وجود ندارد!.
+        /// </summary>
+        public static string BookNotFound {
+            get {
+                return ResourceManager.GetString("BookNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to این کتاب توسط شما خریداری شده است!.
+        /// </summary>
+        public static string BookPurchased {
+            get {
+                return ResourceManager.GetString("BookPurchased", resourceCulture);
             }
         }
         
@@ -160,11 +268,65 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Receivers.
+        /// </summary>
+        public static string CacheKeyOfReceivers1 {
+            get {
+                return ResourceManager.GetString("CacheKeyOfReceivers1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کد تخفیف وارد شده منقضی شده است.
+        /// </summary>
+        public static string CodeExpired {
+            get {
+                return ResourceManager.GetString("CodeExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عداد دفعات استفاده از کد تخفیف وارد شده تمام شده است.
+        /// </summary>
+        public static string CodeFinished {
+            get {
+                return ResourceManager.GetString("CodeFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کد تخفیف وارد شده موجود نیست.
+        /// </summary>
+        public static string CodeNotFound {
+            get {
+                return ResourceManager.GetString("CodeNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کد وارد شده توسط شما استفاده شده است!.
+        /// </summary>
+        public static string CodeUsed {
+            get {
+                return ResourceManager.GetString("CodeUsed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تایید درخواست بازدید از ملک.
         /// </summary>
         public static string ConfirmVisit {
             get {
                 return ResourceManager.GetString("ConfirmVisit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تایید درخواست بازدید از ملک.
+        /// </summary>
+        public static string ConfirmVisit1 {
+            get {
+                return ResourceManager.GetString("ConfirmVisit1", resourceCulture);
             }
         }
         
@@ -178,11 +340,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مشکلی در ثبت به وجود آمده است!!.
+        /// </summary>
+        public static string CreateError1 {
+            get {
+                return ResourceManager.GetString("CreateError1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to این روز برای آگهی شما ثبت شده است.
         /// </summary>
         public static string DaysExists {
             get {
                 return ResourceManager.GetString("DaysExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to این روز برای آگهی شما ثبت شده است.
+        /// </summary>
+        public static string DaysExists1 {
+            get {
+                return ResourceManager.GetString("DaysExists1", resourceCulture);
             }
         }
         
@@ -196,11 +376,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مشکلی در حذف به وجود آمده است!!.
+        /// </summary>
+        public static string DeleteError1 {
+            get {
+                return ResourceManager.GetString("DeleteError1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to مشکلی در شارژ کیف پول شما به وجود آمده  است ، مجددا تلاش کنید.
         /// </summary>
         public static string DepositFail {
             get {
                 return ResourceManager.GetString("DepositFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مشکلی در شارژ کیف پول شما به وجود آمده  است ، مجددا تلاش کنید.
+        /// </summary>
+        public static string DepositFail1 {
+            get {
+                return ResourceManager.GetString("DepositFail1", resourceCulture);
             }
         }
         
@@ -214,11 +412,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to رکوردی برای نمایش وجود ندارد.
+        /// </summary>
+        public static string EmailRecordNull1 {
+            get {
+                return ResourceManager.GetString("EmailRecordNull1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ایمیل های اطلاع رسانی ارسال شدند.
         /// </summary>
         public static string EmailsSent {
             get {
                 return ResourceManager.GetString("EmailsSent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ایمیل های اطلاع رسانی ارسال شدند.
+        /// </summary>
+        public static string EmailsSent1 {
+            get {
+                return ResourceManager.GetString("EmailsSent1", resourceCulture);
             }
         }
         
@@ -241,6 +457,24 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مورد تایید قرار گرفت.
+        /// </summary>
+        public static string EmailSubject1_11 {
+            get {
+                return ResourceManager.GetString("EmailSubject1-11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to درخواست بازدید شما از ملک آگهی شده.
+        /// </summary>
+        public static string EmailSubject11 {
+            get {
+                return ResourceManager.GetString("EmailSubject11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to درخواست بازدید از ملک آگهی شده شما، توسط .
         /// </summary>
         public static string EmailSubject2 {
@@ -259,11 +493,38 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to برای شما ارسال شده است.
+        /// </summary>
+        public static string EmailSubject2_11 {
+            get {
+                return ResourceManager.GetString("EmailSubject2-11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to درخواست بازدید از ملک آگهی شده شما، توسط .
+        /// </summary>
+        public static string EmailSubject21 {
+            get {
+                return ResourceManager.GetString("EmailSubject21", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to پارامترهای ارسالی را کامل و صحیح وارد کنید..
         /// </summary>
         public static string EnterParametersCorrectlyAndCompletely {
             get {
                 return ResourceManager.GetString("EnterParametersCorrectlyAndCompletely", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to پارامترهای ارسالی را کامل و صحیح وارد کنید..
+        /// </summary>
+        public static string EnterParametersCorrectlyAndCompletely1 {
+            get {
+                return ResourceManager.GetString("EnterParametersCorrectlyAndCompletely1", resourceCulture);
             }
         }
         
@@ -277,11 +538,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to اطلاعات املاک نمیتواند خالی باشد.
+        /// </summary>
+        public static string EstateInfo1 {
+            get {
+                return ResourceManager.GetString("EstateInfo1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to مدت زمان در نظر گرفته شده منقضی شده است.
         /// </summary>
         public static string ExpiredDate {
             get {
                 return ResourceManager.GetString("ExpiredDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مدت زمان در نظر گرفته شده منقضی شده است.
+        /// </summary>
+        public static string ExpiredDate1 {
+            get {
+                return ResourceManager.GetString("ExpiredDate1", resourceCulture);
             }
         }
         
@@ -295,11 +574,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to جهت بازیابی رمزعبور کد ذیل را در فیلد مربوطه وارد کنید.دقت شود که این کد تا 5 دقیقه معتبر است.
+        /// </summary>
+        public static string ForgotPassword11 {
+            get {
+                return ResourceManager.GetString("ForgotPassword11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to لطفا مجددا تلاش کنید.
         /// </summary>
         public static string GeneralErrorTryAgain {
             get {
                 return ResourceManager.GetString("GeneralErrorTryAgain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to لطفا مجددا تلاش کنید.
+        /// </summary>
+        public static string GeneralErrorTryAgain1 {
+            get {
+                return ResourceManager.GetString("GeneralErrorTryAgain1", resourceCulture);
             }
         }
         
@@ -313,11 +610,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to عکس وارد شود.
+        /// </summary>
+        public static string ImageRequired1 {
+            get {
+                return ResourceManager.GetString("ImageRequired1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The response has already started, the http status code middleware will not be executed..
         /// </summary>
         public static string InvalidOperationException {
             get {
                 return ResourceManager.GetString("InvalidOperationException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The response has already started, the http status code middleware will not be executed..
+        /// </summary>
+        public static string InvalidOperationException1 {
+            get {
+                return ResourceManager.GetString("InvalidOperationException1", resourceCulture);
             }
         }
         
@@ -331,11 +646,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to حساب کاربری شما فعال شده است.
+        /// </summary>
+        public static string IsActive1 {
+            get {
+                return ResourceManager.GetString("IsActive1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تکراری میباشد.
         /// </summary>
         public static string IsExists {
             get {
                 return ResourceManager.GetString("IsExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تکراری میباشد.
+        /// </summary>
+        public static string IsExists1 {
+            get {
+                return ResourceManager.GetString("IsExists1", resourceCulture);
             }
         }
         
@@ -349,11 +682,38 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to زمان انقضایی برای توکن ارسالی وجود ندارد.
+        /// </summary>
+        public static string JwtExpTimeClaimMissing1 {
+            get {
+                return ResourceManager.GetString("JwtExpTimeClaimMissing1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to توکن ارسالی منقضی شذه است دوباره لاگین شوید.
         /// </summary>
         public static string JwtTokenExpired {
             get {
                 return ResourceManager.GetString("JwtTokenExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to توکن ارسالی منقضی شذه است دوباره لاگین شوید.
+        /// </summary>
+        public static string JwtTokenExpired1 {
+            get {
+                return ResourceManager.GetString("JwtTokenExpired1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کاربر عزیز لطفا مجددا لاگین شوید.
+        /// </summary>
+        public static string LoginAgain {
+            get {
+                return ResourceManager.GetString("LoginAgain", resourceCulture);
             }
         }
         
@@ -367,11 +727,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ارور در Mapping رخ داده است.
+        /// </summary>
+        public static string MapingError1 {
+            get {
+                return ResourceManager.GetString("MapingError1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to پرسنلی برای ارسال ایمیل وجود ندارد.
         /// </summary>
         public static string NewsReceiverError {
             get {
                 return ResourceManager.GetString("NewsReceiverError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to پرسنلی برای ارسال ایمیل وجود ندارد.
+        /// </summary>
+        public static string NewsReceiverError1 {
+            get {
+                return ResourceManager.GetString("NewsReceiverError1", resourceCulture);
             }
         }
         
@@ -385,11 +763,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to یافت نشد.
+        /// </summary>
+        public static string NotFound1 {
+            get {
+                return ResourceManager.GetString("NotFound1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to فیلد مربوطه نباید خالی باشد.
         /// </summary>
         public static string NullField {
             get {
                 return ResourceManager.GetString("NullField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to فیلد مربوطه نباید خالی باشد.
+        /// </summary>
+        public static string NullField1 {
+            get {
+                return ResourceManager.GetString("NullField1", resourceCulture);
             }
         }
         
@@ -403,11 +799,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to رمز عبور قبلی نادرست است.
+        /// </summary>
+        public static string PasswordDoesntMatch1 {
+            get {
+                return ResourceManager.GetString("PasswordDoesntMatch1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to رمز عبور نباید کمتر از 8 حرف باشد.
         /// </summary>
         public static string PasswordMin {
             get {
                 return ResourceManager.GetString("PasswordMin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to رمز عبور نباید کمتر از 8 حرف باشد.
+        /// </summary>
+        public static string PasswordMin1 {
+            get {
+                return ResourceManager.GetString("PasswordMin1", resourceCulture);
             }
         }
         
@@ -421,11 +835,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to رمزعبور باید شامل اعداد ، حروف کوچک و بزرگ و حروف خاص باشد.
+        /// </summary>
+        public static string PasswordQuality1 {
+            get {
+                return ResourceManager.GetString("PasswordQuality1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to رمزعبور باید شامل حروف خاص باشد.
         /// </summary>
         public static string PasswordUnique {
             get {
                 return ResourceManager.GetString("PasswordUnique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to رمزعبور باید شامل حروف خاص باشد.
+        /// </summary>
+        public static string PasswordUnique1 {
+            get {
+                return ResourceManager.GetString("PasswordUnique1", resourceCulture);
             }
         }
         
@@ -439,11 +871,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to بازیابی رمز عبور.
+        /// </summary>
+        public static string RecoveryPassword1 {
+            get {
+                return ResourceManager.GetString("RecoveryPassword1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to شما قبلا درخواستی برای بازدید از این ملک ارسال کرده اید.
         /// </summary>
         public static string RequestExists {
             get {
                 return ResourceManager.GetString("RequestExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شما قبلا درخواستی برای بازدید از این ملک ارسال کرده اید.
+        /// </summary>
+        public static string RequestExists1 {
+            get {
+                return ResourceManager.GetString("RequestExists1", resourceCulture);
             }
         }
         
@@ -457,11 +907,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to درخواست بازدید از ملک.
+        /// </summary>
+        public static string RequestVisit1 {
+            get {
+                return ResourceManager.GetString("RequestVisit1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to چنین دسترسی ای برای شما تعریف نشده است.
         /// </summary>
         public static string RoleDoesNotMatchUser {
             get {
                 return ResourceManager.GetString("RoleDoesNotMatchUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to چنین دسترسی ای برای شما تعریف نشده است.
+        /// </summary>
+        public static string RoleDoesNotMatchUser1 {
+            get {
+                return ResourceManager.GetString("RoleDoesNotMatchUser1", resourceCulture);
             }
         }
         
@@ -475,11 +943,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to نقش وارد شده تکراری میباشد.
+        /// </summary>
+        public static string RoleExist1 {
+            get {
+                return ResourceManager.GetString("RoleExist1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to RoleId در توکن ارسالی یافت نشد.
         /// </summary>
         public static string RoleIdClaimMissing {
             get {
                 return ResourceManager.GetString("RoleIdClaimMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RoleId در توکن ارسالی یافت نشد.
+        /// </summary>
+        public static string RoleIdClaimMissing1 {
+            get {
+                return ResourceManager.GetString("RoleIdClaimMissing1", resourceCulture);
             }
         }
         
@@ -493,11 +979,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to نقشی یافت نشد.
+        /// </summary>
+        public static string RoleNotFound1 {
+            get {
+                return ResourceManager.GetString("RoleNotFound1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to توکن امنیتی منقضی شده است.
         /// </summary>
         public static string SecurityTokenExpiredException {
             get {
                 return ResourceManager.GetString("SecurityTokenExpiredException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to توکن امنیتی منقضی شده است.
+        /// </summary>
+        public static string SecurityTokenExpiredException1 {
+            get {
+                return ResourceManager.GetString("SecurityTokenExpiredException1", resourceCulture);
             }
         }
         
@@ -511,11 +1015,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to به دلیل نقض محدودیت کلید خارجی امکان درج یا آپدیت وجود ندارد.
+        /// </summary>
+        public static string SqlForeignKeyException1 {
+            get {
+                return ResourceManager.GetString("SqlForeignKeyException1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to به دلیل نقض یونیک بودن بعضی از فیلدها امکان اضافه شدن و یا اپدیت وجود ندارد.
         /// </summary>
         public static string SqlUpdateException {
             get {
                 return ResourceManager.GetString("SqlUpdateException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to به دلیل نقض یونیک بودن بعضی از فیلدها امکان اضافه شدن و یا اپدیت وجود ندارد.
+        /// </summary>
+        public static string SqlUpdateException1 {
+            get {
+                return ResourceManager.GetString("SqlUpdateException1", resourceCulture);
             }
         }
         
@@ -529,11 +1051,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to فرمت توکن ارسالی در هدر، صحیح نمیباشد.
+        /// </summary>
+        public static string TokenTypeError1 {
+            get {
+                return ResourceManager.GetString("TokenTypeError1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to دسترسی به این بخش بدون احراز هویت امکان پذیر نیست.
         /// </summary>
         public static string UnauthorizedAccessException {
             get {
                 return ResourceManager.GetString("UnauthorizedAccessException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to دسترسی به این بخش بدون احراز هویت امکان پذیر نیست.
+        /// </summary>
+        public static string UnauthorizedAccessException1 {
+            get {
+                return ResourceManager.GetString("UnauthorizedAccessException1", resourceCulture);
             }
         }
         
@@ -547,11 +1087,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مشکلی در بروزرسانی به وجود آمده است!!.
+        /// </summary>
+        public static string UpdateError1 {
+            get {
+                return ResourceManager.GetString("UpdateError1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to شناسه کاربری در توکن ارسالی یافت نشد.
         /// </summary>
         public static string UserIdClaimMissing {
             get {
                 return ResourceManager.GetString("UserIdClaimMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شناسه کاربری در توکن ارسالی یافت نشد.
+        /// </summary>
+        public static string UserIdClaimMissing1 {
+            get {
+                return ResourceManager.GetString("UserIdClaimMissing1", resourceCulture);
             }
         }
         
@@ -565,11 +1123,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to حساب کاربری شما فعال نیست.
+        /// </summary>
+        public static string UserIsNotActive1 {
+            get {
+                return ResourceManager.GetString("UserIsNotActive1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ایجاد کننده آگهی نمیتواند برای آگهی خود درخواست بازدید بفرستد.
         /// </summary>
         public static string UserRequestError {
             get {
                 return ResourceManager.GetString("UserRequestError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ایجاد کننده آگهی نمیتواند برای آگهی خود درخواست بازدید بفرستد.
+        /// </summary>
+        public static string UserRequestError1 {
+            get {
+                return ResourceManager.GetString("UserRequestError1", resourceCulture);
             }
         }
         
@@ -583,6 +1159,42 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to این نقش قبلا به این کاربر نسبت داده شده است.
+        /// </summary>
+        public static string UserRoleExist1 {
+            get {
+                return ResourceManager.GetString("UserRoleExist1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to موجودی کیف پول شما برای خرید این کتاب کافی نیست!.
+        /// </summary>
+        public static string WalletAmountError {
+            get {
+                return ResourceManager.GetString("WalletAmountError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to استفاده از این کد صرفا برای خرید اول کاربر در نظر گرفته شده است!.
+        /// </summary>
+        public static string WelcomeCodeError {
+            get {
+                return ResourceManager.GetString("WelcomeCodeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to welcome.
+        /// </summary>
+        public static string WelcomeDiscountCode {
+            get {
+                return ResourceManager.GetString("WelcomeDiscountCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to چنین آگهی ای برای این شخص تعریف نشده است.
         /// </summary>
         public static string WrongAdvertise {
@@ -592,11 +1204,29 @@ namespace Wallet.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to چنین آگهی ای برای این شخص تعریف نشده است.
+        /// </summary>
+        public static string WrongAdvertise1 {
+            get {
+                return ResourceManager.GetString("WrongAdvertise1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to روز های هفته باید شامل شنبه تا جمعه باشند.
         /// </summary>
         public static string WrongDaySelected {
             get {
                 return ResourceManager.GetString("WrongDaySelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to روز های هفته باید شامل شنبه تا جمعه باشند.
+        /// </summary>
+        public static string WrongDaySelected1 {
+            get {
+                return ResourceManager.GetString("WrongDaySelected1", resourceCulture);
             }
         }
     }

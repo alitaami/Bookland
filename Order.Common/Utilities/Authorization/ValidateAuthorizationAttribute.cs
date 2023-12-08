@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Security.Claims;
+using Order.Common.Resources;
 
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = true)]
 public class ValidateAuthorizationAttribute : Attribute, IAsyncAuthorizationFilter
@@ -38,7 +39,7 @@ public class ValidateAuthorizationAttribute : Attribute, IAsyncAuthorizationFilt
         catch (Exception ex)
         {
             // Handle unexpected exceptions
-            context.Result = new ObjectResult(new ServiceResult(null, new ApiResult(HttpStatusCode.Unauthorized, ErrorCodeEnum.UnAuthorized, ex.Message, null)))
+            context.Result = new ObjectResult(new ServiceResult(null, new ApiResult(HttpStatusCode.Unauthorized, ErrorCodeEnum.UnAuthorized, Resource.LoginAgain, null)))
             {
                 StatusCode = (int)HttpStatusCode.Unauthorized
             };

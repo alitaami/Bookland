@@ -50,13 +50,24 @@ namespace Entities.Base
         DatabaseWriteError = 21,
         DatabaseConnectionError = 22,
         NullField = 23,
-        PermissionDenied =24,
-        JwtExpired =25,
-        JwtTimeIsNull =26,
-        AmountError =27,
-        DepositError =28
+        PermissionDenied = 24,
+        JwtExpired = 25,
+        JwtTimeIsNull = 26,
+        AmountError = 27,
+        DepositError = 28,
+        CodeNotFound = 29,
+        CodeUsed = 30,
+        CodeExpired = 31,
+        CodeFinished = 32,
+        WalletAmountError = 33,
+        BookNotFound = 34,
+        BookPurchased = 35,
+        WelcomeCodeError = 36,
+        AuthorizationHeaderMissing = 37,
+        TokenTypeError = 38,
+        RoleIdClaimMissing = 39,
+        UserIdClaimMissing = 40
     }
-
     public class FieldErrorItem
     {
         public FieldErrorItem(string fieldName, List<string> fieldError)

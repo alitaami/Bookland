@@ -61,7 +61,7 @@ public static class AuthorizationHelper
     {
         // Log the exception
         // You can customize this method based on your error handling strategy
-        return new ObjectResult(new ServiceResult(null, new ApiResult(HttpStatusCode.Unauthorized, ErrorCodeEnum.UnAuthorized, ex.Message, null)))
+        return new ObjectResult(new ServiceResult(null, new ApiResult(HttpStatusCode.Unauthorized, ErrorCodeEnum.UnAuthorized, Resource.LoginAgain, null)))
         {
             StatusCode = (int)HttpStatusCode.Unauthorized
         };

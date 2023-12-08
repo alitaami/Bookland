@@ -412,6 +412,15 @@ namespace Order.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to کاربر عزیز لطفا مجددا لاگین شوید.
+        /// </summary>
+        public static string LoginAgain {
+            get {
+                return ResourceManager.GetString("LoginAgain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ارور در Mapping رخ داده است.
         /// </summary>
         public static string MapingError {

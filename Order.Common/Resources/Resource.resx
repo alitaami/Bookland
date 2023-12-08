@@ -234,6 +234,9 @@
   <data name="JwtTokenExpired" xml:space="preserve">
     <value>توکن ارسالی منقضی شذه است دوباره لاگین شوید</value>
   </data>
+  <data name="LoginAgain" xml:space="preserve">
+    <value>کاربر عزیز لطفا مجددا لاگین شوید</value>
+  </data>
   <data name="MapingError" xml:space="preserve">
     <value>ارور در Mapping رخ داده است</value>
   </data>
