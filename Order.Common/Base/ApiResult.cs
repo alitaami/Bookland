@@ -62,7 +62,11 @@ namespace Entities.Base
         WalletAmountError = 33,
         BookNotFound = 34,
         BookPurchased = 35,
-        WelcomeCodeError = 36
+        WelcomeCodeError = 36,
+        AuthorizationHeaderMissing = 37,
+        TokenTypeError = 38,
+        RoleIdClaimMissing = 39,
+        UserIdClaimMissing = 40
     }
 
     public class FieldErrorItem

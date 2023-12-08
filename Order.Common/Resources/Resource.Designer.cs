@@ -151,7 +151,7 @@ namespace Order.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to !چنین کتابی وجود ندارد.
+        ///   Looks up a localized string similar to چنین کتابی وجود ندارد!.
         /// </summary>
         public static string BookNotFound {
             get {
@@ -160,7 +160,7 @@ namespace Order.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to !این کتاب توسط شما خریداری شده است.
+        ///   Looks up a localized string similar to این کتاب توسط شما خریداری شده است!.
         /// </summary>
         public static string BookPurchased {
             get {
@@ -205,7 +205,7 @@ namespace Order.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to !کد وارد شده توسط شما استفاده شده است.
+        ///   Looks up a localized string similar to کد وارد شده توسط شما استفاده شده است!.
         /// </summary>
         public static string CodeUsed {
             get {
@@ -637,7 +637,7 @@ namespace Order.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to !موجودی کیف پول شما برای خرید این کتاب کافی نیست.
+        ///   Looks up a localized string similar to موجودی کیف پول شما برای خرید این کتاب کافی نیست!.
         /// </summary>
         public static string WalletAmountError {
             get {
@@ -646,7 +646,7 @@ namespace Order.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to !استفاده از این کد صرفا برای خرید اول کاربر در نظر گرفته شده است.
+        ///   Looks up a localized string similar to استفاده از این کد صرفا برای خرید اول کاربر در نظر گرفته شده است!.
         /// </summary>
         public static string WelcomeCodeError {
             get {

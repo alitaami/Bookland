@@ -38,7 +38,7 @@ public class ValidateAuthorizationAttribute : Attribute, IAsyncAuthorizationFilt
         catch (Exception ex)
         {
             // Handle unexpected exceptions
-            context.Result = new ObjectResult(new ServiceResult(null, new ApiResult(HttpStatusCode.Unauthorized, ErrorCodeEnum.InternalError, ex.Message, null)))
+            context.Result = new ObjectResult(new ServiceResult(null, new ApiResult(HttpStatusCode.Unauthorized, ErrorCodeEnum.UnAuthorized, ex.Message, null)))
             {
                 StatusCode = (int)HttpStatusCode.Unauthorized
             };
