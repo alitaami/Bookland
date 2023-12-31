@@ -9,6 +9,7 @@ In the diagram below, you can see the general architecture and different back-en
 As you see, I have developed Wallet service and Order-Discount service for this OnlineBookStore project.
 
 Wallet service : It is about charging wallets of customer and the publisher; I have used ZarinPalDemo Api for implementing this future. 
+
 Order-Discount : It is for purchasing books by users and calculating the invoice if they used any discount or if they did not used.
 
 You can build and run to test endpoints with this docker command in the path of the project : 
