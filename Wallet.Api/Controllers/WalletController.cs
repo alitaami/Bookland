@@ -34,6 +34,7 @@ namespace Wallet.Api.Controllers
             _sender = sender;
         }
 
+        #region UserWallet
         /// <summary>
         /// 
         /// </summary>
@@ -116,5 +117,90 @@ namespace Wallet.Api.Controllers
                 return InternalServerError(ErrorCodeEnum.InternalError, ex.Message);
             }
         }
+        #endregion
+        #region Publisher Wallet
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="authorizationHeader"></param>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        [Route("api/publisher/wallet/[action]")]
+        [HttpPost]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.InternalServerError)]
+        [ValidateAuthorization(1)] // Specify the required roleId
+        public async Task<IActionResult> ChargePublisherWallet([FromHeader(Name = "Authorization")] string authorizationHeader, [FromQuery] int amount)
+        {
+            try
+            {
+                // Use HttpContext.User.Claims to retrieve user claims
+                string userId = HttpContext.User?.Claims.FirstOrDefault(c => c.Type == "user_id")?.Value;
+
+                if (amount > 200000 || amount < 5000)
+                    return InternalServerError(ErrorCodeEnum.AmountError, Resource.AmountError);
+
+                var model = new ChargeWalletViewModel
+                {
+                    amount = amount,
+                    userId = int.Parse(userId)
+                };
+
+                var walletAction_Id = await _sender.Send(new ChargeWalletCommand(model));
+
+                int walletActionId = _mapper.Map<int>(walletAction_Id.Data);
+
+                #region ZarinPal Implementation
+                var payment = new ZarinpalSandbox.Payment(amount);
+                var res = payment.PaymentRequest("شارژ کیف پول", "http://localhost:3000/publisher/views/chargewallet");
+
+                if (res.Result.Status == 100)
+                {
+                    string authority = res.Result.Authority; // Remove leading zeros
+                    string baseUrl = "https://sandbox.zarinpal.com/pg/StartPay/";
+
+                    string redirectUrl = $"{baseUrl}{authority}?walletActionId={walletActionId}";
+
+                    ServiceResult result = new ServiceResult(redirectUrl, new ApiResult(HttpStatusCode.OK, ErrorCodeEnum.None, "", null));
+
+                    return APIResponse(result);
+                }
+                else
+                {
+                    return InternalServerError(ErrorCodeEnum.DepositError, Resource.DepositFail);
+                }
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, null, null);
+                return InternalServerError(ErrorCodeEnum.InternalError, ex.Message);
+            }
+        }
+
+        [Route("api/publisher/wallet/[action]")]
+        [HttpPut]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.InternalServerError)]
+        [ValidateAuthorization(1)] // Specify the required roleId
+        public async Task<IActionResult> UpdatePublisherWallet([FromHeader(Name = "Authorization")] string authorizationHeader, [FromQuery] int walletActionId)
+        {
+            try
+            {
+                var res = await _sender.Send(new UpdateWalletCommand(walletActionId));
+
+                return APIResponse(res);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, null, null);
+                return InternalServerError(ErrorCodeEnum.InternalError, ex.Message);
+            }
+        }
+        #endregion
     }
 }
