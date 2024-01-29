@@ -8,11 +8,11 @@ using Wallet.Common.Resources;
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = true)]
 public class ValidateAuthorizationAttribute : Attribute, IAsyncAuthorizationFilter
 {
-    private readonly int[] roleIds;
+    private readonly int roleId;
 
-    public ValidateAuthorizationAttribute(params int[] roleIds)
+    public ValidateAuthorizationAttribute(int roleId)
     {
-        this.roleIds = roleIds;
+        this.roleId = roleId;
     }
 
     public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
@@ -22,7 +22,7 @@ public class ValidateAuthorizationAttribute : Attribute, IAsyncAuthorizationFilt
 
         try
         {
-            IActionResult validationError = AuthorizationHelper.ValidateAuthorization(authorizationHeader, roleIds, out userId);
+            IActionResult validationError = AuthorizationHelper.ValidateAuthorization(authorizationHeader, roleId, out userId);
 
             if (validationError != null)
             {
@@ -46,4 +46,3 @@ public class ValidateAuthorizationAttribute : Attribute, IAsyncAuthorizationFilt
         }
     }
 }
-

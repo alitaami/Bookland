@@ -7,7 +7,7 @@ using Wallet.Common.Utilities.Authorization;
 
 public static class AuthorizationHelper
 {
-    public static IActionResult ValidateAuthorization(string authorizationHeader, int[] roleIds, out string userId)
+    public static IActionResult ValidateAuthorization(string authorizationHeader, int roleId, out string userId)
     {
         userId = null;
 
@@ -44,8 +44,7 @@ public static class AuthorizationHelper
 
             int role_Id = int.Parse(roleIdOfUser);
 
-            // Check if the user's role is in the allowed roleIds
-            if (!roleIds.Contains(role_Id))
+            if (role_Id != roleId)
                 return Forbidden(ErrorCodeEnum.PermissionDenied, Resource.RoleDoesNotMatchUser);
 
             return null; // Indicates successful validation 

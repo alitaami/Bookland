@@ -47,15 +47,13 @@ namespace Wallet.Api.Controllers
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.InternalServerError)]
-        [ValidateAuthorization(1,2)] // Specify the required roleId
+        [ValidateAuthorization(2)] // Specify the required roleId
         public async Task<IActionResult> ChargeUserWallet([FromHeader(Name = "Authorization")] string authorizationHeader, [FromQuery] int amount)
         {
             try
             {
-
                 // Use HttpContext.User.Claims to retrieve user claims
                 string userId = HttpContext.User?.Claims.FirstOrDefault(c => c.Type == "user_id")?.Value;
-                string roleId = HttpContext.User?.Claims.FirstOrDefault(c => c.Type == "role_id")?.Value;
 
                 if (amount > 200000 || amount < 5000)
                     return InternalServerError(ErrorCodeEnum.AmountError, Resource.AmountError);
@@ -72,15 +70,7 @@ namespace Wallet.Api.Controllers
 
                 #region ZarinPal Implementation
                 var payment = new ZarinpalSandbox.Payment(amount);
-
-                Task<ZarinpalSandbox.Models.PaymentRequestResponse> res =
-                    payment.PaymentRequest("شارژ کیف پول", "http://localhost:3000/user/wallet/");
-
-                if (roleId.Equals(1))
-                {
-                    res = payment.PaymentRequest("شارژ کیف پول", "http://localhost:3000/Publisher/views/ChargeWallet");
-
-                }
+                var res = payment.PaymentRequest("شارژ کیف پول", "http://localhost:3000/user/wallet/");
 
                 if (res.Result.Status == 100)
                 {
@@ -112,7 +102,7 @@ namespace Wallet.Api.Controllers
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.InternalServerError)]
-        [ValidateAuthorization(1,2)] // Specify the required roleId
+        [ValidateAuthorization(2)] // Specify the required roleId
         public async Task<IActionResult> UpdateUserWallet([FromHeader(Name = "Authorization")] string authorizationHeader, [FromQuery] int walletActionId)
         {
             try
