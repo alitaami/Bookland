@@ -3,7 +3,7 @@
 Welcome to BookLand, your premier destination for accessing a vast library of books and enjoying a seamless reading experience online. Our platform is designed to cater to book enthusiasts, providing a diverse collection of titles across various genres, authors, and languages.
 
 ## Screenshots
-For a visual overview of our platform's interface and features, please refer to the [Screenshots](./screenshots.md) section. Screenshots showcase different aspects of our online book reading platform, including the user interface, book browsing, and interactive features.
+For a visual overview of our platform's interface and features, please refer to the [Screenshots](https://github.com/ElyarSadig/BookLand_Microservice/blob/main/screenshots.md) section. Screenshots showcase different aspects of our online book reading platform, including the user interface, book browsing, and interactive features.
 
 You can view the presentation of BookLand
 [View Presentation Videos](https://drive.google.com/drive/folders/1Wje7X72HKo4F0SV681AvAFXqDRcHlkib)
