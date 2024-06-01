@@ -70,7 +70,7 @@ namespace Wallet.Api.Controllers
 
                 #region ZarinPal Implementation
                 var payment = new ZarinpalSandbox.Payment(amount);
-                var res = payment.PaymentRequest("شارژ کیف پول", "http://localhost:3000/user/wallet/");
+                var res = payment.PaymentRequest("شارژ کیف پول", "http://localhost:3000/wallet/");
 
                 if (res.Result.Status == 100)
                 {
