@@ -35,7 +35,7 @@ namespace Wallet.Infrastructure.Services
                     dbConnection.Open();
 
                     // Query to get discount information
-                    string query = "SELECT id , quantity, expiredate, percent FROM public.discounts WHERE code = @Code";
+                    string query = "SELECT id, quantity, expire_date, percent FROM discounts WHERE code = @Code";
 
                     // Execute the query
                     var discountInfo = await dbConnection.QueryFirstOrDefaultAsync(query, new { Code = code });
@@ -70,7 +70,7 @@ namespace Wallet.Infrastructure.Services
                     dbConnection.Open();
 
                     // Query to check if the book exists
-                    var bookCheckQuery = "SELECT 1 FROM public.books WHERE  id = @BookId AND isdelete=false ";
+                    var bookCheckQuery = "SELECT 1 FROM books WHERE id = @BookId AND is_delete = false";
 
                     // Execute the query
                     var bookCheck = await dbConnection.ExecuteScalarAsync<int?>(bookCheckQuery, new { BookId = bookId });
@@ -97,7 +97,7 @@ namespace Wallet.Infrastructure.Services
                     dbConnection.Open();
 
                     // Query to check if the user has purchased the book
-                    string query = "SELECT 1 FROM public.userbooks WHERE userid = @UserId AND bookid = @BookId";
+                    string query = "SELECT 1 FROM user_books WHERE user_id = @UserId AND book_id = @BookId";
 
                     // Execute the query
                     var result = await dbConnection.ExecuteScalarAsync<int?>(query, new { UserId = userId, BookId = bookId });
@@ -139,7 +139,7 @@ namespace Wallet.Infrastructure.Services
                             return BadRequest(ErrorCodeEnum.BookNotFound, Resource.BookNotFound, null);
 
                         // Query to get book amount
-                        string amountQuery = "SELECT price FROM public.books WHERE id = @BookId AND isdelete = false ";
+                        string amountQuery = "SELECT price FROM books WHERE id = @BookId AND is_delete = false";
 
                         // Execute the query
                         var amount = await dbConnection.ExecuteScalarAsync<decimal>(amountQuery, new { BookId = model.BookId });
@@ -152,7 +152,7 @@ namespace Wallet.Infrastructure.Services
                                 return validate;
 
                             // Query to get discount percentage
-                            string discountquery = "SELECT percent FROM public.discounts WHERE id = @DiscountId";
+                            string discountquery = "SELECT percent FROM discounts WHERE id = @DiscountId";
 
                             // Execute the query
                             var percent = await dbConnection.ExecuteScalarAsync<decimal>(discountquery, new { DiscountId = model.DiscountId });
@@ -165,12 +165,13 @@ namespace Wallet.Infrastructure.Services
                             // Query to calculate the sum of the amount for a user
                             // Query to calculate the sum of the amount for a user
                             string query = @"
-                            SELECT
-                            SUM(CASE WHEN actiontypeid = 1 AND issuccessful = true THEN amount ELSE 0 END) -
-                            SUM(CASE WHEN actiontypeid = 2 AND issuccessful = true THEN amount ELSE 0 END) AS balance
-                            FROM
-                            public.walletactions
-                            WHERE userid = @UserId";
+                                           SELECT
+                                               SUM(CASE WHEN action_type_id = 1 AND is_successful = true THEN amount ELSE 0 END) -
+                                               SUM(CASE WHEN action_type_id = 2 AND is_successful = true THEN amount ELSE 0 END) AS balance
+                                           FROM
+                                               wallet_actions
+                                           WHERE
+                                               user_id = @UserId";
 
                             // Execute the query
                             var result = await dbConnection.ExecuteScalarAsync<decimal>(query, new { UserId = userId });
@@ -178,20 +179,26 @@ namespace Wallet.Infrastructure.Services
                             if (result < newPrice)
                                 return BadRequest(ErrorCodeEnum.WalletAmountError, Resource.WalletAmountError, null);
 
-                            string bookQuery = "SELECT bookname FROM public.books WHERE id = @BookId";
+                            string bookQuery = "SELECT book_name FROM books WHERE id = @BookId";
 
                             var bookName = await dbConnection.ExecuteScalarAsync<string>(bookQuery, new { BookId = model.BookId });
 
                             string query1 = @"
-                            INSERT INTO public.walletactions (actiontypeid, userid, amount, issuccessful, description, createddate)
-                            VALUES (2, @UserId, @Amount, true, 'خرید کتاب  ' || @BookName ,CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
+                              INSERT INTO wallet_actions (action_type_id, user_id, amount, is_successful, description, created_date)
+                              VALUES (2, @UserId, @Amount, true, 'خرید کتاب ' || @BookName, CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
 
-                            // Query to add books to userBooks
-                            string query2 = "INSERT INTO public.userbooks (bookid, userid, boughttime) VALUES (@BookId, @UserId, CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
+                            string query2 = @"
+                              INSERT INTO user_books (book_id, user_id, bought_time)
+                              VALUES (@BookId, @UserId, CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
 
-                            string query3 = "INSERT INTO public.userdiscounts (discountid, userid) VALUES (@DiscountId, @UserId)";
+                            string query3 = @"
+                              INSERT INTO user_discounts (discount_id, user_id)
+                              VALUES (@DiscountId, @UserId)";
 
-                            string query4 = "UPDATE public.discounts SET quantity = quantity - 1 WHERE id = @DiscountId";
+                            string query4 = @"
+                              UPDATE discounts
+                              SET quantity = quantity - 1
+                              WHERE id = @DiscountId";
 
                             // Combine both queries into a single command
                             string combinedQuery = $"{query1}; {query2}; {query3}; {query4}";
@@ -206,12 +213,13 @@ namespace Wallet.Infrastructure.Services
                         {
                             // Query to calculate the sum of the amount for a user
                             string query = @"
-                            SELECT
-                            SUM(CASE WHEN actiontypeid = 1 AND issuccessful = true THEN amount ELSE 0 END) -
-                            SUM(CASE WHEN actiontypeid = 2 AND issuccessful = true THEN amount ELSE 0 END) AS balance
-                            FROM
-                            public.walletactions
-                            WHERE userid = @UserId";
+                                          SELECT
+                                              SUM(CASE WHEN action_type_id = 1 AND is_successful = true THEN amount ELSE 0 END) -
+                                              SUM(CASE WHEN action_type_id = 2 AND is_successful = true THEN amount ELSE 0 END) AS balance
+                                          FROM
+                                              wallet_actions
+                                          WHERE
+                                              user_id = @UserId";
 
                             // Execute the query
                             var result = await dbConnection.ExecuteScalarAsync<decimal>(query, new { UserId = userId });
@@ -219,16 +227,18 @@ namespace Wallet.Infrastructure.Services
                             if (result < amount)
                                 return BadRequest(ErrorCodeEnum.WalletAmountError, Resource.WalletAmountError, null);
 
-                            string bookQuery = "SELECT bookname FROM public.books WHERE id = @BookId";
+                            string bookQuery = "SELECT book_name FROM books WHERE id = @BookId";
 
                             var bookName = await dbConnection.ExecuteScalarAsync<string>(bookQuery, new { BookId = model.BookId });
 
                             string query1 = @"
-                            INSERT INTO public.walletactions (actiontypeid, userid, amount, issuccessful, description, createddate)
-                            VALUES (2, @UserId, @Amount, true, 'خرید کتاب  ' || @BookName ,CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
+                            INSERT INTO wallet_actions (action_type_id, user_id, amount, is_successful, description, created_date)
+                            VALUES (2, @UserId, @Amount, true, 'خرید کتاب ' || @BookName, CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
 
                             // Query to add books to userBooks
-                            string query2 = "INSERT INTO public.userbooks (bookid, userid, boughttime) VALUES (@BookId, @UserId, CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
+                            string query2 = @"
+                            INSERT INTO user_books (book_id, user_id, bought_time)
+                            VALUES (@BookId, @UserId, CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
 
                             // Combine both queries into a single command
                             string combinedQuery = $"{query1}; {query2};";
@@ -259,7 +269,7 @@ namespace Wallet.Infrastructure.Services
                 {
                     if (code == Resource.WelcomeDiscountCode)
                     {
-                        string query1 = "SELECT 1 FROM public.userbooks WHERE userid = @UserId";
+                        string query1 = "SELECT 1 FROM user_books WHERE user_id = @UserId";
 
                         // Execute the query
                         var userInfo = await dbConnection.QueryFirstOrDefaultAsync(query1, new { UserId = userId });
@@ -272,7 +282,7 @@ namespace Wallet.Infrastructure.Services
                 {
                     if (discountId == 1)
                     {
-                        string query1 = "SELECT 1 FROM public.userbooks WHERE userid = @UserId";
+                        string query1 = "SELECT 1 FROM user_books WHERE user_id = @UserId";
 
                         // Execute the query
                         var userInfo = await dbConnection.QueryFirstOrDefaultAsync(query1, new { UserId = userId });
@@ -303,7 +313,7 @@ namespace Wallet.Infrastructure.Services
                         if (discountId is null)
                         {
                             // Query to get discount information
-                            string query = "SELECT id, quantity, expiredate, percent FROM public.discounts WHERE code = @Code";
+                            string query = "SELECT id, quantity, expire_date, percent FROM discounts WHERE code = @Code";
 
                             // Execute the query
                             var discountInfo = await dbConnection.QueryFirstOrDefaultAsync(query, new { Code = code });
@@ -320,7 +330,7 @@ namespace Wallet.Infrastructure.Services
                                 return BadRequest(ErrorCodeEnum.CodeExpired, Resource.CodeExpired, null);
 
                             // Check if the discount is already used
-                            var isUsedQuery = "SELECT 1 FROM public.userdiscounts WHERE discountid = @DiscountId AND UserId = @userId";
+                            var isUsedQuery = "SELECT 1 FROM user_discounts WHERE discount_id = @DiscountId AND user_id = @UserId";
                             var isUsed = await dbConnection.ExecuteScalarAsync<int?>(isUsedQuery, new { DiscountId = discountInfo.id, UserId = userId });
 
                             if (isUsed != null)
@@ -331,7 +341,7 @@ namespace Wallet.Infrastructure.Services
                         else
                         {
                             // Query to get discount information
-                            string query = "SELECT id, quantity, expiredate, percent FROM public.discounts WHERE id = @DiscountId";
+                            string query = "SELECT id, quantity, expire_date, percent FROM discounts WHERE id = @DiscountId";
 
                             // Execute the query
                             var discountInfo = await dbConnection.QueryFirstOrDefaultAsync(query, new { DiscountId = discountId });
@@ -348,7 +358,7 @@ namespace Wallet.Infrastructure.Services
                                 return BadRequest(ErrorCodeEnum.CodeExpired, Resource.CodeExpired, null);
 
                             // Check if the discount is already used
-                            var isUsedQuery = "SELECT 1 FROM public.userdiscounts WHERE discountid = @DiscountId AND UserId = @userId";
+                            var isUsedQuery = "SELECT 1 FROM user_discounts WHERE discount_id = @DiscountId AND user_id = @userId";
                             var isUsed = await dbConnection.ExecuteScalarAsync<int?>(isUsedQuery, new { DiscountId = discountInfo.id, UserId = userId });
 
                             if (isUsed != null)
@@ -375,7 +385,7 @@ namespace Wallet.Infrastructure.Services
                     dbConnection.Open();
 
                     // Query to check if the user has purchased the book
-                    string query = "SELECT 1 FROM public.userbookmarks WHERE userid = @UserId AND bookid = @BookId AND isdelete=false";
+                    string query = "SELECT 1 FROM user_bookmarks WHERE user_id = @UserId AND book_id = @BookId AND is_delete = false";
 
                     // Execute the query
                     var result = await dbConnection.ExecuteScalarAsync<int?>(query, new { UserId = userId, BookId = bookId });

@@ -37,11 +37,11 @@ namespace Wallet.Infrastructure.Services
                 IEnumerable<dynamic> data = Enumerable.Empty<dynamic>();
 
                 string insertQuery = @"
-                INSERT INTO WalletActions (ActionTypeId, UserId, Amount, IsSuccessful, Description, CreatedDate)
-                VALUES (@ActionTypeId, @UserId, @Amount, @IsSuccessful, @Description, @CreatedDate)
-                RETURNING Id;
-                ";
-
+                                      INSERT INTO wallet_actions (action_type_id, user_id, amount, is_successful, description, created_date)
+                                      VALUES (@ActionTypeId, @UserId, @Amount, @IsSuccessful, @Description, @CreatedDate)
+                                      RETURNING id;
+                                      ";
+                 
                 var parameters = new
                 {
                     ActionTypeId = 1,
@@ -73,9 +73,9 @@ namespace Wallet.Infrastructure.Services
             try
             {
                 string updateQuery = @"
-                UPDATE WalletActions
-                SET IsSuccessful = true
-                WHERE Id = @WalletActionId;";
+                                     UPDATE wallet_actions
+                                     SET is_successful = true
+                                     WHERE id = @WalletActionId;";
 
                 var parameters = new
                 {
