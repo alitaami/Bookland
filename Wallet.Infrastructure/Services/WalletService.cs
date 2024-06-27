@@ -37,17 +37,17 @@ namespace Wallet.Infrastructure.Services
                 IEnumerable<dynamic> data = Enumerable.Empty<dynamic>();
 
                 string insertQuery = @"
-                INSERT INTO WalletActions (ActionTypeId, UserId, Amount, IsSuccessful, Description, CreatedDate)
-                VALUES (@ActionTypeId, @UserId, @Amount, @IsSuccessful, @Description, @CreatedDate)
-                RETURNING Id;
-                ";
-
+                                      INSERT INTO wallet_actions (action_type_id, user_id, amount, is_successful, description, created_date)
+                                      VALUES (@ActionTypeId, @UserId, @Amount, @IsSuccessful, @Description, @CreatedDate)
+                                      RETURNING id;
+                                      ";
+                 
                 var parameters = new
                 {
                     ActionTypeId = 1,
                     UserId = id,
                     Amount = amount,
-                    IsSuccessful = false, // You may need to determine the success based on your logic
+                    IsSuccessful = 0, // You may need to determine the success based on your logic
                     Description = $" {amount} تومان  واریز به حساب", // You may want to adjust the description
                     CreatedDate = DateTime.Now.AddHours(3.5) // You may want to adjust the creation date
                 };
@@ -73,9 +73,9 @@ namespace Wallet.Infrastructure.Services
             try
             {
                 string updateQuery = @"
-                UPDATE WalletActions
-                SET IsSuccessful = true
-                WHERE Id = @WalletActionId;";
+                                     UPDATE wallet_actions
+                                     SET is_successful = 1
+                                     WHERE id = @WalletActionId;";
 
                 var parameters = new
                 {
