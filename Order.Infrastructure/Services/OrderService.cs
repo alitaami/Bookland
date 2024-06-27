@@ -185,11 +185,11 @@ namespace Wallet.Infrastructure.Services
 
                             string query1 = @"
                               INSERT INTO wallet_actions (action_type_id, user_id, amount, is_successful, description, created_date)
-                              VALUES (2, @UserId, @Amount, true, 'خرید کتاب ' || @BookName, CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
+                              VALUES (2, @UserId, @Amount, true, 'خرید کتاب ' || @BookName, CURRENT_TIMESTAMP')";
 
                             string query2 = @"
                               INSERT INTO user_books (book_id, user_id, bought_time)
-                              VALUES (@BookId, @UserId, CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
+                              VALUES (@BookId, @UserId, CURRENT_TIMESTAMP')";
 
                             string query3 = @"
                               INSERT INTO user_discounts (discount_id, user_id)
@@ -233,12 +233,12 @@ namespace Wallet.Infrastructure.Services
 
                             string query1 = @"
                             INSERT INTO wallet_actions (action_type_id, user_id, amount, is_successful, description, created_date)
-                            VALUES (2, @UserId, @Amount, true, 'خرید کتاب ' || @BookName, CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
+                            VALUES (2, @UserId, @Amount, true, 'خرید کتاب ' || @BookName, CURRENT_TIMESTAMP')";
 
                             // Query to add books to userBooks
                             string query2 = @"
                             INSERT INTO user_books (book_id, user_id, bought_time)
-                            VALUES (@BookId, @UserId, CURRENT_TIMESTAMP + INTERVAL '210 minutes')";
+                            VALUES (@BookId, @UserId, CURRENT_TIMESTAMP')";
 
                             // Combine both queries into a single command
                             string combinedQuery = $"{query1}; {query2};";
