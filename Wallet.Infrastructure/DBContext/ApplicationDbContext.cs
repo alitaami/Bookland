@@ -15,7 +15,7 @@ public class ApplicationDbContext
     {
         get
         {
-            return new NpgsqlConnection(_configuration.GetConnectionString("BookLandDB"));
+            return new NpgsqlConnection(_configuration.GetConnectionString("bookLand_db"));
         }
     }
 }
