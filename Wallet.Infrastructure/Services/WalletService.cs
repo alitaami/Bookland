@@ -47,7 +47,7 @@ namespace Wallet.Infrastructure.Services
                     ActionTypeId = 1,
                     UserId = id,
                     Amount = amount,
-                    IsSuccessful = false, // You may need to determine the success based on your logic
+                    IsSuccessful = 0, // You may need to determine the success based on your logic
                     Description = $" {amount} تومان  واریز به حساب", // You may want to adjust the description
                     CreatedDate = DateTime.Now.AddHours(3.5) // You may want to adjust the creation date
                 };
@@ -74,7 +74,7 @@ namespace Wallet.Infrastructure.Services
             {
                 string updateQuery = @"
                                      UPDATE wallet_actions
-                                     SET is_successful = true
+                                     SET is_successful = 1
                                      WHERE id = @WalletActionId;";
 
                 var parameters = new
