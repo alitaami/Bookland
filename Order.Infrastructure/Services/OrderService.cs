@@ -189,7 +189,7 @@ namespace Wallet.Infrastructure.Services
 
                             string query2 = @"
                               INSERT INTO user_books (book_id, user_id, bought_time)
-                              VALUES (@BookId, @UserId, CURRENT_TIMESTAMP')";
+                              VALUES (@BookId, @UserId, CURRENT_TIMESTAMP)";
 
                             string query3 = @"
                               INSERT INTO user_discounts (discount_id, user_id)
@@ -267,13 +267,15 @@ namespace Wallet.Infrastructure.Services
                     dbConnection.Open();
 
                     // Query to check if the user has purchased the book
-                    string query = "SELECT 1 FROM user_bookmarks WHERE user_id = @UserId";
+                    string insertQuery = @"INSERT INTO user_books (book_id, user_id, bought_time)
+                                   VALUES (@BookId, @UserId, CURRENT_TIMESTAMP);";
 
-                    // Execute the query
-                    var result = await dbConnection.ExecuteScalarAsync<int?>(query, new { UserId = userId, BookId = bookId });
+                    var parameters = new { BookId = bookId, UserId = userId };
+
+                    int rowsAffected = await dbConnection.ExecuteAsync(insertQuery, parameters);
 
                     // Check the result and return accordingly
-                    if (result != null)
+                    if (rowsAffected > 0)
                     {
                         return Ok(true); // The user has purchased the book
                     }
