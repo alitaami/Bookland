@@ -266,22 +266,20 @@ namespace Wallet.Infrastructure.Services
                 {
                     dbConnection.Open();
 
-                    // Query to check if the user has purchased the book
-                    string insertQuery = @"INSERT INTO user_books (book_id, user_id, bought_time)
-                                   VALUES (@BookId, @UserId, CURRENT_TIMESTAMP);";
+                    string query = "SELECT 1 FROM user_bookmarks WHERE user_id = @UserId AND book_id = @BookId";
 
                     var parameters = new { BookId = bookId, UserId = userId };
 
-                    int rowsAffected = await dbConnection.ExecuteAsync(insertQuery, parameters);
+                    var result = await dbConnection.QueryFirstOrDefaultAsync<int?>(query, parameters);
 
                     // Check the result and return accordingly
-                    if (rowsAffected > 0)
+                    if (result.HasValue)
                     {
-                        return Ok(true); // The user has purchased the book
+                        return Ok(true); // The user has bookmarked the book
                     }
                     else
                     {
-                        return Ok(false); // The user has not purchased the book
+                        return Ok(false); // The user has not bookmarked the book
                     }
                 }
             }
