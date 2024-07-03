@@ -179,7 +179,7 @@ namespace Wallet.Infrastructure.Services
                             if (result < newPrice)
                                 return BadRequest(ErrorCodeEnum.WalletAmountError, Resource.WalletAmountError, null);
 
-                            string bookQuery = "SELECT book_name FROM books WHERE id = @BookId";
+                            string bookQuery = "SELECT name FROM books WHERE id = @BookId";
 
                             var bookName = await dbConnection.ExecuteScalarAsync<string>(bookQuery, new { BookId = model.BookId });
 
@@ -227,7 +227,7 @@ namespace Wallet.Infrastructure.Services
                             if (result < amount)
                                 return BadRequest(ErrorCodeEnum.WalletAmountError, Resource.WalletAmountError, null);
 
-                            string bookQuery = "SELECT book_name FROM books WHERE id = @BookId";
+                            string bookQuery = "SELECT name FROM books WHERE id = @BookId";
 
                             var bookName = await dbConnection.ExecuteScalarAsync<string>(bookQuery, new { BookId = model.BookId });
 
@@ -256,6 +256,37 @@ namespace Wallet.Infrastructure.Services
                         return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
                     }
                 }
+            }
+        }
+        public async Task<ServiceResult> UserBookmarked(int userId, int bookId)
+        {
+            try
+            {
+                using (IDbConnection dbConnection = _Context.Connection)
+                {
+                    dbConnection.Open();
+
+                    // Query to check if the user has purchased the book
+                    string query = "SELECT 1 FROM user_bookmarks WHERE user_id = @UserId";
+
+                    // Execute the query
+                    var result = await dbConnection.ExecuteScalarAsync<int?>(query, new { UserId = userId, BookId = bookId });
+
+                    // Check the result and return accordingly
+                    if (result != null)
+                    {
+                        return Ok(true); // The user has purchased the book
+                    }
+                    else
+                    {
+                        return Ok(false); // The user has not purchased the book
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, null, null);
+                return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
             }
         }
 
@@ -376,36 +407,6 @@ namespace Wallet.Infrastructure.Services
             }
         }
 
-        public async Task<ServiceResult> UserBookmarked(int userId, int bookId)
-        {
-            try
-            {
-                using (IDbConnection dbConnection = _Context.Connection)
-                {
-                    dbConnection.Open();
 
-                    // Query to check if the user has purchased the book
-                    string query = "SELECT 1 FROM user_bookmarks WHERE user_id = @UserId AND book_id = @BookId AND is_delete = false";
-
-                    // Execute the query
-                    var result = await dbConnection.ExecuteScalarAsync<int?>(query, new { UserId = userId, BookId = bookId });
-
-                    // Check the result and return accordingly
-                    if (result != null)
-                    {
-                        return Ok(true); // The user has purchased the book
-                    }
-                    else
-                    {
-                        return Ok(false); // The user has not purchased the book
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, null, null);
-                return InternalServerError(ErrorCodeEnum.InternalError, ex.Message, null);
-            }
-        }
     }
 }
