@@ -120,7 +120,7 @@ namespace Order.Controllers
         }
 
         [Route("api/user/purchase-book")]
-        [HttpPost]
+        [HttpGet]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.BadRequest)]
@@ -138,7 +138,11 @@ namespace Order.Controllers
                 if (userId.Equals(0))
                     return BadRequestError(ErrorCodeEnum.BadRequest, Resource.TokenTypeError);
 
-                var res = await _sender.Send(new PurchaseBookCommand(userId, model));
+                var res = await _sender.Send(new PurchaseBookCommand(userId, new PurchaseBookViewModel
+                {
+                    BookId = bookId,
+                    DiscountId = discountId
+                }));
 
                 return APIResponse(res);
             }

@@ -103,7 +103,7 @@ namespace Wallet.Infrastructure.Services
                     var result = await dbConnection.ExecuteScalarAsync<int?>(query, new { UserId = userId, BookId = bookId });
 
                     // Check the result and return accordingly
-                    if (result != null)
+                    if (result.HasValue)
                     {
                         return Ok(true); // The user has purchased the book
                     }
@@ -137,7 +137,7 @@ namespace Wallet.Infrastructure.Services
 
                         if (checkBook.Data is false)
                             return BadRequest(ErrorCodeEnum.BookNotFound, Resource.BookNotFound, null);
-
+                         
                         // Query to get book amount
                         string amountQuery = "SELECT price FROM books WHERE id = @BookId AND is_delete = false";
 
@@ -162,7 +162,6 @@ namespace Wallet.Infrastructure.Services
 
                             decimal newPrice = (100 - percent) * amount / 100;
 
-                            // Query to calculate the sum of the amount for a user
                             // Query to calculate the sum of the amount for a user
                             string query = @"
                                            SELECT
@@ -233,12 +232,12 @@ namespace Wallet.Infrastructure.Services
 
                             string query1 = @"
                             INSERT INTO wallet_actions (action_type_id, user_id, amount, is_successful, description, created_date)
-                            VALUES (2, @UserId, @Amount, true, 'خرید کتاب ' || @BookName, CURRENT_TIMESTAMP')";
+                            VALUES (2, @UserId, @Amount, true, 'خرید کتاب ' || @BookName, CURRENT_TIMESTAMP)";
 
                             // Query to add books to userBooks
                             string query2 = @"
                             INSERT INTO user_books (book_id, user_id, bought_time)
-                            VALUES (@BookId, @UserId, CURRENT_TIMESTAMP')";
+                            VALUES (@BookId, @UserId, CURRENT_TIMESTAMP)";
 
                             // Combine both queries into a single command
                             string combinedQuery = $"{query1}; {query2};";

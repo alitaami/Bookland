@@ -115,7 +115,7 @@ namespace Order.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to تلفن همراه ،ایمیل و یا نام کاربری تکراریست!.
+        ///   Looks up a localized string similar to !تلفن همراه ،ایمیل و یا نام کاربری تکراریست.
         /// </summary>
         public static string AlreadyExists {
             get {
@@ -124,7 +124,7 @@ namespace Order.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to تلفن همراه ، نام کاربری ،ایمیل و یا کد املاک تکراریست!.
+        ///   Looks up a localized string similar to !تلفن همراه ، نام کاربری ،ایمیل و یا کد املاک تکراریست.
         /// </summary>
         public static string AlreadyExists2 {
             get {
@@ -151,7 +151,7 @@ namespace Order.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to چنین کتابی وجود ندارد!.
+        ///   Looks up a localized string similar to !چنین کتابی وجود ندارد.
         /// </summary>
         public static string BookNotFound {
             get {
@@ -160,7 +160,7 @@ namespace Order.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to این کتاب توسط شما خریداری شده است!.
+        ///   Looks up a localized string similar to !این کتاب توسط شما خریداری شده است.
         /// </summary>
         public static string BookPurchased {
             get {
@@ -187,7 +187,7 @@ namespace Order.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to عداد دفعات استفاده از کد تخفیف وارد شده تمام شده است.
+        ///   Looks up a localized string similar to  تعداد دفعات استفاده از کد تخفیف وارد شده تمام شده است.
         /// </summary>
         public static string CodeFinished {
             get {
@@ -196,7 +196,7 @@ namespace Order.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to کد تخفیف وارد شده موجود نیست.
+        ///   Looks up a localized string similar to کد تخفیف وارد شده معتبر نیست.
         /// </summary>
         public static string CodeNotFound {
             get {
@@ -205,7 +205,7 @@ namespace Order.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to کد وارد شده توسط شما استفاده شده است!.
+        ///   Looks up a localized string similar to !کد وارد شده توسط شما استفاده شده است.
         /// </summary>
         public static string CodeUsed {
             get {
@@ -223,7 +223,7 @@ namespace Order.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to مشکلی در ثبت به وجود آمده است!!.
+        ///   Looks up a localized string similar to !مشکلی در ثبت به وجود آمده است.
         /// </summary>
         public static string CreateError {
             get {
@@ -241,7 +241,7 @@ namespace Order.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to مشکلی در حذف به وجود آمده است!!.
+        ///   Looks up a localized string similar to !مشکلی در حذف به وجود آمده است.
         /// </summary>
         public static string DeleteError {
             get {
@@ -313,7 +313,7 @@ namespace Order.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to پارامترهای ارسالی را کامل و صحیح وارد کنید..
+        ///   Looks up a localized string similar to پارامترهای ارسالی را کامل و صحیح وارد کنید.
         /// </summary>
         public static string EnterParametersCorrectlyAndCompletely {
             get {
@@ -601,7 +601,7 @@ namespace Order.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to مشکلی در بروزرسانی به وجود آمده است!!.
+        ///   Looks up a localized string similar to !مشکلی در بروزرسانی به وجود آمده است.
         /// </summary>
         public static string UpdateError {
             get {
@@ -646,7 +646,7 @@ namespace Order.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to موجودی کیف پول شما برای خرید این کتاب کافی نیست!.
+        ///   Looks up a localized string similar to !موجودی کیف پول شما برای خرید این کتاب کافی نیست.
         /// </summary>
         public static string WalletAmountError {
             get {
@@ -655,7 +655,7 @@ namespace Order.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to استفاده از این کد صرفا برای خرید اول کاربر در نظر گرفته شده است!.
+        ///   Looks up a localized string similar to !استفاده از این کد صرفا برای خرید اول کاربر در نظر گرفته شده است.
         /// </summary>
         public static string WelcomeCodeError {
             get {

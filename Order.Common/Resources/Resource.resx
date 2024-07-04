@@ -136,10 +136,10 @@
     <value>سن نباید کمتر از 18 باشد</value>
   </data>
   <data name="AlreadyExists" xml:space="preserve">
-    <value>تلفن همراه ،ایمیل و یا نام کاربری تکراریست!</value>
+    <value>!تلفن همراه ،ایمیل و یا نام کاربری تکراریست</value>
   </data>
   <data name="AlreadyExists2" xml:space="preserve">
-    <value>تلفن همراه ، نام کاربری ،ایمیل و یا کد املاک تکراریست!</value>
+    <value>!تلفن همراه ، نام کاربری ،ایمیل و یا کد املاک تکراریست</value>
   </data>
   <data name="AmountError" xml:space="preserve">
     <value>مبلغ وارد شده نباید کمتر از 5000 و یا بیشتر از 200000 تومان باشد</value>
@@ -148,10 +148,10 @@
     <value>برای دسترسی به این بخش باید لاگین شده باشید</value>
   </data>
   <data name="BookNotFound" xml:space="preserve">
-    <value>چنین کتابی وجود ندارد!</value>
+    <value>!چنین کتابی وجود ندارد</value>
   </data>
   <data name="BookPurchased" xml:space="preserve">
-    <value>این کتاب توسط شما خریداری شده است!</value>
+    <value>!این کتاب توسط شما خریداری شده است</value>
   </data>
   <data name="CacheKeyOfReceivers" xml:space="preserve">
     <value>Receivers</value>
@@ -160,25 +160,25 @@
     <value>کد تخفیف وارد شده منقضی شده است</value>
   </data>
   <data name="CodeFinished" xml:space="preserve">
-    <value>عداد دفعات استفاده از کد تخفیف وارد شده تمام شده است</value>
+    <value> تعداد دفعات استفاده از کد تخفیف وارد شده تمام شده است</value>
   </data>
   <data name="CodeNotFound" xml:space="preserve">
-    <value>کد تخفیف وارد شده موجود نیست</value>
+    <value>کد تخفیف وارد شده معتبر نیست</value>
   </data>
   <data name="CodeUsed" xml:space="preserve">
-    <value>کد وارد شده توسط شما استفاده شده است!</value>
+    <value>!کد وارد شده توسط شما استفاده شده است</value>
   </data>
   <data name="ConfirmVisit" xml:space="preserve">
     <value>تایید درخواست بازدید از ملک</value>
   </data>
   <data name="CreateError" xml:space="preserve">
-    <value>مشکلی در ثبت به وجود آمده است!!</value>
+    <value>!مشکلی در ثبت به وجود آمده است</value>
   </data>
   <data name="DaysExists" xml:space="preserve">
     <value>این روز برای آگهی شما ثبت شده است</value>
   </data>
   <data name="DeleteError" xml:space="preserve">
-    <value>مشکلی در حذف به وجود آمده است!!</value>
+    <value>!مشکلی در حذف به وجود آمده است</value>
   </data>
   <data name="DepositFail" xml:space="preserve">
     <value>مشکلی در شارژ کیف پول شما به وجود آمده  است ، مجددا تلاش کنید</value>
@@ -202,7 +202,7 @@
     <value>برای شما ارسال شده است</value>
   </data>
   <data name="EnterParametersCorrectlyAndCompletely" xml:space="preserve">
-    <value>پارامترهای ارسالی را کامل و صحیح وارد کنید.</value>
+    <value>پارامترهای ارسالی را کامل و صحیح وارد کنید</value>
   </data>
   <data name="EstateInfo" xml:space="preserve">
     <value>اطلاعات املاک نمیتواند خالی باشد</value>
@@ -298,7 +298,7 @@
     <value>دسترسی به این بخش بدون احراز هویت امکان پذیر نیست</value>
   </data>
   <data name="UpdateError" xml:space="preserve">
-    <value>مشکلی در بروزرسانی به وجود آمده است!!</value>
+    <value>!مشکلی در بروزرسانی به وجود آمده است</value>
   </data>
   <data name="UserIdClaimMissing" xml:space="preserve">
     <value>شناسه کاربری در توکن ارسالی یافت نشد</value>
@@ -313,10 +313,10 @@
     <value>این نقش قبلا به این کاربر نسبت داده شده است</value>
   </data>
   <data name="WalletAmountError" xml:space="preserve">
-    <value>موجودی کیف پول شما برای خرید این کتاب کافی نیست!</value>
+    <value>!موجودی کیف پول شما برای خرید این کتاب کافی نیست</value>
   </data>
   <data name="WelcomeCodeError" xml:space="preserve">
-    <value>استفاده از این کد صرفا برای خرید اول کاربر در نظر گرفته شده است!</value>
+    <value>!استفاده از این کد صرفا برای خرید اول کاربر در نظر گرفته شده است</value>
   </data>
   <data name="WelcomeDiscountCode" xml:space="preserve">
     <value>welcome</value>
