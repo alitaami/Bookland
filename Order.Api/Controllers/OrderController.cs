@@ -126,7 +126,7 @@ namespace Order.Controllers
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ApiResult), (int)HttpStatusCode.InternalServerError)]
         [ValidateAuthorization(2)] // Specify the required roleId
-        public async Task<IActionResult> PurchaseBook([FromHeader(Name = "Authorization")] string authorizationHeader, [FromBody] PurchaseBookViewModel model)
+        public async Task<IActionResult> PurchaseBook([FromHeader(Name = "Authorization")] string authorizationHeader, int bookId,int? discountId)
         {
             try
             {
