@@ -1,0 +1,260 @@
+{
+	"info": {
+		"_postman_id": "3c0cc9d9-05cc-4f94-a9e7-d314f828eb53",
+		"name": "order/wallet-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "26322275"
+	},
+	"item": [
+		{
+			"name": "wallet",
+			"item": [
+				{
+					"name": "ChargeUserWallet",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJyb2xlX2lkIjoyLCJleHAiOjE3MjAwMzM4MTd9.JvvqSl-XJAKFApV3miuRP73Caig0Gxja7vfWNJe9g5Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/{{WALLET}}/ChargeUserWallet?amount=10000",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{WALLET}}",
+								"ChargeUserWallet"
+							],
+							"query": [
+								{
+									"key": "amount",
+									"value": "10000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateUserWallet",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJyb2xlX2lkIjoyLCJleHAiOjE3MjAwMzc0MDN9.qc5yvt0HjmlzK7hbZwbRwbsG6bLpsjOt-mKj-GQzOyI",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/{{WALLET}}/UpdateUserWallet?walletActionId=14",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{WALLET}}",
+								"UpdateUserWallet"
+							],
+							"query": [
+								{
+									"key": "walletActionId",
+									"value": "14"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ChargePublisherWallet",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJyb2xlX2lkIjoxLCJleHAiOjE3MjAwMzkwMzl9.H_SJzfMxJvU3nzR_4r4DSMhSFc4qNb7ilxHt_UbQiVE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/{{WALLET}}/ChargePublisherWallet?amount=10000",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{WALLET}}",
+								"ChargePublisherWallet"
+							],
+							"query": [
+								{
+									"key": "amount",
+									"value": "10000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdatePublisherWallet",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJyb2xlX2lkIjoxLCJleHAiOjE3MjAwMzkwMzl9.H_SJzfMxJvU3nzR_4r4DSMhSFc4qNb7ilxHt_UbQiVE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/{{WALLET2}}/UpdatePublisherWallet?walletActionId=16",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{WALLET2}}",
+								"UpdatePublisherWallet"
+							],
+							"query": [
+								{
+									"key": "walletActionId",
+									"value": "16"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "check-book",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJyb2xlX2lkIjoyLCJleHAiOjE3MjAwODMxNDh9.L3Dfk2xvp7fjmUkLJtSzpXv7RQHQ1bSPrMfbGEZBckY",
+								"type": "text"
+							}
+						],
+						"url": "{{BASE_URL2}}/{{ORDER-DISCOUNT}}/check-book/11"
+					},
+					"response": []
+				},
+				{
+					"name": "check-bookmark",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJyb2xlX2lkIjoxLCJleHAiOjE3MjAwMzkwMzl9.H_SJzfMxJvU3nzR_4r4DSMhSFc4qNb7ilxHt_UbQiVE",
+								"type": "text"
+							}
+						],
+						"url": "{{BASE_URL2}}/{{ORDER-DISCOUNT}}/check-bookmark/11"
+					},
+					"response": []
+				},
+				{
+					"name": "adjust-discount",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJyb2xlX2lkIjoyLCJleHAiOjE3MjAwODMxNDh9.L3Dfk2xvp7fjmUkLJtSzpXv7RQHQ1bSPrMfbGEZBckY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL2}}/{{ORDER-DISCOUNT}}/adjust-discount?code=welcome&amount=50000",
+							"host": [
+								"{{BASE_URL2}}"
+							],
+							"path": [
+								"{{ORDER-DISCOUNT}}",
+								"adjust-discount"
+							],
+							"query": [
+								{
+									"key": "code",
+									"value": "welcome"
+								},
+								{
+									"key": "amount",
+									"value": "50000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "purchase-book",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJyb2xlX2lkIjoyLCJleHAiOjE3MjAwODMxNDh9.L3Dfk2xvp7fjmUkLJtSzpXv7RQHQ1bSPrMfbGEZBckY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL2}}/{{ORDER-DISCOUNT}}/purchase-book?bookId=16&discountId=10",
+							"host": [
+								"{{BASE_URL2}}"
+							],
+							"path": [
+								"{{ORDER-DISCOUNT}}",
+								"purchase-book"
+							],
+							"query": [
+								{
+									"key": "bookId",
+									"value": "16"
+								},
+								{
+									"key": "discountId",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "localhost:5000"
+		},
+		{
+			"key": "WALLET",
+			"value": "api/user/wallet"
+		},
+		{
+			"key": "WALLET2",
+			"value": "api/publisher/wallet"
+		},
+		{
+			"key": "BASE_URL2",
+			"value": "localhost:5001"
+		},
+		{
+			"key": "ORDER-DISCOUNT",
+			"value": "api/user"
+		}
+	]
+}

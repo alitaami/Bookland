@@ -1,0 +1,869 @@
+{
+	"info": {
+		"_postman_id": "482846a1-3b31-42db-975b-92ee4db36744",
+		"name": "user-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27032162"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "customer signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"ElyarSadig2\",\r\n    \"email\":\"elyarnejati2@gmail.com\",\r\n    \"password\": \"@Ely1380\",\r\n    \"password2\": \"@Ely1380\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{AUTH}}/user/signup",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{AUTH}}",
+								"user",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email_or_username\": \"KheyliSabz\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{AUTH}}/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{AUTH}}",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "send signup email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"sadignejati@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{AUTH}}/send-signup-email",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{AUTH}}",
+								"send-signup-email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify email activation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"sadignejati@gmail.com\",\r\n    \"activation_code\": \"978636\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{AUTH}}/verify-email-code",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{AUTH}}",
+								"verify-email-code"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "send reset password code",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"elyarnejati@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{AUTH}}/send-resetpassword-code",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{AUTH}}",
+								"send-resetpassword-code"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"elyarnejati@gmail.com\",\r\n    \"activation_code\": \"242610\",\r\n    \"password\": \"password$1D\",\r\n    \"password2\": \"password$1D\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{AUTH}}/reset-password",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{AUTH}}",
+								"reset-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sign up publisher",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"ElyarSadig3\",\r\n    \"email\": \"sadignejati@gmail.com\",\r\n    \"password\": \"@Ely1380\",\r\n    \"password2\": \"@Ely1380\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{AUTH}}/publisher/signup",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{AUTH}}",
+								"publisher",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "send publisher details",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJyb2xlX2lkIjoyLCJleHAiOjE3MTczMjU2ODR9.yzeYkpEfmUL_KlQWT2swY01VYwSr08TNmP1nAsiyMyg"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"phone_number\": \"09214491645\",\r\n    \"publications_name\": \"ElyarPublish\",\r\n    \"card_number\": \"610433742324234\",\r\n    \"address\": \"nesf rah\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{AUTH}}/publisher/signup-1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{AUTH}}",
+								"publisher",
+								"signup-1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "send publisher docs",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer "
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/{{AUTH}}/publisher/signup-2",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{AUTH}}",
+								"publisher",
+								"signup-2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "books",
+			"item": [
+				{
+					"name": "get all categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{BOOK}}/categories",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{BOOK}}",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all languages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{BOOK}}/languages",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{BOOK}}",
+								"languages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get book categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{BOOK}}/1/categories",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{BOOK}}",
+								"1",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get book original file path",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{USER_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/{{BOOK}}/originalfilepath/11",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{BOOK}}",
+								"originalfilepath",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get book details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{BOOK}}/5",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{BOOK}}",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get book reviews",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{BOOK}}/7/reviews",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{BOOK}}",
+								"7",
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "profile",
+			"item": [
+				{
+					"name": "get user bookmarks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{USER}}/bookmarks",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{USER}}",
+								"bookmarks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{USER}}/profile",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{USER}}",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{USER}}/books",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{USER}}",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user bookmark",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{USER}}/bookmarks/12",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{USER}}",
+								"bookmarks",
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user transactions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{USER}}/wallet-history?page=1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{USER}}",
+								"wallet-history"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get wallet balance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{USER}}/wallet-balance",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{USER}}",
+								"wallet-balance"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{USER_TOKEN}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "publisher",
+			"item": [
+				{
+					"name": "change-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"old_password\": \"@Ely1380121\",\r\n    \"new_password\": \"@Ely1380\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{PUBLISHER}}/change-password",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{PUBLISHER}}",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get publisher books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{PUBLISHER}}/books",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{PUBLISHER}}",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete publisher book",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{PUBLISHER}}/books/1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{PUBLISHER}}",
+								"books",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "publisher profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{PUBLISHER}}/profile",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{PUBLISHER}}",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update publisher profile",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"address\": \"Tabriz Iran\",\r\n    \"phone_number2\": \"09214491645\",\r\n    \"card_number\": \"310433745785876\",\r\n    \"publications_image\": \"update image\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{PUBLISHER}}/profile",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{PUBLISHER}}",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "publisher wallet history",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{PUBLISHER}}/wallet-history",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{PUBLISHER}}",
+								"wallet-history"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "publisher wallet balance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{PUBLISHER}}/wallet-balance",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{PUBLISHER}}",
+								"wallet-balance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create book",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "book name from sana",
+									"type": "text"
+								},
+								{
+									"key": "author_name",
+									"value": "author name test",
+									"type": "text"
+								},
+								{
+									"key": "translator_name",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "released_date",
+									"value": "1402",
+									"type": "text"
+								},
+								{
+									"key": "book_cover_image",
+									"type": "file",
+									"src": [
+										"/C:/Users/Elyar/Desktop/8.jpg",
+										"/C:/wallpaper/5.jpg"
+									]
+								},
+								{
+									"key": "description",
+									"value": "Here is a sample description",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "150000",
+									"type": "text"
+								},
+								{
+									"key": "number_of_pages",
+									"value": "453",
+									"type": "text"
+								},
+								{
+									"key": "language_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "demo_file",
+									"type": "file",
+									"src": [
+										"/C:/Users/Elyar/Desktop/putting the you in CPU.pdf",
+										"/C:/Users/Elyar/Desktop/Books/Docker/The_Art_of_Docker_Streamline_App_Development_and_Deployment_with.pdf"
+									]
+								},
+								{
+									"key": "original_file",
+									"type": "file",
+									"src": [
+										"/C:/Users/Elyar/Desktop/putting the you in CPU.pdf",
+										"/C:/Users/Elyar/Desktop/Books/Docker/The_Art_of_Docker_Streamline_App_Development_and_Deployment_with.pdf"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{PUBLISHER}}/books",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{PUBLISHER}}",
+								"books"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{PUBLISHER_TOKEN}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "AUTH",
+			"value": "api/auth",
+			"type": "string"
+		},
+		{
+			"key": "BOOK",
+			"value": "api/books",
+			"type": "string"
+		},
+		{
+			"key": "USER",
+			"value": "api/user",
+			"type": "string"
+		},
+		{
+			"key": "PUBLISHER",
+			"value": "api/publisher",
+			"type": "string"
+		},
+		{
+			"key": "USER_TOKEN",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJyb2xlX2lkIjoyLCJleHAiOjE3MTc0OTI0NTN9.bOTlrQqHTwl9K8JlhR8A660S5x-KezY8QUZpOLiAJXw",
+			"type": "string"
+		},
+		{
+			"key": "PUBLISHER_TOKEN",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2LCJyb2xlX2lkIjoxLCJleHAiOjE3MTk1ODc5MDJ9.8zVxZurzduOwB-8wqucHSF3TbSsHS9xpj697nVsVUjE",
+			"type": "string"
+		}
+	]
+}
